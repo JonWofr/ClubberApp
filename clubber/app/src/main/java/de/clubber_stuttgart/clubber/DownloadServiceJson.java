@@ -10,7 +10,7 @@ import android.net.Uri;
 
 public class DownloadServiceJson extends IntentService {
 
-    long queueId;
+    private static long queueId;
     DownloadManager dm;
 
     public DownloadServiceJson() {
@@ -27,6 +27,11 @@ public class DownloadServiceJson extends IntentService {
         request.setDestinationInExternalFilesDir(this, getFilesDir().getAbsolutePath(), "data.json");
         request.setVisibleInDownloadsUi(false);
         queueId = dm.enqueue(request);
+    }
+
+    //A getter method, which returns the private id of the downloaded file
+    protected static long getQueueId(){
+        return queueId;
     }
 }
 
