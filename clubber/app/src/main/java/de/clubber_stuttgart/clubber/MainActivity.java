@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
     @Override
     public void onStart(){
         super.onStart();
+        //ToDo: Woanders registrieren?
         //registers an IntentFilter dynamically for DownloadReceiver. When a Download is finished, the DownloadReceiver.class will listen to it
         IntentFilter downloadCompleteFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         registerReceiver(downloadReceiver, downloadCompleteFilter);
@@ -33,9 +34,9 @@ public class MainActivity extends Activity {
     @Override
     public void onStop(){
         super.onStop();
+        //ToDo: Kann eigentlich schon früher deregistriert werden.
         //unregisters the receiver
         unregisterReceiver(downloadReceiver);
-
     }
 
 
