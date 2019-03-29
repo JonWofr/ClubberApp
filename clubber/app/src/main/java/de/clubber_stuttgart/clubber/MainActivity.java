@@ -6,8 +6,11 @@ import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +24,7 @@ public class MainActivity extends Activity {
     //String pathJson = this.getExternalFilesDir( this.getFilesDir().getAbsolutePath()).getAbsolutePath() + "data.json";
 
     BroadcastReceiver downloadReceiver = new DownloadReceiver();
+    private static final int REQUEST_WRITE_ACCESS_CODE = 0;
 
     @Override
     public void onStart(){
@@ -45,10 +49,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //ToDo: Permission richtig abfragen
+
+
+
+
         //ToDo: Überprüfen, ob external Storage erreichbar ist
 
-        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+
+        //ToDo: Eigentlich benötigen wir diese Permission momentan nicht, falls wir sie aus dem Programm nehmen sollten, unbedingt auch an die Manifest denken!
+        //getPermissionToReadExternalStorage();
 
         deleteOldJsonFiles();
 
@@ -57,7 +66,9 @@ public class MainActivity extends Activity {
         this.startService(intent);
 
 
+
     }
+
 
 
     //ToDo: Projektstruktur überdenken, wollen wir Methoden wie diese in der MainActivity stehen haben?
@@ -73,7 +84,7 @@ public class MainActivity extends Activity {
                     break;
                 } else {
                     i++;
-                    //iterates ending of the filename if there are multiple files called Data.json
+                    //iterates ending of the filename if there are multiple files called data.json
                     iter = "-" + i;
                 }
             }
@@ -82,4 +93,65 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+    ToDO: Permissionabfrage löschen falls nicht benötigt.
+
+    public void getPermissionToReadExternalStorage() {
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // The permission is NOT already granted.
+            // Check if the user has been asked about this permission already and denied
+            // it. If so, we want to give more explanation about why the permission is needed.
+            if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Show our own UI to explain to the user why we need to read the contacts
+                // before actually requesting the permission and showing the default UI
+                Toast.makeText(this, "Wir benötigen die Berechtigung, um dir Clubs und Events anzeigen zu können", Toast.LENGTH_SHORT).show();
+            }
+            // Fire off an async request to actually get the permission
+            // This will show the standard permission request dialog UI
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_ACCESS_CODE);
+
+        }
+        else {
+            //ToDo: implement me
+        }
+    }
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        // Make sure it's our original READ_CONTACTS request
+        if (requestCode == REQUEST_WRITE_ACCESS_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Read Storage granted", Toast.LENGTH_SHORT).show();
+            } else {
+                // showRationale = false if user clicks Never Ask Again, otherwise true
+                boolean showRationale = shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE);
+
+                if (showRationale) {
+                    Toast.makeText(this, "Wir benötigen die Berechtigung, um dir Clubs und Events anzeigen zu können", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Berechtigung Daten zu lesen und zu schreiben verweigert.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    */
+
+
 }
