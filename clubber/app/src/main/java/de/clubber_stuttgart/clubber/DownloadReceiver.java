@@ -5,15 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
 public class DownloadReceiver extends BroadcastReceiver {
 
+    //the global JSONObject for the "Veranstaltungen-" and "Clubs-" tab
+    private static JSONObject jsonobj;
+
     //ToDo: Achtung, Kommentar könnte sich noch bezüglich onStart und onStop ändern.
     //receives DOWNLOAD_COMPLETE broadcast, which is registered in the onStart method (and unregistered in the onStop method)
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -28,9 +33,9 @@ public class DownloadReceiver extends BroadcastReceiver {
             String result = "";
             String filename = context.getExternalFilesDir(context.getFilesDir().getAbsolutePath()).getAbsolutePath() + "/data.json";
             try {
-                //BufferedReader is said to be more performance friendly
+                //BufferedReader is said to be more performance friendly than reading the whole file at once
                 BufferedReader br = new BufferedReader(new FileReader(filename));
-                //the StringBuilder ist pretty much just a String
+                //the StringBuilder is a not as performance heavy as appending a String gradually
                 StringBuilder sb = new StringBuilder();
                 String line = br.readLine();
                 //reads every line of the json file on at a time
@@ -42,18 +47,25 @@ public class DownloadReceiver extends BroadcastReceiver {
                 }
                 //conversion from StringBuilder to String
                 result = sb.toString();
-            } catch (Exception e) {
-                //ToDo: ACHTUNG HIER WIRD NICHTS BEHANDELT, WENN DIE DATEI NICHT EXISTIERT!
-                e.printStackTrace();
+                //String will be converted to the JSONObject for further handling
+                jsonobj = new JSONObject(result);
+                Log.i("DownloadReceiver: ", "The JSONObject has been succesfully created.");
             }
-            System.out.println(result);
-
+            //error handling
+            catch (JSONException jsone){
+                Log.w("DownloadReceiver: ","The json file does not contain valid json, errortext: " + jsone);
+            }
+            catch (Exception e) {
+                Log.w("DownloadReceiver: ", "And error occured " + e);
+            }
 
         }else{
-
             //ToDo: Was wenn es sich nicht um unseren Download handelt?
-
         }
+    }
+
+    public static JSONObject getJson(){
+        return jsonobj;
     }
 }
 
