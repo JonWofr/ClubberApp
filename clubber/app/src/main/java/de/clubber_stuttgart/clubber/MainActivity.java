@@ -11,11 +11,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
     //ToDo: Pfade mit Variablen vereinfachen
@@ -66,6 +72,20 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this,DownloadServiceJson.class);
         this.startService(intent);
 
+
+
+        //TESTING
+        Button btn = findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList <Event> e = JsonController.getEventList();
+                for (Event evn : e){
+                    System.out.println(evn.name);
+                }
+            }
+        });
+        //TESTING
 
 
     }

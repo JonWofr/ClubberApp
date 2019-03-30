@@ -15,8 +15,7 @@ import java.io.FileReader;
 
 public class DownloadReceiver extends BroadcastReceiver {
 
-    //the global JSONObject for the "Veranstaltungen-" and "Clubs-" lists
-    private static JSONObject jsonobj;
+
 
     //ToDo: Achtung, Kommentar könnte sich noch bezüglich onStart und onStop ändern.
     //receives DOWNLOAD_COMPLETE broadcast, which is registered in the onStart method (and unregistered in the onStop method)
@@ -39,7 +38,6 @@ public class DownloadReceiver extends BroadcastReceiver {
 
             Log.d("BroadcastReceiver", "Json File download complete!");
 
-            String result = "";
             String filename = context.getExternalFilesDir(context.getFilesDir().getAbsolutePath()).getAbsolutePath() + "/data.json";
             try {
                 //BufferedReader is said to be more performance friendly than reading the whole file at once
@@ -55,26 +53,17 @@ public class DownloadReceiver extends BroadcastReceiver {
                     line = br.readLine();
                 }
                 //conversion from StringBuilder to String
-                result = sb.toString();
-                //String will be converted to the JSONObject for further handling
-                jsonobj = new JSONObject(result);
-                Log.i("DownloadReceiver: ", "The JSONObject has been succesfully created.");
+                String result = sb.toString();
+                JsonController con = new JsonController();
+                con.createList(result);
             }
-            //error handling
-            catch (JSONException jsonE) {
-                Log.w("DownloadReceiver: ", "The json file does not contain valid json, errortext: " + jsonE);
-            } catch (Exception e) {
+
+            catch (Exception e) {
                 Log.w("DownloadReceiver: ", "And error occured " + e);
             }
 
-
         }else{
-            //ToDo: Was wenn es sich nicht um unseren Download handelt?
         }
-    }
-
-    public static JSONObject getJson(){
-        return jsonobj;
     }
 }
 
