@@ -93,7 +93,7 @@ public class MainActivity extends Activity {
 
 
     //ToDo: Projektstruktur überdenken, wollen wir Methoden wie diese in der MainActivity stehen haben?
-    //ToDo: API bezüglich der Files.class Methoden überdenken
+    //ToDo: Backup File checken.
     void deleteOldJsonFiles(){
         try {
             String iter = "";

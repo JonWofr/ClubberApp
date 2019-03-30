@@ -55,6 +55,7 @@ public class DownloadReceiver extends BroadcastReceiver {
                 //conversion from StringBuilder to String
                 String result = sb.toString();
                 JsonController con = new JsonController();
+                //ToDo: static machen
                 con.createList(result);
             }
 

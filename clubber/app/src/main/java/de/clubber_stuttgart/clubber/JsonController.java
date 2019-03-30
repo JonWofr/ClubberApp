@@ -69,6 +69,7 @@ public class JsonController extends Thread {
 
     }
 
+    //ToDo: static
     //called when the download inside DownloadReceiver is finished and the buffer read its contents
     public void createList (String jsonString) {
         this.jsonString = jsonString;
