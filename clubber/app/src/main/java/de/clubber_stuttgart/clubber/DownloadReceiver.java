@@ -64,6 +64,7 @@ public class DownloadReceiver extends BroadcastReceiver {
 
             //ToDo: besseren Ort finden um die Backup-Datei zu löschen, am besten nachdem validität der json geprüft wurde.
             //deleting backup File, we don't need it anymore because we downloaded a fresh one
+            Log.i("BroadcastReceiver","delete backup file...");
             JsonController.deleteOldJsonFiles("backup_data",context.getExternalFilesDir(context.getFilesDir().getAbsolutePath()).getAbsolutePath());
             Log.i("BroadcastReceiver","File has been read, Backup file deleted");
 

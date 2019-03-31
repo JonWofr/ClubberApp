@@ -98,6 +98,8 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 ArrayList <Event> e = JsonController.getEventList();
+                Intent i = new Intent(getApplicationContext(), ClubActivity.class);
+                startActivity(i);
                 for (Event evn : e){
                     System.out.println(evn.name);
                 }
