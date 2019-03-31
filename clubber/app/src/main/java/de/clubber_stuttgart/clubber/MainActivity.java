@@ -4,9 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -56,21 +59,36 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String jsonFileName = "data", newJsonFileName = "backup_data";
+
+
+        if(isNetworkAvailable()){
+            //creates backup, if anything goes wrong in the DownloadService, we still got the backup file
+            JsonController.renameJson(jsonFileName, newJsonFileName, this.getExternalFilesDir( this.getFilesDir().getAbsolutePath()).getAbsolutePath());
+            //deletes any old data.json files if there are any at all
+            JsonController.deleteOldJsonFiles(this.getExternalFilesDir( this.getFilesDir().getAbsolutePath()).getAbsolutePath(), jsonFileName);
+            //triggers the download service, which downloads a json file from our webserver. It runs in its own thread to prevent performance issues.
+            Intent intent = new Intent(this,DownloadServiceJson.class);
+            this.startService(intent);
+
+        }else{
+            File file = new File(this.getExternalFilesDir( this.getFilesDir().getAbsolutePath()).getAbsolutePath(), jsonFileName + ".json");
+            if(file.exists()){
+                //ToDo: alte data.json verwenden (Schritt Datei runterzuladen überspringen)
+            }else{
+                //ToDo: Alternative implementieren. Was machen wir wenn es keine Internetverbindung + keine alte data.json gibt?
+            }
+
+        }
 
 
 
-
-        //ToDo: Überprüfen, ob external Storage erreichbar ist
+        //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
 
 
         //ToDo: Eigentlich benötigen wir diese Permission momentan nicht, falls wir sie aus dem Programm nehmen sollten, unbedingt auch an die Manifest denken!
         //getPermissionToReadExternalStorage();
 
-        deleteOldJsonFiles();
-
-        //triggers the download service, which downloads a json file from our webserver. It runs in its own thread to prevent performance issues.
-        Intent intent = new Intent(this,DownloadServiceJson.class);
-        this.startService(intent);
 
 
 
@@ -90,30 +108,18 @@ public class MainActivity extends Activity {
 
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 
 
     //ToDo: Projektstruktur überdenken, wollen wir Methoden wie diese in der MainActivity stehen haben?
     //ToDo: Backup File checken.
-    void deleteOldJsonFiles(){
-        try {
-            String iter = "";
-            int i = 0;
-            //we delete every old json file to make room in order to replace it with a new one
-            while (true) {
-                File file = new File(this.getExternalFilesDir( this.getFilesDir().getAbsolutePath()).getAbsolutePath() + "/data" + iter + ".json");
-                if (!Files.deleteIfExists(file.toPath())) {
-                    break;
-                } else {
-                    i++;
-                    //iterates ending of the filename if there are multiple files called data.json
-                    iter = "-" + i;
-                }
-            }
-        } catch (IOException e){
-            Log.e("mainActivity","An IOException in deleteIfExists function has occured");
-            e.printStackTrace();
-        }
-    }
+
 
 
 
