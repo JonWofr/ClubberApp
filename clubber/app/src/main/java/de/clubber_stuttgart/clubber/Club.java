@@ -1,6 +1,7 @@
 package de.clubber_stuttgart.clubber;
 
 public class Club {
+    //ToDo: private machen und getter implementieren
     String name;
     String adrs;
     String tel;

@@ -1,6 +1,7 @@
 package de.clubber_stuttgart.clubber;
 
 public class Event {
+    //ToDo private machen und getter erstellen
     String dte;
     String name;
     String club;
