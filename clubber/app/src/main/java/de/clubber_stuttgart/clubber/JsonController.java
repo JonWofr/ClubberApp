@@ -10,13 +10,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class JsonController extends Thread {
 
     private String jsonString;
     //lists to be used in "Veranstaltungen" und "Clubs" section of the app
-    private static ArrayList<Event> eventList = new ArrayList<Event>();
-    private static ArrayList<Club> clubList = new ArrayList<Club>();
+    private static List<HashMap<String, String>> eventList = new ArrayList<HashMap<String, String>>();
+    private static List<HashMap<String, String>> clubList = new ArrayList<HashMap<String, String>>();
 
     //runs in own thread
     @Override
@@ -24,15 +26,20 @@ public class JsonController extends Thread {
         try {
             //JSONObject will be created with String given due to createList() method
             JSONObject jsonObject = new JSONObject(jsonString);
-            Log.i("JsonController: ", "The JSONObject has been succesfully created.");
+            Log.i("JsonController --> ", "The JSONObject has been succesfully created.");
 
             //Jsons's file content are two arrays "events" and "clubs"
             JSONArray jsonEventArray = jsonObject.getJSONArray("events");
             JSONArray jsonClubArray = jsonObject.getJSONArray("clubs");
 
-            //each array consists of either event or club objects. Here we transform the Json event objects into normal java Event objects with corresponding attributes
+            //Each array consists of either event or club objects. Here we save each Json object into an object of Hashmap with corresponding key-value pairs
             for (int i = 0; i < jsonEventArray.length(); i++) {
+
                 JSONObject jsonEventObject = jsonEventArray.getJSONObject(i);
+
+                HashMap<String, String> eventHash = new HashMap <String, String>();
+
+                //Fetching all data from the Json object
                 String dte = jsonEventObject.getString("dte");
                 String name = jsonEventObject.getString("name");
                 String club = jsonEventObject.getString("club");
@@ -45,29 +52,52 @@ public class JsonController extends Thread {
                 String genre = jsonEventObject.getString("genre");
                 String occ = jsonEventObject.getString("occ");
 
-                //we create a new Event object, which will be stored inside an ArrayList of type Event
-                Event evn = new Event(dte, name, club, adrs, srttime, endtime, price, soldas, buttonLink, genre, occ);
-                eventList.add(evn);
-                Log.i("", "Event " + evn.name + " has been added to the list.");
+                //Putting data into Hashmap
+                eventHash.put("dte", dte);
+                eventHash.put("name", name);
+                eventHash.put("club", club);
+                eventHash.put("adrs", adrs);
+                eventHash.put("srttime", srttime);
+                eventHash.put("endtime", endtime);
+                eventHash.put("price", price);
+                eventHash.put("soldas", soldas);
+                eventHash.put("buttonLink", buttonLink);
+                eventHash.put("genre", genre);
+                eventHash.put("occ", occ);
+
+                //Adding Hashmap to the List, which consists of as many Hashmaps as there are Event objects
+                eventList.add(eventHash);
+                Log.i("JsonController --> ", "Event \"" + eventHash.get("name") + "\" has been successfully added to the list.");
             }
 
-            //each array consists of either event or club objects. Here we transform the Json club objects into normal java Club objects with corresponding attributes
+            //Each array consists of either event or club objects. Here we save each Json object into an object of Hashmap with corresponding key-value pairs
             for (int i = 0; i < jsonClubArray.length(); i++) {
+
                 JSONObject jsonClubObject = jsonClubArray.getJSONObject(i);
+
+                HashMap<String, String> clubHash = new HashMap <String, String>();
+
+                //Fetching all data from the Json object
                 String name = jsonClubObject.getString("name");
                 String adrs = jsonClubObject.getString("adrs");
                 String tel = jsonClubObject.getString("tel");
                 String webLink = jsonClubObject.getString("web");
 
-                //we create a new Club object, which will be stored inside an ArrayList of type Club
-                Club clb = new Club(name, adrs, tel, webLink);
-                clubList.add(clb);
-                Log.i("", "Club " + clb.name + " has been added to the list.");
+                //Putting data into Hashmap
+                clubHash.put("name", name);
+                clubHash.put("adrs", adrs);
+                clubHash.put("tel", tel);
+                clubHash.put("webLink", webLink);
+
+                //Adding Hashmap to the List, which consists of as many Hashmaps as there are Club objects
+                clubList.add(clubHash);
+
+                Log.i("JsonController --> ", "Club \"" + clubHash.get("name") + "\" has been successfully added to the list.");
             }
         }
         //TODO catch if var jsonString has not been initialized (e.g.) if smartphone has no internet connection and run() got called
         catch (JSONException jsonE) {
-            Log.w("DownloadReceiver: ", "The json file does not contain valid json, errortext: " + jsonE);
+            Log.w("JsonController --> ", "The json file does not contain valid json, errortext: " + jsonE);
         }
 
     }
@@ -80,12 +110,12 @@ public class JsonController extends Thread {
     }
 
     //Getter for the current eventList
-    public static ArrayList getEventList() {
+    public static List getEventList() {
         return eventList;
     }
 
     //Getter for the current clubList
-    public static ArrayList getClubList() {
+    public static List getClubList() {
         return clubList;
     }
 

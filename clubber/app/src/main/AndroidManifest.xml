@@ -30,7 +30,8 @@ package="de.clubber_stuttgart.clubber">
         android:name=".DownloadServiceJson"
         android:exported="false" />
 
-    <activity android:name=".ClubActivity"></activity>
-</application>
+        <activity android:name=".ClubActivity"></activity>
+        <activity android:name=".EventActivity"></activity>
+    </application>
 
 </manifest>
