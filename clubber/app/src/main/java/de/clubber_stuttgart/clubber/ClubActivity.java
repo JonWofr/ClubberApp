@@ -17,20 +17,14 @@ public class ClubActivity extends Activity {
         setContentView(R.layout.activity_club);
 
         ListView listViewClubs = findViewById(R.id.clubListView);
-        ArrayList<Club> clubList = JsonController.getClubList();
-        List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-        String[] from = {"clubName","clubAdrs","clubTel","clubLink"};
+
+        //get the current eventList
+        List<HashMap<String, String>> fillMaps = JsonController.getClubList();
+
+        //These are the key names, which save the values, which are to be displayed
+        String[] from = {"name","adrs","tel","webLink"};
+        //The values should be displayed in specified TextViews
         int[] to = {R.id.club_name, R.id.club_adrs, R.id.club_tel, R.id.club_link};
-
-
-        for(Club club : clubList){
-            HashMap<String, String> map = new HashMap<>();
-            String[] input = {club.name, club.adrs, club.tel, club.webLink};
-            for(int i = 0; i < from.length; i++) {
-                map.put(from[i],input[i]);
-            }
-            fillMaps.add(map);
-        }
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(this, fillMaps, R.layout.adapter_view_layout_club, from, to);
         listViewClubs.setAdapter(simpleAdapter);

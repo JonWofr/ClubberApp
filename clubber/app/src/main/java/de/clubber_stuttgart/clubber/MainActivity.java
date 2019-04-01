@@ -97,16 +97,22 @@ public class MainActivity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList <Event> e = JsonController.getEventList();
-                Intent i = new Intent(getApplicationContext(), ClubActivity.class);
-                startActivity(i);
-                for (Event evn : e){
-                    System.out.println(evn.name);
-                }
+                Intent itn = new Intent(getApplicationContext(), EventActivity.class );
+                startActivity(itn);
             }
         });
         //TESTING
 
+        //TESTING
+        Button btn2 = findViewById(R.id.button2);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent itn = new Intent(getApplicationContext(), ClubActivity.class );
+                startActivity(itn);
+            }
+        });
+        //TESTING
 
     }
 
