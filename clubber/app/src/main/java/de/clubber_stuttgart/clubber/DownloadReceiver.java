@@ -32,7 +32,7 @@ public class DownloadReceiver extends BroadcastReceiver {
         //3rd check (just in case): is our file existing in the right directory
         if(downloadedJsonId != 0.0 && downloadedFileId == downloadedJsonId && file.exists()) {
             Log.i("BroadcastReceiver", "Json File download complete!");
-
+            //takes json file, reads it and converts it to a string
             createList(context);
 
         }else{

@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +44,7 @@ public class MainActivity extends Activity {
         //registers an IntentFilter dynamically for DownloadReceiver. When a Download is finished, the DownloadReceiver.class will listen to it
         IntentFilter downloadCompleteFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         registerReceiver(downloadReceiver, downloadCompleteFilter);
+
     }
 
     @Override
@@ -70,6 +72,8 @@ public class MainActivity extends Activity {
             //triggers the download service, which downloads a json file from our webserver. It runs in its own thread to prevent performance issues.
             Intent intent = new Intent(this,DownloadServiceJson.class);
             this.startService(intent);
+
+            //ToDo: Verbinde DataBaseHelper mit MainActivity, um Daten von json file in die DB einzuspeichern.
 
         }else{
             File file = new File(this.getExternalFilesDir( this.getFilesDir().getAbsolutePath()).getAbsolutePath(), jsonFileName + ".json");
