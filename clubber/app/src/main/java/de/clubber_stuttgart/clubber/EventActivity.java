@@ -2,18 +2,13 @@ package de.clubber_stuttgart.clubber;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class EventActivity extends Activity {
-
-    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +17,7 @@ public class EventActivity extends Activity {
         ListView listView = (ListView) findViewById(R.id.eventListView);
 
         //get the current eventList
-        List<HashMap<String, String>> eventList = JsonController.getEventList();
-
-
+        List<HashMap<String, String>> eventList= JsonController.getEventList();
 
         //These are the key names, which save the values, which are to be displayed
         String[] from = new String[]{"dte", "name", "club", "adrs", "srttime" };
@@ -33,42 +26,5 @@ public class EventActivity extends Activity {
 
         SimpleAdapter adapter = new SimpleAdapter(this,eventList, R.layout.activity_event, from, to);
         listView.setAdapter(adapter);
-
-
-    }*/
-
-    //Platzhalter um zu testen ob das Layout funktioniert = einfach mit SQL Staement erstetzen
-
-        private RecyclerView mRecyclerView;
-        private RecyclerView.Adapter mAdapter;
-        private RecyclerView.LayoutManager mLayoutManager;
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-
-            ArrayList<CardItemEvents> card_items = new ArrayList<>();
-            card_items.add(new CardItemEvents("Ladies Night", "#mixed","28.03","20:00","Schräglage"));
-            card_items.add(new CardItemEvents("Halloween Special", "#mixed","28.03","20:00","Perkins Park"));
-            card_items.add(new CardItemEvents("Tanz in den Mai", "#HipHop","28.03","20:00","7Grad"));
-            card_items.add(new CardItemEvents("Ladies Night", "#mixed","28.03","20:00","Schräglage"));
-            card_items.add(new CardItemEvents("Ladies Night", "#mixed","28.03","20:00","Schräglage"));
-            card_items.add(new CardItemEvents("Ladies Night", "#mixed","28.03","20:00","Schräglage"));
-            card_items.add(new CardItemEvents("Ladies Night", "#mixed","28.03","20:00","Schräglage"));
-            card_items.add(new CardItemEvents("Ladies Night", "#mixed","28.03","20:00","Schräglage"));
-            card_items.add(new CardItemEvents("Ladies Night", "#mixed","28.03","20:00","Schräglage"));
-            card_items.add(new CardItemEvents("Ladies Night", "#mixed","28.03","20:00","Schräglage"));
-
-
-
-            mRecyclerView = findViewById(R.id.recycler_view);
-            //wenn man weiß, dass sich die Größe des RecyclerView nicht verändern wird
-            mRecyclerView.setHasFixedSize(true);
-            mLayoutManager = new LinearLayoutManager(this);
-            mAdapter = new CardEventAdapter(card_items);
-
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mRecyclerView.setAdapter(mAdapter);
-        }
-
+    }
 }
