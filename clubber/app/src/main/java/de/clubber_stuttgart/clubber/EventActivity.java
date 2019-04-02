@@ -30,7 +30,7 @@ public class EventActivity extends Activity {
         listView.setAdapter(adapter);
     }*/
 
-    //ToDo: die Navigation funktioniert nicht:  Error inflating class android.support.design.widget.BottomNavigationView 
+    //ToDo: die Navigation funktioniert nicht:  Error inflating class android.support.design.widget.BottomNavigationView
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
