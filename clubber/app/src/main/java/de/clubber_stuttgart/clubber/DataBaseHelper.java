@@ -9,10 +9,10 @@ import android.util.Log;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     //Database name
-    private static final String DATABASE_NAME = "clubberDB";
+    protected static final String DATABASE_NAME = "clubberDB";
     //Database tablenames
-    private static final String TABLE_NAME_EVENTS = "events";
-    private static final String TABLE_NAME_CLUBS = "clubs";
+    protected static final String TABLE_NAME_EVENTS = "events";
+    protected static final String TABLE_NAME_CLUBS = "clubs";
 
     //Colum names from events table
     private static final String E_ID = "id";
@@ -23,12 +23,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String E_BTN = "btn";
     private static final String E_GENRE = "genre";
 
+    protected static final String[] ECOLUMNS = {E_ID,E_DTE,E_NAME,E_CLUB,E_SRT_TIME,E_BTN,E_GENRE};
+
     //Colum names from clubs table
     private static final String C_ID = "id";
     private static final String C_NAME = "name";
     private static final String C_ADRS = "adrs";
     private static final String C_TEL = "tel";
     private static final String C_WEB = "web";
+
 
     //SQL statement for creating events table
     private String CREATE_TABLE_EVENTS = "CREATE TABLE " + TABLE_NAME_EVENTS + "(" + E_ID + " INTEGER PRIMARYKEY NOT NULL ," +
@@ -59,6 +62,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //creates events and clubs tables
+
         db.execSQL(CREATE_TABLE_EVENTS);
         Log.d("DataBaseHelper", "Table " + TABLE_NAME_EVENTS + " got created with following SQL-statement: " + CREATE_TABLE_EVENTS);
 
@@ -72,6 +76,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //deletes the tables
+        //ToDo: hier löschen der Tabellen einfügen und bei den anderen beiden Methoden rausnehmen.
         db.execSQL(dropTableClubs);
         db.execSQL(dropTableEvents);
         onCreate(db);
@@ -79,6 +85,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     protected void insertEventEntry(Event event){
+        //inserts values for event table
         ContentValues values = new ContentValues();
         values.put(E_ID, event.id);
         values.put(E_DTE, event.dte);
@@ -87,9 +94,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(E_SRT_TIME, event.srttime);
         values.put(E_BTN, event.btn);
         values.put(E_GENRE, event.genre);
+
+        //ToDo: wie hängt onUpgrade damit zusammen?
+        //gets the DB and calls the onCreate method
+        SQLiteDatabase db = this.getWritableDatabase();
+        //runs insert command as SQL
+        db.insert(TABLE_NAME_EVENTS, null,values);
+        db.close();
+
     }
 
     protected void insertClubEntry (Club club){
+        //inserts values for clubs table
         ContentValues values = new ContentValues();
         values.put(C_ID, club.id);
         values.put(C_NAME, club.name);
@@ -97,8 +113,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(C_TEL, club.tel);
         values.put(C_WEB, club.web);
 
-        SQLiteDatabase db = this.getWritableDatabase();
 
+        //ToDo: wie hängt onUpgrade damit zusammen?
+        //gets the DB and calls the onCreate method
+        SQLiteDatabase db = this.getWritableDatabase();
+        //runs insert command as SQL
         db.insert(TABLE_NAME_CLUBS, null, values);
         db.close();
     }

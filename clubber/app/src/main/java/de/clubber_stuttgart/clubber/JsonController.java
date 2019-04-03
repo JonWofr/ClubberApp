@@ -41,13 +41,12 @@ public class JsonController extends Thread {
                 String dte = jsonEventObject.getString("dte");
                 String name = jsonEventObject.getString("name");
                 String club = jsonEventObject.getString("club");
-                String adrs = jsonEventObject.getString("adrs");
                 String srttime = jsonEventObject.getString("srttime");
                 String btn = jsonEventObject.getString("btn");
                 String genre = jsonEventObject.getString("genre");
 
                 //we create a new Event object, which will be stored inside an ArrayList of type Event
-                Event evn = new Event(id, dte, name, club, adrs, srttime, btn, genre);
+                Event evn = new Event(id, dte, name, club, srttime, btn, genre);
                 eventList.add(evn);
                 Log.i("", "Event " + evn.name + " has been added to the list.");
             }

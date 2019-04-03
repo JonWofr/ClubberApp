@@ -56,12 +56,19 @@ public class DownloadReceiver extends BroadcastReceiver {
             //conversion from StringBuilder to String
             String result = sb.toString();
             JsonController.createList(result);
+            ArrayList<Event> eventList = JsonController.getEventList();
             ArrayList<Club> clubList = JsonController.getClubList();
+
             DataBaseHelper dbHelper = new DataBaseHelper(context);
 
-            for (Club clb : clubList){
-                dbHelper.insertClubEntry(clb);
+            for (Event event : eventList){
+                dbHelper.insertEventEntry(event);
             }
+
+            for (Club club : clubList){
+                dbHelper.insertClubEntry(club);
+            }
+
 
             //ToDo: besseren Ort finden um die Backup-Datei zu löschen, am besten nachdem validität der json geprüft wurde.
             //deleting backup File, we don't need it anymore because we downloaded a fresh one

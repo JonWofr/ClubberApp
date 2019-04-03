@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.ExampleViewHolder>{
 
-    private ArrayList<CardItemEvent> mCarditems;
+    private ArrayList<Event> mCarditems;
 
     @NonNull
     @Override
@@ -23,14 +23,14 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
 
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder exampleViewHolder, int i) {
-        CardItemEvent currentItem= mCarditems.get(i);
+        Event currentItem= mCarditems.get(i);
 
         // exampleViewHolder.imageView.setImageResource(currentItem.getImageResource());
-        exampleViewHolder.textView1.setText(currentItem.getEventTitle());
-        exampleViewHolder.textView2.setText(currentItem.getMusicDirection());
-        exampleViewHolder.textView3.setText(currentItem.getDate());
-        exampleViewHolder.textView4.setText(currentItem.getStartTime());
-        exampleViewHolder.textView5.setText(currentItem.getClub());
+        exampleViewHolder.textView1.setText(currentItem.name);
+        exampleViewHolder.textView2.setText(currentItem.genre);
+        exampleViewHolder.textView3.setText(currentItem.dte);
+        exampleViewHolder.textView4.setText(currentItem.srttime);
+        exampleViewHolder.textView5.setText(currentItem.club);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
         return mCarditems.size();
     }
 
-    public CardEventAdapter(ArrayList<CardItemEvent> cardList){
+    public CardEventAdapter(ArrayList<Event> cardList){
         mCarditems=cardList;
     }
 
