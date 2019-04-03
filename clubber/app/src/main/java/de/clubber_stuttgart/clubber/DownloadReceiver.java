@@ -6,12 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class DownloadReceiver extends BroadcastReceiver {
 
@@ -33,14 +31,14 @@ public class DownloadReceiver extends BroadcastReceiver {
         if(downloadedJsonId != 0.0 && downloadedFileId == downloadedJsonId && file.exists()) {
             Log.i("BroadcastReceiver", "Json File download complete!");
             //takes json file, reads it and converts it to a string
-            createList(context);
+            createJsonString(context);
 
         }else{
-            //We ignor the broadcast...
+            //We ignore the broadcast...
         }
     }
 
-    void createList(Context context){
+    void createJsonString(Context context){
         String filename = context.getExternalFilesDir(context.getFilesDir().getAbsolutePath()).getAbsolutePath() + "/data.json";
         try {
             //BufferedReader is said to be more performance friendly than reading the whole file at once
@@ -57,10 +55,13 @@ public class DownloadReceiver extends BroadcastReceiver {
             }
             //conversion from StringBuilder to String
             String result = sb.toString();
-            JsonController con = new JsonController();
-            //ToDo: static machen
-            con.createList(result);
+            JsonController.createList(result);
+            ArrayList<Club> clubList = JsonController.getClubList();
+            DataBaseHelper dbHelper = new DataBaseHelper(context);
 
+            for (Club clb : clubList){
+                dbHelper.insertClubEntry(clb);
+            }
 
             //ToDo: besseren Ort finden um die Backup-Datei zu löschen, am besten nachdem validität der json geprüft wurde.
             //deleting backup File, we don't need it anymore because we downloaded a fresh one

@@ -14,17 +14,15 @@ import java.util.ArrayList;
 
 public class JsonController extends Thread {
 
-    private String jsonString;
     //lists to be used in "Veranstaltungen" und "Clubs" section of the app
     private static ArrayList<Event> eventList = new ArrayList<Event>();
     private static ArrayList<Club> clubList = new ArrayList<Club>();
     private Context context;
 
-    //runs in own thread
-    @Override
-    public void run() {
+    //called when the download inside DownloadReceiver is finished and the buffer reads its contents
+    public static void createList(String jsonString) {
         try {
-            //JSONObject will be created with String given due to createList() method
+            //JSONObject will be created with String given due to createJsonString() method
             JSONObject jsonObject = new JSONObject(jsonString);
             Log.i("JsonController", "The JSONObject has been succesfully created.");
 
@@ -77,16 +75,8 @@ public class JsonController extends Thread {
         catch (JSONException jsonE) {
             Log.w("JsonController", "The json file does not contain valid json, errortext: " + jsonE);
         }
-
     }
 
-
-    //ToDo: static
-    //called when the download inside DownloadReceiver is finished and the buffer read its contents
-    public void createList(String jsonString) {
-        this.jsonString = jsonString;
-        this.run();
-    }
 
     //Getter for the current eventList
     public static ArrayList getEventList() {

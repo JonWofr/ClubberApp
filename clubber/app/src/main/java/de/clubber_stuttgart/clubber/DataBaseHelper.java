@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -30,7 +31,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String C_WEB = "web";
 
     //SQL statement for creating events table
-    private String CREATE_TABLE_EVENTS = "CREATE TABLE " + TABLE_NAME_EVENTS + "(" + E_ID + "INTEGER PRIMARYKEY NOT NULL ," +
+    private String CREATE_TABLE_EVENTS = "CREATE TABLE " + TABLE_NAME_EVENTS + "(" + E_ID + " INTEGER PRIMARYKEY NOT NULL ," +
             E_DTE + " TEXT ," +
             E_NAME + " TEXT NOT NULL ," +
             E_CLUB + " TEXT NOT NULL ," +
@@ -39,11 +40,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             E_GENRE + " TEXT)";
 
     //SQL statement for creating clubs table
-    private String CREATE_TABLE_CLUBS = "CREATE TABLE " + TABLE_NAME_CLUBS + "(" + C_ID + "INTEGER PRIMARYKEY NOT NULL ," +
-            C_NAME + " TEXT ," +
-            C_ADRS + " TEXT NOT NULL ," +
-            C_TEL + " TEXT ," +
+    private String CREATE_TABLE_CLUBS = "CREATE TABLE " + TABLE_NAME_CLUBS + "(" + C_ID + " INTEGER PRIMARY KEY , " +
+            C_NAME + " TEXT , " +
+            C_ADRS + " TEXT NOT NULL , " +
+            C_TEL + " TEXT , " +
             C_WEB + " TEXT NOT NULL)";
+
+    private String dropTableClubs = "DROP TABLE " + TABLE_NAME_CLUBS;
+    private String dropTableEvents = "DROP TABLE " + TABLE_NAME_EVENTS;
+
 
 
     DataBaseHelper (Context context){
@@ -55,7 +60,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         //creates events and clubs tables
         db.execSQL(CREATE_TABLE_EVENTS);
+        Log.d("DataBaseHelper", "Table " + TABLE_NAME_EVENTS + " got created with following SQL-statement: " + CREATE_TABLE_EVENTS);
+
         db.execSQL(CREATE_TABLE_CLUBS);
+        Log.d("DataBaseHelper", "Table " + TABLE_NAME_CLUBS + " got created with following SQL-statement: " + CREATE_TABLE_CLUBS);
+
 
     }
 
@@ -63,7 +72,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL(dropTableClubs);
+        db.execSQL(dropTableEvents);
+        onCreate(db);
     }
 
 
@@ -76,7 +87,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(E_SRT_TIME, event.srttime);
         values.put(E_BTN, event.btn);
         values.put(E_GENRE, event.genre);
-
     }
 
     protected void insertClubEntry (Club club){
@@ -88,7 +98,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(C_WEB, club.web);
 
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(TABLE_NAME_EVENTS, null, values);
+
+        db.insert(TABLE_NAME_CLUBS, null, values);
         db.close();
     }
 
