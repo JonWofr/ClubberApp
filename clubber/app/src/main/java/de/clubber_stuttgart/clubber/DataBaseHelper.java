@@ -2,6 +2,7 @@ package de.clubber_stuttgart.clubber;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -49,8 +50,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             C_TEL + " TEXT , " +
             C_WEB + " TEXT NOT NULL)";
 
-    private String dropTableClubs = "DROP TABLE " + TABLE_NAME_CLUBS;
-    private String dropTableEvents = "DROP TABLE " + TABLE_NAME_EVENTS;
+    private String dropTableClubs = "DROP IF TABLE EXISTS " + TABLE_NAME_CLUBS;
+    private String dropTableEvents = "DROP IF TABLE EXISTS " + TABLE_NAME_EVENTS;
 
 
 
@@ -80,6 +81,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //ToDo: hier löschen der Tabellen einfügen und bei den anderen beiden Methoden rausnehmen.
         db.execSQL(dropTableClubs);
         db.execSQL(dropTableEvents);
+        Log.d(this.getClass().toString(), "Table " + TABLE_NAME_CLUBS + " and table " + TABLE_NAME_EVENTS + " have been deleted.");
         onCreate(db);
     }
 
@@ -99,9 +101,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //gets the DB and calls the onCreate method
         SQLiteDatabase db = this.getWritableDatabase();
         //runs insert command as SQL
-        db.insert(TABLE_NAME_EVENTS, null,values);
+        long resultCode = db.insert(TABLE_NAME_EVENTS, null, values);
         db.close();
 
+        if (resultCode == -1){
+            Log.w(this.getClass().toString(), "The row of event data has not been inserted into the database");
+        }
+        else {
+            Log.d(this.getClass().toString(), "The row of event data has successfully been inserted into the database");
+        }
     }
 
     protected void insertClubEntry (Club club){
@@ -118,8 +126,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //gets the DB and calls the onCreate method
         SQLiteDatabase db = this.getWritableDatabase();
         //runs insert command as SQL
-        db.insert(TABLE_NAME_CLUBS, null, values);
+        long resultCode = db.insert(TABLE_NAME_CLUBS, null, values);
         db.close();
+
+        if (resultCode == -1){
+            Log.w(this.getClass().toString(), "The row of club data has not been inserted into the database");
+        }
+        else {
+            Log.d(this.getClass().toString(), "The row of club data has successfully been inserted into the database");
+        }
+    }
+
+    public void alterTable (String command){
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.execSQL(command);
+        }
+        catch (SQLException e){
+            Log.w(this.getClass().toString(), "The SQLite alter-statement is not valid");
+        }
     }
 
 }

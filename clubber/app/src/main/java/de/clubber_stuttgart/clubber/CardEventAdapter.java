@@ -1,10 +1,15 @@
 package de.clubber_stuttgart.clubber;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -12,6 +17,7 @@ import java.util.ArrayList;
 public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.ExampleViewHolder>{
 
     private ArrayList<Event> mCarditems;
+    private Context context;
 
     @NonNull
     @Override
@@ -23,14 +29,26 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
 
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder exampleViewHolder, int i) {
-        Event currentItem= mCarditems.get(i);
+        final Event currentItem= mCarditems.get(i);
 
         // exampleViewHolder.imageView.setImageResource(currentItem.getImageResource());
+        //Sets values for corresponding nodes of the current Event object
         exampleViewHolder.textView1.setText(currentItem.name);
         exampleViewHolder.textView2.setText(currentItem.genre);
         exampleViewHolder.textView3.setText(currentItem.dte);
         exampleViewHolder.textView4.setText(currentItem.srttime);
         exampleViewHolder.textView5.setText(currentItem.club);
+        //OnClickListener for each Button is added to reference URL saved in Event object
+        //the context, which is needed to know from which activity the Intent should be started, gets passed when the constructor is called
+        exampleViewHolder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(currentItem.btn);
+                Intent toExternalSite =  new Intent(Intent.ACTION_VIEW, uri);
+                context.startActivity(toExternalSite);
+                Log.i(this.getClass().toString(), "External site " + uri + " has been clicked on");
+            }
+        });
     }
 
     @Override
@@ -39,8 +57,9 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
         return mCarditems.size();
     }
 
-    public CardEventAdapter(ArrayList<Event> cardList){
+    public CardEventAdapter(ArrayList<Event> cardList, Context context){
         mCarditems=cardList;
+        this.context = context;
     }
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder{
@@ -49,6 +68,7 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
         public TextView textView3;
         public TextView textView4;
         public TextView textView5;
+        public Button button;
 
 
         public ExampleViewHolder(@NonNull View itemView) {
@@ -58,6 +78,7 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
             textView3=itemView.findViewById(R.id.date);
             textView4=itemView.findViewById(R.id.startTime);
             textView5=itemView.findViewById(R.id.club);
+            button = itemView.findViewById(R.id.linkToEvent);
         }
     }
 
