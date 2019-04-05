@@ -45,6 +45,7 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
             public void onClick(View v) {
                 Uri uri = Uri.parse(currentItem.btn);
                 Intent toExternalSite =  new Intent(Intent.ACTION_VIEW, uri);
+                System.out.println(uri + "" + toExternalSite);
                 context.startActivity(toExternalSite);
                 Log.i(this.getClass().toString(), "External site " + uri + " has been clicked on");
             }
