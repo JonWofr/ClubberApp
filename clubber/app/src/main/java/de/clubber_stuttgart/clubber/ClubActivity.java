@@ -35,7 +35,7 @@ public class ClubActivity extends Activity {
             fillMaps.add(map);
         }
 
-        SimpleAdapter simpleAdapter = new SimpleAdapter(this, fillMaps, R.layout.adapter_view_layout_club, from, to);
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this, fillMaps, R.layout.card_item_club, from, to);
         listViewClubs.setAdapter(simpleAdapter);
     }
 
