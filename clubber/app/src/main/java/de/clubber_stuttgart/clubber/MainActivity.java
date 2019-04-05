@@ -99,20 +99,20 @@ public class MainActivity extends Activity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent itn = new Intent(getApplicationContext(), ClubActivity.class );
-                startActivity(itn);
+                Intent intent = new Intent(getApplicationContext(),ClubActivity.class);
+                startActivity(intent);
             }
         });
         //TESTING
 
         //TESTING
-        Button btn3 = findViewById(R.id.button3);
+        /*Button btn3 = findViewById(R.id.button3);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new HTTPHelper().initiateServerCommunication("581", "2");
             }
-        });
+        });*/
 
     }
 

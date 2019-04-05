@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".ClubActivity"
     android:background="@color/background">
 
     <FrameLayout
@@ -18,12 +18,12 @@
             android:layout_height="match_parent"
             android:padding="4dp"
             android:layout_margin="5dp"
-            android:scrollbars="vertical"
-            >
-
+            android:scrollbars="vertical">
         </android.support.v7.widget.RecyclerView>
 
     </FrameLayout>
+
+    <!-- ToDo: Navigationsmenu funktioniert nicht, Dienstag nachfragen wenn bis dahin nicht gefixt-->
 
     <!--<android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

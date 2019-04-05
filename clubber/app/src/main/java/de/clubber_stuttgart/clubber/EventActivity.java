@@ -18,9 +18,9 @@ public class EventActivity extends Activity {
 
     //ToDo: die Navigation funktioniert nicht:  Error inflating class android.support.design.widget.BottomNavigationView
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView eRecyclerView;
+    private RecyclerView.Adapter eAdapter;
+    private RecyclerView.LayoutManager eLayoutManager;
 
     private DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
 
@@ -30,7 +30,8 @@ public class EventActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        ArrayList<Event> card_items = new ArrayList<>();
+        //creates an Array List of event items
+        ArrayList<Event> eventList = new ArrayList<>();
         SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
 
         Log.d(this.getClass().toString(), db.getPath());
@@ -42,18 +43,18 @@ public class EventActivity extends Activity {
         Cursor cursor = db.query(true, DataBaseHelper.TABLE_NAME_EVENTS, null, null, null, null, null, null, null);
 
         while (cursor.moveToNext()) {
-            card_items.add(new Event(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),cursor.getString(5),cursor.getString(6)));
+            eventList.add(new Event(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),cursor.getString(5),cursor.getString(6)));
         }
 
 
 
-        mRecyclerView = findViewById(R.id.recycler_view);
+        eRecyclerView = findViewById(R.id.recycler_view);
         //wenn man weiß, dass sich die Größe des RecyclerView nicht verändern wird
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new CardEventAdapter(card_items, getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        eRecyclerView.setHasFixedSize(true);
+        eLayoutManager = new LinearLayoutManager(this);
+        eAdapter = new CardEventAdapter(eventList, getApplicationContext());
+        eRecyclerView.setLayoutManager(eLayoutManager);
+        eRecyclerView.setAdapter(eAdapter);
     }
 
 
