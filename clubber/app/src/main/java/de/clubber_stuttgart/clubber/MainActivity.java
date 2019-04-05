@@ -105,6 +105,15 @@ public class MainActivity extends Activity {
         });
         //TESTING
 
+        //TESTING
+        Button btn3 = findViewById(R.id.button3);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new HTTPHelper().initiateServerCommunication("581", "2");
+            }
+        });
+
     }
 
     private boolean isNetworkAvailable() {
