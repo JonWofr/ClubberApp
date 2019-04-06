@@ -57,24 +57,24 @@ public class MainActivity extends Activity {
         } else {
             //ToDo: einfache Abfrage der lokalen DB und Fehlermeldung, falls noch keine Einträge vorhanden sind.
         }
-
-
-        //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
-
-
-        //ToDo: Eigentlich benötigen wir diese Permission momentan nicht, falls wir sie aus dem Programm nehmen sollten, unbedingt auch an die Manifest denken!
-        //getPermissionToReadExternalStorage();
-
-
-        //ToDo: Projektstruktur überdenken, wollen wir Methoden wie diese in der MainActivity stehen haben?
-        private boolean isNetworkAvailable () {
-            ConnectivityManager connectivityManager
-                    = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-        }
-    
     }
+
+
+    //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
+
+
+    //ToDo: Eigentlich benötigen wir diese Permission momentan nicht, falls wir sie aus dem Programm nehmen sollten, unbedingt auch an die Manifest denken!
+    //getPermissionToReadExternalStorage();
+
+
+    //ToDo: Projektstruktur überdenken, wollen wir Methoden wie diese in der MainActivity stehen haben?
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 }
 
 
