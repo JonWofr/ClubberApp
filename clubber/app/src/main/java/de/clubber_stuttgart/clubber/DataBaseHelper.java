@@ -2,6 +2,7 @@ package de.clubber_stuttgart.clubber;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -35,7 +36,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     //SQL statement for creating events table
-    private String CREATE_TABLE_EVENTS = "CREATE TABLE " + TABLE_NAME_EVENTS + "(" + E_ID + " INTEGER PRIMARYKEY NOT NULL ," +
+    private final String CREATE_TABLE_EVENTS = "CREATE TABLE " + TABLE_NAME_EVENTS + "(" + E_ID + " INTEGER PRIMARYKEY NOT NULL ," +
             E_DTE + " TEXT ," +
             E_NAME + " TEXT NOT NULL ," +
             E_CLUB + " TEXT NOT NULL ," +
@@ -44,14 +45,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             E_GENRE + " TEXT)";
 
     //SQL statement for creating clubs table
-    private String CREATE_TABLE_CLUBS = "CREATE TABLE " + TABLE_NAME_CLUBS + "(" + C_ID + " INTEGER PRIMARY KEY , " +
+    private final String CREATE_TABLE_CLUBS = "CREATE TABLE " + TABLE_NAME_CLUBS + "(" + C_ID + " INTEGER PRIMARY KEY  NOT NULL , " +
             C_NAME + " TEXT , " +
             C_ADRS + " TEXT NOT NULL , " +
             C_TEL + " TEXT , " +
             C_WEB + " TEXT NOT NULL)";
 
-    private String dropTableClubs = "DROP IF TABLE EXISTS " + TABLE_NAME_CLUBS;
-    private String dropTableEvents = "DROP IF TABLE EXISTS " + TABLE_NAME_EVENTS;
+    private final String DROP_TABLE_CLUBS = "DROP IF TABLE EXISTS " + TABLE_NAME_CLUBS;
+    private final String DROP_TABLE_EVENTS = "DROP IF TABLE EXISTS " + TABLE_NAME_EVENTS;
 
 
 
@@ -79,8 +80,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //deletes the tables
         //ToDo: hier löschen der Tabellen einfügen und bei den anderen beiden Methoden rausnehmen.
-        db.execSQL(dropTableClubs);
-        db.execSQL(dropTableEvents);
+        db.execSQL(DROP_TABLE_CLUBS);
+        db.execSQL(DROP_TABLE_EVENTS);
         Log.d(this.getClass().toString(), "Table " + TABLE_NAME_CLUBS + " and table " + TABLE_NAME_EVENTS + " have been deleted.");
         onCreate(db);
     }
@@ -145,6 +146,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         catch (SQLException e){
             Log.w(this.getClass().toString(), "The SQLite alter-statement is not valid");
         }
+    }
+
+    public String[] selectHighestIds (){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(true, TABLE_NAME_EVENTS, new String[]{"MAX(" + E_ID + ")"}, null, null, null, null, null, null);
+        String eId = cursor.getString(0);
+        cursor = db.query(true, TABLE_NAME_CLUBS, new String[]{"MAX(" + C_ID + ")"}, null, null, null, null, null, null);
+        String cId = cursor.getString(0);
+        return new String[]{eId, cId};
     }
 
 }

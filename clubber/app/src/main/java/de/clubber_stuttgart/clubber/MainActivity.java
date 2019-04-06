@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
     //ToDo: Pfade mit Variablen vereinfachen
@@ -21,25 +24,16 @@ public class MainActivity extends Activity {
     //path where json file is saved to
     //String pathJson = this.getExternalFilesDir( this.getFilesDir().getAbsolutePath()).getAbsolutePath() + "data.json";
 
-    BroadcastReceiver downloadReceiver = new DownloadReceiver();
     private static final int REQUEST_WRITE_ACCESS_CODE = 0;
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        //ToDo: Woanders registrieren?
-        //registers an IntentFilter dynamically for DownloadReceiver. When a Download is finished, the DownloadReceiver.class will listen to it
-        IntentFilter downloadCompleteFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        registerReceiver(downloadReceiver, downloadCompleteFilter);
-
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
-        //ToDo: Kann eigentlich schon früher deregistriert werden.
-        //unregisters the receiver
-        unregisterReceiver(downloadReceiver);
     }
 
 
@@ -51,27 +45,19 @@ public class MainActivity extends Activity {
         String jsonFileName = "data", newJsonFileName = "backup_data";
 
 
-        if(isNetworkAvailable()){
-            //creates backup, if anything goes wrong in the DownloadService, we still got the backup file
-            JsonController.renameJson(jsonFileName, newJsonFileName, this.getExternalFilesDir( this.getFilesDir().getAbsolutePath()).getAbsolutePath());
-            //deletes any old data.json files if there are any at all
-            JsonController.deleteOldJsonFiles(this.getExternalFilesDir( this.getFilesDir().getAbsolutePath()).getAbsolutePath(), jsonFileName);
-            //triggers the download service, which downloads a json file from our webserver. It runs in its own thread to prevent performance issues.
-            Intent intent = new Intent(this,DownloadServiceJson.class);
-            this.startService(intent);
+        if (isNetworkAvailable()) {
 
-            //ToDo: Verbinde DataBaseHelper mit MainActivity, um Daten von json file in die DB einzuspeichern.
+            DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
+            String[] highestIds = dataBaseHelper.selectHighestIds();
 
-        }else{
-            File file = new File(this.getExternalFilesDir( this.getFilesDir().getAbsolutePath()).getAbsolutePath(), jsonFileName + ".json");
-            if(file.exists()){
-                //ToDo: alte data.json verwenden (Schritt Datei runterzuladen überspringen)
-            }else{
-                //ToDo: Alternative implementieren. Was machen wir wenn es keine Internetverbindung + keine alte data.json gibt?
-            }
+            //init call to start async task which updates the database if needed.
+            new HTTPHelper().initiateServerCommunication(highestIds[0],highestIds[1],this);
 
+
+
+        } else {
+            //ToDo: einfache Abfrage der lokalen DB und Fehlermeldung, falls noch keine Einträge vorhanden sind.
         }
-
 
 
         //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
@@ -81,14 +67,12 @@ public class MainActivity extends Activity {
         //getPermissionToReadExternalStorage();
 
 
-
-
         //TESTING
         Button btn = findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent itn = new Intent(getApplicationContext(), EventActivity.class );
+                Intent itn = new Intent(getApplicationContext(), EventActivity.class);
                 startActivity(itn);
             }
         });
@@ -99,23 +83,18 @@ public class MainActivity extends Activity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent itn = new Intent(getApplicationContext(), ClubActivity.class );
+                Intent itn = new Intent(getApplicationContext(), ClubActivity.class);
                 startActivity(itn);
             }
         });
         //TESTING
 
-        //TESTING
-        Button btn3 = findViewById(R.id.button3);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new HTTPHelper().initiateServerCommunication("581", "2");
-            }
-        });
 
     }
 
+
+
+    //ToDo: Projektstruktur überdenken, wollen wir Methoden wie diese in der MainActivity stehen haben?
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -123,10 +102,10 @@ public class MainActivity extends Activity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+}
 
 
-    //ToDo: Projektstruktur überdenken, wollen wir Methoden wie diese in der MainActivity stehen haben?
-    //ToDo: Backup File checken.
+
 
 
 
@@ -189,4 +168,3 @@ public class MainActivity extends Activity {
     */
 
 
-}
