@@ -20,14 +20,10 @@ public class HTTPHelper extends AsyncTask {
     private String idClub;
     private  Context context;
 
+    //is called after execute() call and calls method requestResponseServer(). This method runs in its own thread
     @Override
     protected Object doInBackground(Object[] objects) {
         return requestResponseServer(idEvent, idClub);
-    }
-
-    @Override
-    protected void onProgressUpdate(Object[] values) {
-        super.onProgressUpdate(values);
     }
 
     //method to be called on a HTTPHelper object to initiate the AsyncTask methods
@@ -38,6 +34,7 @@ public class HTTPHelper extends AsyncTask {
         this.execute();
     }
 
+    //is called after doInBackground() finished its tasks and the return value of doInBackground() is passed to this method
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
@@ -46,49 +43,55 @@ public class HTTPHelper extends AsyncTask {
         }else{
             //ToDo: Struktur der Objekte überlegen. Brauchen wir diese noch oder können wir direkt von jsonObject einspeichern?
 
-            Log.i("HHTPhelper","WIR SPEICHERN DINGE EIN...");
+            Log.i(this.getClass().toString(),"New data is about to be added to the local db");
             JsonController.createList(o.toString());
             ArrayList<Event> eventList = JsonController.getEventList();
             ArrayList<Club> clubList = JsonController.getClubList();
 
+            //context is needed to create this object, got passed inside this class via initiateServerCommunication()
             DataBaseHelper dbHelper = new DataBaseHelper(context);
 
+            //inserts every event object into the db
             for (Event event : eventList){
                 dbHelper.insertEventEntry(event);
             }
-
+            //inserts every club object into the db
             for (Club club : clubList){
                 dbHelper.insertClubEntry(club);
             }
         }
     }
 
+    //this method is necessary to establish the connection to the server, send data to the server and retrieve responses, which are dependant
+    //on the sent requests
     private String requestResponseServer(String idEvent, String idClub){
-        URL url;
-        //TODO Send data and get response inside here
+        //URL which leads to the php script on the server. Data for the request is sent via GET
         String urlString = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=" + idEvent + "&idClub=" + idClub;
         //TODO hier das erst Argument für die Loggin methoden im kopf der klasse deklariern und konsistent machenn
         Log.i(this.getClass().toString(), urlString);
+        //this stringbuilder will be appended gradually and consists of the response of the server
         StringBuilder jsonString = new StringBuilder();
         try {
-            url = new URL(urlString);
+            URL url = new URL(urlString);
+            //connect to the server
             HttpURLConnection jsonResponse = (HttpURLConnection) url.openConnection();
             //TODO weitermachen bruh?!
             System.out.println(jsonResponse);
 
+            //create inputstream which delivers server's response data
             InputStream in = new BufferedInputStream(jsonResponse.getInputStream());
             BufferedReader buf = new BufferedReader(new InputStreamReader(in));
 
+            //jumps to next line
             String line = buf.readLine();
-            //reads every line of the json file on at a time
+            //reads every line of the data one at a time
             while (line != null) {
                 //StringBuilder is concattinated correspondingly
                 jsonString.append(line);
                 //jumps to next line
                 line = buf.readLine();
             }
-            System.out.println(jsonString.toString());
-
+            Log.i(this.getClass().toString(), "Data of the server: " + jsonString);
         }catch (MalformedURLException e) {
             Log.w(this.getClass().toString(), "URL is invalid");
         }

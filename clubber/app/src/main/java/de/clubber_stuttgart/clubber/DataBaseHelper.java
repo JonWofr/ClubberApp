@@ -25,8 +25,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String E_BTN = "btn";
     private static final String E_GENRE = "genre";
 
-    protected static final String[] ECOLUMNS = {E_ID,E_DTE,E_NAME,E_CLUB,E_SRT_TIME,E_BTN,E_GENRE};
-
     //Colum names from clubs table
     private static final String C_ID = "id";
     private static final String C_NAME = "name";
@@ -51,6 +49,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             C_TEL + " TEXT , " +
             C_WEB + " TEXT NOT NULL)";
 
+    //SQL statement to drop the specified tables
     private final String DROP_TABLE_CLUBS = "DROP IF TABLE EXISTS " + TABLE_NAME_CLUBS;
     private final String DROP_TABLE_EVENTS = "DROP IF TABLE EXISTS " + TABLE_NAME_EVENTS;
 
@@ -75,10 +74,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-
+    //deletes the tables and creates them all over again
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //deletes the tables
         //ToDo: hier löschen der Tabellen einfügen und bei den anderen beiden Methoden rausnehmen.
         db.execSQL(DROP_TABLE_CLUBS);
         db.execSQL(DROP_TABLE_EVENTS);
@@ -138,6 +136,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    //method to execute a SQL statement, which contains 'alter'
     public void alterTable (String command){
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -148,16 +147,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    //method to fetch the highest id saved in the local db of table events and club. Is called inside MainActivity
     public String[] selectHighestIds (){
         SQLiteDatabase db = this.getWritableDatabase();
+        //get highest id of table events
         Cursor cursor = db.query(true, TABLE_NAME_EVENTS, new String[]{"MAX(" + E_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
         String eId = cursor.getString(0);
+        //get highest id of table events
         Log.d(this.getClass().toString(), "The highest id of " + TABLE_NAME_EVENTS + " is " + eId);
         cursor = db.query(true, TABLE_NAME_CLUBS, new String[]{"MAX(" + C_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
         String cId = cursor.getString(0);
         Log.d(this.getClass().toString(), "The highest id of " + TABLE_NAME_CLUBS + " is " + cId);
+        db.close();
+        //save highest ids of both tables inside String array and return it
         return new String[]{eId, cId};
     }
 
