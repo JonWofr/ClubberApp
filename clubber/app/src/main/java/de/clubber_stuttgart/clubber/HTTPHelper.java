@@ -4,6 +4,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,20 +48,29 @@ public class HTTPHelper extends AsyncTask {
             //ToDo: Struktur der Objekte überlegen. Brauchen wir diese noch oder können wir direkt von jsonObject einspeichern?
 
             Log.i(this.getClass().toString(),"New data is about to be added to the local db");
-            JsonController.createList(o.toString());
-            ArrayList<Event> eventList = JsonController.getEventList();
-            ArrayList<Club> clubList = JsonController.getClubList();
 
-            //context is needed to create this object, got passed inside this class via initiateServerCommunication()
-            DataBaseHelper dbHelper = new DataBaseHelper(context);
+            try {
+                JSONObject jsonObject = new JSONObject(o.toString());
+                Log.i("JsonController", "The JSONObject has been succesfully created.");
 
-            //inserts every event object into the db
-            for (Event event : eventList){
-                dbHelper.insertEventEntry(event);
-            }
-            //inserts every club object into the db
-            for (Club club : clubList){
-                dbHelper.insertClubEntry(club);
+                //Jsons's file content are two arrays "events" and "clubs"
+                JSONArray jsonEventArray = jsonObject.getJSONArray("events");
+                JSONArray jsonClubArray = jsonObject.getJSONArray("clubs");
+
+                //context is needed to create this object, got passed inside this class via initiateServerCommunication()
+                DataBaseHelper dbHelper = new DataBaseHelper(context);
+
+                //inserts every json event object into the db
+                for (int i = 0; i < jsonEventArray.length(); i++){
+                    dbHelper.insertEventEntry(jsonEventArray.getJSONObject(i));
+                }
+                //inserts every json club object into the db
+                for (int i = 0; i < jsonClubArray.length(); i++){
+                    dbHelper.insertClubEntry(jsonClubArray.getJSONObject(i));
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }

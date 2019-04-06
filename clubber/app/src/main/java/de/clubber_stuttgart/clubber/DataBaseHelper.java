@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     //Database name
@@ -34,7 +37,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     //SQL statement for creating events table
-    private final String CREATE_TABLE_EVENTS = "CREATE TABLE " + TABLE_NAME_EVENTS + "(" + E_ID + " INTEGER PRIMARYKEY NOT NULL ," +
+    private final String CREATE_TABLE_EVENTS = "CREATE TABLE " + TABLE_NAME_EVENTS + "(" + E_ID + " INTEGER PRIMARY KEY NOT NULL ," +
             E_DTE + " TEXT ," +
             E_NAME + " TEXT NOT NULL ," +
             E_CLUB + " TEXT NOT NULL ," +
@@ -85,16 +88,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    protected void insertEventEntry(Event event){
+    protected void insertEventEntry(JSONObject event){
         //inserts values for event table
         ContentValues values = new ContentValues();
-        values.put(E_ID, event.id);
-        values.put(E_DTE, event.dte);
-        values.put(E_NAME, event.name);
-        values.put(E_CLUB, event.club);
-        values.put(E_SRT_TIME, event.srttime);
-        values.put(E_BTN, event.btn);
-        values.put(E_GENRE, event.genre);
+        try {
+            values.put(E_ID, event.getInt(E_ID));
+            values.put(E_DTE, event.getString(E_DTE));
+            values.put(E_NAME, event.getString(E_NAME));
+            values.put(E_CLUB, event.getString(E_CLUB));
+            values.put(E_SRT_TIME, event.getString(E_SRT_TIME));
+            values.put(E_BTN, event.getString(E_BTN));
+            values.put(E_GENRE, event.getString(E_GENRE));
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+
 
         //ToDo: wie hängt onUpgrade damit zusammen?
         //gets the DB and calls the onCreate method
@@ -111,15 +120,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    protected void insertClubEntry (Club club){
+    protected void insertClubEntry (JSONObject club){
         //inserts values for clubs table
         ContentValues values = new ContentValues();
-        values.put(C_ID, club.id);
-        values.put(C_NAME, club.name);
-        values.put(C_ADRS, club.adrs);
-        values.put(C_TEL, club.tel);
-        values.put(C_WEB, club.web);
-
+        try {
+        values.put(C_ID, club.getInt(C_ID));
+        values.put(C_NAME, club.getString(C_NAME));
+        values.put(C_ADRS, club.getString(C_ADRS));
+        values.put(C_TEL, club.getString(C_TEL));
+        values.put(C_WEB, club.getString(C_WEB));
+        }
+        catch(JSONException e){
+            e.printStackTrace();
+        }
 
         //ToDo: wie hängt onUpgrade damit zusammen?
         //gets the DB and calls the onCreate method
@@ -150,12 +163,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //method to fetch the highest id saved in the local db of table events and club. Is called inside MainActivity
     public String[] selectHighestIds (){
         SQLiteDatabase db = this.getWritableDatabase();
-        //get highest id of table events
+        //get highest id of table events. If the table does not exist at this moment String eId will be null
         Cursor cursor = db.query(true, TABLE_NAME_EVENTS, new String[]{"MAX(" + E_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
         String eId = cursor.getString(0);
 
-        //get highest id of table events
+        //TODO Sofern die Tabellen noch nicht bestehen zu dieesm Zeitpunkt werden die Strings null und null wird an die URL, welche zu dem Server
+        //TODO geschickt wird, angehängt. Das Programm stürzt nicht ab und der Server antwortet sogar darauf, jedoch kann dies zu unerwünschtem
+        //TODO Verhalten führen.
+        
+        //get highest id of table events. If the table does not exist at this moment String eId will be null
         Log.d(this.getClass().toString(), "The highest id of " + TABLE_NAME_EVENTS + " is " + eId);
         cursor = db.query(true, TABLE_NAME_CLUBS, new String[]{"MAX(" + C_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
