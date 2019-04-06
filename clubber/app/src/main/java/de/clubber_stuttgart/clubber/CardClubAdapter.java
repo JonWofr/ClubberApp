@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class CardClubAdapter extends RecyclerView.Adapter<CardClubAdapter.ExampleViewHolder> {
 
+    //ToDo: Variablen, die private gemacht werden können, private oder protected machen
+
     private ArrayList<Club> clubList;
 
     //ViewHolder for Adapter
@@ -59,7 +61,7 @@ public class CardClubAdapter extends RecyclerView.Adapter<CardClubAdapter.Exampl
 
     }
 
-    //define how many items the list will hold
+    //defines how many items the list will hold
     @Override
     public int getItemCount() {
         return clubList.size();

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.ExampleViewHolder>{
 
+    //ToDo: Variablen, die private gemacht werden können, private oder protected machen
+
     private ArrayList<Event> mCarditems;
     private Context context;
 

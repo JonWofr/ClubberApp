@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class ClubActivity extends Activity {
 
+    final private String LOG = "ClubActivity";
     private RecyclerView cRecyclerView;
     //Adapter is Bridge between Data and the Recycler View - only provides as many items as we currently need
     private RecyclerView.Adapter cAdapter;
@@ -38,8 +40,24 @@ public class ClubActivity extends Activity {
             clubList.add(new Club(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
         }
 
+
+        boolean noNetwork = getIntent().getBooleanExtra("noNetwork", false);
+        Log.i(LOG, "Check if there is network access... result: " + !noNetwork);
+
+        if (noNetwork) {
+            if (clubList.isEmpty()) {
+                Log.w(LOG, "There are no entries in the database");
+                //ToDo: Hier evtl. eher eine TextView einfügen.
+                Toast.makeText(this, "Keine Clubs vorhanden, bitte stelle eine Internetverbindung her.", Toast.LENGTH_LONG).show();
+            } else {
+                Log.i(LOG, "There are entries in the database but they might not be up to date");
+                //prints information about the lack of network access
+                Toast.makeText(this, "Achtung, keine Internetverbindung. Clubs eventuell unvollständig", Toast.LENGTH_LONG).show();
+            }
+        }
+
         //connect with the recyclerView from the Layout
-        cRecyclerView=findViewById(R.id.recycler_view2);
+        cRecyclerView = findViewById(R.id.recycler_view2);
         // if the RecyclerView wont change in size it makes the performance better
         cRecyclerView.setHasFixedSize(true);
         //asign LayoutManager
@@ -51,25 +69,6 @@ public class ClubActivity extends Activity {
         cRecyclerView.setAdapter(cAdapter);
 
 
-        /*ListView listViewClubs = findViewById(R.id.clubListView);
-
-        ArrayList<Club> clubList = JsonController.getClubList();
-        List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-        String[] from = {"clubName","clubAdrs","clubTel","clubLink"};
-        int[] to = {R.id.club_name, R.id.club_adrs, R.id.club_tel, R.id.club_web};
-
-
-        for(Club club : clubList){
-            HashMap<String, String> map = new HashMap<>();
-            String[] input = {club.name, club.adrs, club.tel, club.web};
-            for(int i = 0; i < from.length; i++) {
-                map.put(from[i],input[i]);
-            }
-            fillMaps.add(map);
-        }
-
-        SimpleAdapter simpleAdapter = new SimpleAdapter(this, fillMaps, R.layout.card_item_club, from, to);
-        listViewClubs.setAdapter(simpleAdapter);*/
     }
 
 }
