@@ -80,6 +80,7 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
             textView4=itemView.findViewById(R.id.startTime);
             textView5=itemView.findViewById(R.id.club);
             button = itemView.findViewById(R.id.linkToEvent);
+
         }
     }
 

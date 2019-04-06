@@ -51,8 +51,7 @@ public class MainActivity extends Activity {
             String[] highestIds = dataBaseHelper.selectHighestIds();
 
             //init call to start async task which updates the database if needed.
-            new HTTPHelper().initiateServerCommunication(highestIds[0],highestIds[1],this);
-
+            new HTTPHelper().initiateServerCommunication(highestIds[0], highestIds[1], this);
 
 
         } else {
@@ -67,41 +66,15 @@ public class MainActivity extends Activity {
         //getPermissionToReadExternalStorage();
 
 
-        //TESTING
-        Button btn = findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent itn = new Intent(getApplicationContext(), EventActivity.class);
-                startActivity(itn);
-            }
-        });
-        //TESTING
-
-        //TESTING
-        Button btn2 = findViewById(R.id.button2);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent itn = new Intent(getApplicationContext(), ClubActivity.class);
-                startActivity(itn);
-            }
-        });
-        //TESTING
-
-
+        //ToDo: Projektstruktur überdenken, wollen wir Methoden wie diese in der MainActivity stehen haben?
+        private boolean isNetworkAvailable () {
+            ConnectivityManager connectivityManager
+                    = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+    
     }
-
-
-
-    //ToDo: Projektstruktur überdenken, wollen wir Methoden wie diese in der MainActivity stehen haben?
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
 }
 
 
