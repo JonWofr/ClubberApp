@@ -57,9 +57,29 @@ public class MainActivity extends Activity {
         } else {
             //ToDo: einfache Abfrage der lokalen DB und Fehlermeldung, falls noch keine Einträge vorhanden sind.
         }
+
+
+        Button btn = findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),EventActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        Button btn2 = findViewById(R.id.button2);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ClubActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
-
-
     //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
 
 
@@ -74,6 +94,10 @@ public class MainActivity extends Activity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
+
+
+
 
 }
 

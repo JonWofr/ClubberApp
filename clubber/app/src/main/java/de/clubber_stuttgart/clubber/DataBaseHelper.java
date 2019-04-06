@@ -154,11 +154,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(true, TABLE_NAME_EVENTS, new String[]{"MAX(" + E_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
         String eId = cursor.getString(0);
+
         //get highest id of table events
         Log.d(this.getClass().toString(), "The highest id of " + TABLE_NAME_EVENTS + " is " + eId);
         cursor = db.query(true, TABLE_NAME_CLUBS, new String[]{"MAX(" + C_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
         String cId = cursor.getString(0);
+
         Log.d(this.getClass().toString(), "The highest id of " + TABLE_NAME_CLUBS + " is " + cId);
         db.close();
         //save highest ids of both tables inside String array and return it

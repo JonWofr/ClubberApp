@@ -55,6 +55,7 @@ public class EventActivity extends Activity {
         eAdapter = new CardEventAdapter(eventList, getApplicationContext());
         eRecyclerView.setLayoutManager(eLayoutManager);
         eRecyclerView.setAdapter(eAdapter);
+
     }
 
 

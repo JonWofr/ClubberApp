@@ -1,15 +1,14 @@
 package de.clubber_stuttgart.clubber;
 
 import android.app.Activity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class ClubActivity extends Activity {
 
@@ -17,6 +16,7 @@ public class ClubActivity extends Activity {
     //Adapter is Bridge between Data and the Recycler View - only provides as many items as we currently need
     private RecyclerView.Adapter cAdapter;
     private RecyclerView.LayoutManager cLayoutManager;
+    private DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
 
 
     @Override
@@ -24,16 +24,19 @@ public class ClubActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club);
 
-        // ToDo: das Beispiel Club Event durch die Verbindung mit der Datenbank ersetzten
-        //this is just an Club item example
-        Club c = new Club(1,"Rakete","Haussmanstraße 43, 70186 Stuttgart","0711 467588", "www.rakete-stuttgart.de");
-
-        //creates the Array list of Club items
+        //creates an Array List of event items
         ArrayList<Club> clubList = new ArrayList<>();
-        //just an example to test the Club xml and Adapter
-        clubList.add(c);
-        clubList.add(c);
-        clubList.add(c);
+        SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
+
+        //columns --> which should be selected (null = all)
+        //selection null return all the rows (WHERE statement)
+        //selectionArgs where blabla is something (e.g. date)
+        //ToDo: orderby einfügen
+        Cursor cursor = db.query(true, DataBaseHelper.TABLE_NAME_CLUBS, null, null, null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            clubList.add(new Club(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+        }
 
         //connect with the recyclerView from the Layout
         cRecyclerView=findViewById(R.id.recycler_view2);
@@ -54,8 +57,6 @@ public class ClubActivity extends Activity {
         List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
         String[] from = {"clubName","clubAdrs","clubTel","clubLink"};
         int[] to = {R.id.club_name, R.id.club_adrs, R.id.club_tel, R.id.club_web};
-
-
 
 
         for(Club club : clubList){

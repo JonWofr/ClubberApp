@@ -87,48 +87,6 @@ public class JsonController extends Thread {
         return clubList;
     }
 
-    static void deleteOldJsonFiles(String filename, String path) {
-        try {
-            String iter = "";
-            int i = 0;
-            //we delete every old json file to make room in order to replace it with a new one
-            while (true) {
-                File file = new File(path + "/" + filename + iter + ".json");
-                //only deletes if file exists. If there is no file to delete it will break out of the loop.
-                if (!Files.deleteIfExists(file.toPath())) {
-                    if (i == 0) {
-                        Log.i("deleteOldJsonFiles", "No files to delete. Method ends");
-                    } else {
-                        Log.i("deleteOldJsonFiles", "No files left to delete. Method ends.");
-                    }
-                    break;
-                } else {
-                    i++;
-                    //iterates ending of the filename if there are multiple files called data.json
-                    iter = "-" + i;
-                }
-            }
-        } catch (IOException e) {
-            Log.e("mainActivity", "An IOException in deleteIfExists function has occured");
-            e.printStackTrace();
-        }
-    }
 
-    static void renameJson(String oldName, String newName, String path) {
-        File from = new File(path, oldName + ".json");
-        File to = new File(path, newName + ".json");
-        if (from.exists()) {
-            if (from.renameTo(to)) {
-                Log.i("renameJson", "Successful, backup created");
-            } else {
-                Log.i("renameJson", "Unsuccessful, no backup created");
 
-                //ToDo: Das hier tun
-                Log.i("MainActivity", "should try to download json without backup");
-            }
-        } else {
-            Log.i("renameJson", "File doesn't exist");
-            Log.i("MainActivity", "should download json");
-        }
-    }
 }
