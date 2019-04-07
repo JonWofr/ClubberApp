@@ -38,17 +38,26 @@ public class EventActivity extends Activity {
 
         Log.d(this.getClass().toString(), db.getPath());
 
-        //columns --> which should be selected (null = all)
-        //selection null return all the rows (WHERE statement)
-        //selectionArgs where blabla is something (e.g. date)
-        //ToDo: orderby einfügen
-        Cursor cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, null, null, null, null, "dte, srttime asc", null);
+        Bundle bundle = getIntent().getExtras();
+        Cursor cursor;
+
+        //Intent does not have to contain any selected date (for example if the events tab is reached via the tab bar)
+        if (bundle.containsKey("selectedDate")){
+            //custom query
+            Log.i(this.getClass().toString(), "Events will be filtered for date " + bundle.getString("selectedDate"));
+            cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, "dte = ?", new String[]{bundle.getString("selectedDate")}, null, null, "dte, srttime asc", null);
+        }
+        else {
+            //default query
+            cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, null, null, null, null, "dte, srttime asc", null);
+        }
+
         while (cursor.moveToNext()) {
             eventList.add(new Event(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6)));
         }
 
 
-        boolean noNetwork = getIntent().getBooleanExtra("noNetwork", false);
+        boolean noNetwork = bundle.getBoolean("noNetwork", false);
         Log.i(LOG, "Check if there is network access... result: " + !noNetwork);
 
         if (noNetwork) {

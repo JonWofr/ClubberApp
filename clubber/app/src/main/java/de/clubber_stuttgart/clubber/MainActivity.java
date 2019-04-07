@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -16,11 +18,17 @@ public class MainActivity extends Activity {
     final private String LOG = "MainActivity";
     private Intent startEventActIntent;
     private Intent startClubActIntent;
+    private EditText txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Set default date to current date
+        txt = findViewById(R.id.editText);
+        String currentDate = java.time.LocalDate.now().toString();
+        txt.setText(currentDate);
 
         startEventActIntent = new Intent(this, EventActivity.class);
         startClubActIntent = new Intent(this, ClubActivity.class);
@@ -30,8 +38,10 @@ public class MainActivity extends Activity {
 
         Button btn = findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                startEventActIntent.putExtra("selectedDate", txt.getText().toString());
                 startActivity(startEventActIntent);
             }
         });
