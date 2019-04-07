@@ -68,7 +68,7 @@ public class HTTPHelper extends AsyncTask {
                 }
                 Log.d(LOG, jsonEventArray.length() + " event/s has/have been inserted to the database");
 
-                Log.i(LOG,"inserting event entries to the database...");
+                Log.i(LOG,"inserting club entries to the database...");
                 //inserts every json club object into the db
                 for (int countEntryC = 0; countEntryC < jsonClubArray.length(); countEntryC++){
                     dbHelper.insertClubEntry(jsonClubArray.getJSONObject(countEntryC));

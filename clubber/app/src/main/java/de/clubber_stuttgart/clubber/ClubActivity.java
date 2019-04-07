@@ -34,7 +34,7 @@ public class ClubActivity extends Activity {
         //selection null return all the rows (WHERE statement)
         //selectionArgs where blabla is something (e.g. date)
         //ToDo: orderby einfügen
-        Cursor cursor = db.query(true, DataBaseHelper.TABLE_NAME_CLUBS, null, null, null, null, null, null, null);
+        Cursor cursor = db.query(true, DataBaseHelper.TABLE_NAME_CLUBS, null, null, null, null, null, "name asc", null);
 
         while (cursor.moveToNext()) {
             clubList.add(new Club(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));

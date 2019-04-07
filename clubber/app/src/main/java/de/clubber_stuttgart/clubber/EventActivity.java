@@ -42,8 +42,7 @@ public class EventActivity extends Activity {
         //selection null return all the rows (WHERE statement)
         //selectionArgs where blabla is something (e.g. date)
         //ToDo: orderby einfügen
-        Cursor cursor = db.query(true, DataBaseHelper.TABLE_NAME_EVENTS, null, null, null, null, null, null, null);
-
+        Cursor cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, null, null, null, null, "dte, srttime asc", null);
         while (cursor.moveToNext()) {
             eventList.add(new Event(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6)));
         }

@@ -168,7 +168,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //TODO Sofern die Tabellen noch nicht bestehen zu dieesm Zeitpunkt werden die Strings null und null wird an die URL, welche zu dem Server
         //TODO geschickt wird, angehängt. Das Programm stürzt nicht ab und der Server antwortet sogar darauf, jedoch kann dies zu unerwünschtem
         //TODO Verhalten führen.
-        
+
         //get highest id of table events. If the table does not exist at this moment String eId will be null
         cursor = db.query(true, TABLE_NAME_CLUBS, new String[]{"MAX(" + C_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
