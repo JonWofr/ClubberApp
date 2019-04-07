@@ -2,6 +2,7 @@ package de.clubber_stuttgart.clubber;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -23,6 +24,7 @@ public class HTTPHelper extends AsyncTask {
     private String idEvent;
     private String idClub;
     private  Context context;
+    final private String LOG = "HTTPHelper";
 
     //is called after execute() call and calls method requestResponseServer(). This method runs in its own thread
     @Override
@@ -43,15 +45,14 @@ public class HTTPHelper extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
         if(o == null){
-            //ToDo: Achtung kann nicht null sein --> was wenn json file mehr oder weniger leer ist und DB up to date ist?
+            //ToDo: Achtung kann momentan nicht null sein --> was wenn json file mehr oder weniger leer ist und DB up to date ist?
         }else{
-            //ToDo: Struktur der Objekte überlegen. Brauchen wir diese noch oder können wir direkt von jsonObject einspeichern?
 
-            Log.i(this.getClass().toString(),"New data is about to be added to the local db");
+            Log.i(LOG,"inserting received data to the database...");
 
             try {
                 JSONObject jsonObject = new JSONObject(o.toString());
-                Log.i("JsonController", "The JSONObject has been succesfully created.");
+                Log.d(LOG, "A JSONObject has been created with the received data from the server");
 
                 //Jsons's file content are two arrays "events" and "clubs"
                 JSONArray jsonEventArray = jsonObject.getJSONArray("events");
@@ -60,14 +61,19 @@ public class HTTPHelper extends AsyncTask {
                 //context is needed to create this object, got passed inside this class via initiateServerCommunication()
                 DataBaseHelper dbHelper = new DataBaseHelper(context);
 
+                Log.i(LOG,"inserting event entries to the database...");
                 //inserts every json event object into the db
-                for (int i = 0; i < jsonEventArray.length(); i++){
-                    dbHelper.insertEventEntry(jsonEventArray.getJSONObject(i));
+                for (int countEntryE = 0; countEntryE < jsonEventArray.length(); countEntryE++){
+                    dbHelper.insertEventEntry(jsonEventArray.getJSONObject(countEntryE));
                 }
+                Log.d(LOG, jsonEventArray.length() + " event/s has/have been inserted to the database");
+
+                Log.i(LOG,"inserting event entries to the database...");
                 //inserts every json club object into the db
-                for (int i = 0; i < jsonClubArray.length(); i++){
-                    dbHelper.insertClubEntry(jsonClubArray.getJSONObject(i));
+                for (int countEntryC = 0; countEntryC < jsonClubArray.length(); countEntryC++){
+                    dbHelper.insertClubEntry(jsonClubArray.getJSONObject(countEntryC));
                 }
+                Log.d(LOG, jsonClubArray.length() + " club/s has/have been inserted to the database");
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -75,21 +81,19 @@ public class HTTPHelper extends AsyncTask {
         }
     }
 
-    //this method is necessary to establish the connection to the server, send data to the server and retrieve responses, which are dependant
-    //on the sent requests
+    //this method is necessary to establish the connection to the server, send data to the server and retrieve responses, which are dependant on the sent requests
     private String requestResponseServer(String idEvent, String idClub){
         //URL which leads to the php script on the server. Data for the request is sent via GET
         String urlString = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=" + idEvent + "&idClub=" + idClub;
-        //TODO hier das erst Argument für die Loggin methoden im kopf der klasse deklariern und konsistent machenn
-        Log.i(this.getClass().toString(), urlString);
+        Log.d(LOG, "send request to following url: " + urlString);
         //this stringbuilder will be appended gradually and consists of the response of the server
         StringBuilder jsonString = new StringBuilder();
         try {
             URL url = new URL(urlString);
             //connect to the server
             HttpURLConnection jsonResponse = (HttpURLConnection) url.openConnection();
+            Log.d(LOG,"Connection to " + jsonResponse + " established");
             //TODO weitermachen bruh?!
-            System.out.println(jsonResponse);
 
             //create inputstream which delivers server's response data
             InputStream in = new BufferedInputStream(jsonResponse.getInputStream());
@@ -104,13 +108,14 @@ public class HTTPHelper extends AsyncTask {
                 //jumps to next line
                 line = buf.readLine();
             }
-            Log.i(this.getClass().toString(), "Data of the server: " + jsonString);
         }catch (MalformedURLException e) {
-            Log.w(this.getClass().toString(), "URL is invalid");
+            //ToDo: reicht hier eine Warnung oder stürzt die App danach ab?
+            Log.w(LOG, "URL is invalid");
         }
         catch (IOException ioe){
             ioe.printStackTrace();
         }
+        Log.d(LOG, "Data of server response: " + jsonString);
         return jsonString.toString();
     }
 }

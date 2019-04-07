@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,19 +32,24 @@ public class MainActivity extends Activity {
         final Intent startEventActIntent = new Intent(getApplicationContext(),EventActivity.class);
         final Intent startClubActIntent = new Intent(getApplicationContext(), ClubActivity.class);
 
+        //ToDo: Das hier in eine Methode schreiben, da wir das auch ausführen müssen, wenn der Nutzer wieder Internet hat oder einen Refresh durchführen will.
+        Log.i(LOG,"Checking if network is available...");
         if (isNetworkAvailable()) {
 
+            Log.i(LOG,"Network is available");
+            Log.i(LOG, "initiating setup and update of the database...");
             DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
             String[] highestIds = dataBaseHelper.selectHighestIds();
-
             //init call to start async task which updates the database if needed.
+            Log.i(LOG, "Requesting data from webserver database...");
+            Log.d(LOG, "Requesting data from event table from following id:" + highestIds[0]);
+            Log.d(LOG, "Requesting data from club table from following id:" + highestIds[1]);
             new HTTPHelper().initiateServerCommunication(highestIds[0], highestIds[1], this);
 
 
         } else {
-            //ToDo: einfache Abfrage der lokalen DB und Fehlermeldung, falls noch keine Einträge vorhanden sind.
             //ToDo: Broadcast empfangen, falls Netzwerk erreichbar? oder beim runterziehen der Listen Datenbank aktualisieren?
-            Log.i(LOG,"There is no Network access");
+            Log.i(LOG,"There is no Network available");
             Log.d(LOG, "putExtra() on the Activity Intents to let them know there is no network available...");
 
             //gives the intent some more information about the connection --> "carefull activity! You need to consider this to give the user information on the UI"
@@ -74,12 +80,6 @@ public class MainActivity extends Activity {
     }
     //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
 
-
-    //ToDo: Eigentlich benötigen wir diese Permission momentan nicht, falls wir sie aus dem Programm nehmen sollten, unbedingt auch an die Manifest denken!
-    //getPermissionToReadExternalStorage();
-
-
-    //ToDo: Projektstruktur überdenken, wollen wir Methoden wie diese in der MainActivity stehen haben?
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

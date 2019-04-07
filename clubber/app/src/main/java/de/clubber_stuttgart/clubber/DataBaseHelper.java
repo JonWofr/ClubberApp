@@ -13,6 +13,8 @@ import org.json.JSONObject;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
+    final private String LOG = "HTTPHelper";
+
     //Database name
     protected static final String DATABASE_NAME = "clubberDB";
     //Database tablenames
@@ -65,13 +67,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        //creates events and clubs tables
+        Log.d(LOG, "Creating tables...");
 
+        //creates events and clubs tables
         db.execSQL(CREATE_TABLE_EVENTS);
-        Log.d("DataBaseHelper", "Table " + TABLE_NAME_EVENTS + " got created with following SQL-statement: " + CREATE_TABLE_EVENTS);
+        Log.d(LOG, "Table " + TABLE_NAME_EVENTS + " got created with following SQL-statement: " + CREATE_TABLE_EVENTS);
 
         db.execSQL(CREATE_TABLE_CLUBS);
-        Log.d("DataBaseHelper", "Table " + TABLE_NAME_CLUBS + " got created with following SQL-statement: " + CREATE_TABLE_CLUBS);
+        Log.d(LOG, "Table " + TABLE_NAME_CLUBS + " got created with following SQL-statement: " + CREATE_TABLE_CLUBS);
 
 
     }
@@ -83,7 +86,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //ToDo: hier löschen der Tabellen einfügen und bei den anderen beiden Methoden rausnehmen.
         db.execSQL(DROP_TABLE_CLUBS);
         db.execSQL(DROP_TABLE_EVENTS);
-        Log.d(this.getClass().toString(), "Table " + TABLE_NAME_CLUBS + " and table " + TABLE_NAME_EVENTS + " have been deleted.");
+        Log.d(LOG, "Table " + TABLE_NAME_CLUBS + " and table " + TABLE_NAME_EVENTS + " have been deleted.");
         onCreate(db);
     }
 
@@ -113,10 +116,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
 
         if (resultCode == -1){
-            Log.w(this.getClass().toString(), "The row of event data has not been inserted into the database");
-        }
-        else {
-            Log.d(this.getClass().toString(), "The row of event data has successfully been inserted into the database");
+            Log.w(LOG, "The row of event data has not been inserted into the database");
         }
     }
 
@@ -142,10 +142,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
 
         if (resultCode == -1){
-            Log.w(this.getClass().toString(), "The row of club data has not been inserted into the database");
-        }
-        else {
-            Log.d(this.getClass().toString(), "The row of club data has successfully been inserted into the database");
+            Log.w(LOG, "The row of club data has not been inserted into the database");
         }
     }
 
@@ -156,7 +153,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             db.execSQL(command);
         }
         catch (SQLException e){
-            Log.w(this.getClass().toString(), "The SQLite alter-statement is not valid");
+            Log.w(LOG, "The SQLite alter-statement is not valid");
         }
     }
 
@@ -173,12 +170,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //TODO Verhalten führen.
         
         //get highest id of table events. If the table does not exist at this moment String eId will be null
-        Log.d(this.getClass().toString(), "The highest id of " + TABLE_NAME_EVENTS + " is " + eId);
         cursor = db.query(true, TABLE_NAME_CLUBS, new String[]{"MAX(" + C_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
         String cId = cursor.getString(0);
 
-        Log.d(this.getClass().toString(), "The highest id of " + TABLE_NAME_CLUBS + " is " + cId);
         db.close();
         //save highest ids of both tables inside String array and return it
         return new String[]{eId, cId};
