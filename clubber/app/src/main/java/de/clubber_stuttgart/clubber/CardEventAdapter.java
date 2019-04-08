@@ -33,7 +33,7 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
     public void onBindViewHolder(@NonNull ExampleViewHolder exampleViewHolder, int i) {
         final Event currentItem= mCarditems.get(i);
 
-        // exampleViewHolder.imageView.setImageResource(currentItem.getImageResource());
+        //exampleViewHolder.imageView.setImageResource(currentItem.getImageResource());
         //Sets values for corresponding nodes of the current Event object
         exampleViewHolder.textView1.setText(currentItem.name);
         exampleViewHolder.textView2.setText(currentItem.genre);
@@ -84,6 +84,7 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
             button = itemView.findViewById(R.id.linkToEvent);
 
         }
+
     }
 
 

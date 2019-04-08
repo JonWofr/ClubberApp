@@ -1,13 +1,8 @@
-package de.clubber_stuttgart.clubber;
+package de.clubber_stuttgart.clubber.business_logic;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 
 /**

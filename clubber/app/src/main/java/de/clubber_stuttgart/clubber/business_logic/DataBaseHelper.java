@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber;
+package de.clubber_stuttgart.clubber.business_logic;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,10 +16,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     final private String LOG = "HTTPHelper";
 
     //Database name
-    protected static final String DATABASE_NAME = "clubberDB";
-    //Database tablenames
-    protected static final String TABLE_NAME_EVENTS = "events";
-    protected static final String TABLE_NAME_CLUBS = "clubs";
+    private static final String DATABASE_NAME = "clubberDB";
+    //Database tablenames (are protected private so ClubActivity and EventActivity are able to get the names of the tables)
+    static final String TABLE_NAME_EVENTS = "events";
+    static final String TABLE_NAME_CLUBS = "clubs";
 
     //Colum names from events table
     private static final String E_ID = "id";
@@ -59,10 +59,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private final String DROP_TABLE_EVENTS = "DROP IF TABLE EXISTS " + TABLE_NAME_EVENTS;
 
 
-
     DataBaseHelper (Context context){
         super(context, DATABASE_NAME, null, 1);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -91,7 +91,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    protected void insertEventEntry(JSONObject event){
+    void insertEventEntry(JSONObject event){
         //inserts values for event table
         ContentValues values = new ContentValues();
         try {
@@ -120,7 +120,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    protected void insertClubEntry (JSONObject club){
+    void insertClubEntry(JSONObject club){
         //inserts values for clubs table
         ContentValues values = new ContentValues();
         try {
@@ -158,14 +158,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     //method to fetch the highest id saved in the local db of table events and club. Is called inside MainActivity
-    public String[] selectHighestIds (){
+    String[] selectHighestIds (){
         SQLiteDatabase db = this.getWritableDatabase();
         //get highest id of table events. If the table does not exist at this moment String eId will be null
         Cursor cursor = db.query(true, TABLE_NAME_EVENTS, new String[]{"MAX(" + E_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
         String eId = cursor.getString(0);
 
-        //TODO Sofern die Tabellen noch nicht bestehen zu dieesm Zeitpunkt werden die Strings null und null wird an die URL, welche zu dem Server
+        cursor.close();
+        //TODO Sofern die Tabellen noch nicht bestehen zu diesem Zeitpunkt werden die Strings null und null wird an die URL, welche zu dem Server
         //TODO geschickt wird, angehängt. Das Programm stürzt nicht ab und der Server antwortet sogar darauf, jedoch kann dies zu unerwünschtem
         //TODO Verhalten führen.
 
@@ -174,6 +175,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.moveToNext();
         String cId = cursor.getString(0);
 
+        cursor.close();
         db.close();
         //save highest ids of both tables inside String array and return it
         return new String[]{eId, cId};

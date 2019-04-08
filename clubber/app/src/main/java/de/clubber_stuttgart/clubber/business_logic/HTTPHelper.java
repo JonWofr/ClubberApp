@@ -1,8 +1,7 @@
-package de.clubber_stuttgart.clubber;
+package de.clubber_stuttgart.clubber.business_logic;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -17,13 +16,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class HTTPHelper extends AsyncTask {
 
     private String idEvent;
     private String idClub;
-    private  Context context;
+    private Context context;
     final private String LOG = "HTTPHelper";
 
     //is called after execute() call and calls method requestResponseServer(). This method runs in its own thread
@@ -33,7 +31,7 @@ public class HTTPHelper extends AsyncTask {
     }
 
     //method to be called on a HTTPHelper object to initiate the AsyncTask methods
-    public void initiateServerCommunication(String idEvent, String idClub, Context context){
+    void initiateServerCommunication(String idEvent, String idClub, Context context){
         this.context = context;
         this.idEvent = idEvent;
         this.idClub = idClub;
@@ -45,6 +43,7 @@ public class HTTPHelper extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
         if(o == null){
+            //when null returned the user gets a response that the database is up to date
             //ToDo: Achtung kann momentan nicht null sein --> was wenn json file mehr oder weniger leer ist und DB up to date ist?
         }else{
 

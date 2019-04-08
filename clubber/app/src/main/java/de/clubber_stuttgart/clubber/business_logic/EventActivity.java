@@ -1,9 +1,8 @@
-package de.clubber_stuttgart.clubber;
+package de.clubber_stuttgart.clubber.business_logic;
 
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +10,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
+import de.clubber_stuttgart.clubber.CardEventAdapter;
+import de.clubber_stuttgart.clubber.Event;
+import de.clubber_stuttgart.clubber.R;
 
 public class EventActivity extends Activity {
 
@@ -42,7 +43,7 @@ public class EventActivity extends Activity {
         Cursor cursor;
 
         //Intent does not have to contain any selected date (for example if the events tab is reached via the tab bar)
-        if (bundle.containsKey("selectedDate")){
+        if (bundle != null && bundle.containsKey("selectedDate")){
             //custom query
             Log.i(this.getClass().toString(), "Events will be filtered for date " + bundle.getString("selectedDate"));
             cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, "dte = ?", new String[]{bundle.getString("selectedDate")}, null, null, "dte, srttime asc", null);
@@ -55,6 +56,7 @@ public class EventActivity extends Activity {
         while (cursor.moveToNext()) {
             eventList.add(new Event(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6)));
         }
+         cursor.close();
 
 
         boolean noNetwork = bundle.getBoolean("noNetwork", false);

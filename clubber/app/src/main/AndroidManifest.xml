@@ -12,18 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".business_logic.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ClubActivity" />
-        <activity android:name=".EventActivity" />
+        <activity android:name=".business_logic.ClubActivity" />
+        <activity android:name=".business_logic.EventActivity" />
 
         <service
-            android:name=".DBConnectionService"
+            android:name=".business_logic.DBConnectionService"
             android:exported="false"></service>
     </application>
 
