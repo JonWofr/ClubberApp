@@ -1,79 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="@drawable/audience_band_concert">
 
     <LinearLayout
-        android:layout_width="283dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/datePicker"
+                android:gravity="center"
+                android:textSize="26sp"
+                android:inputType="none"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter Date"/>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
+
+        </LinearLayout>
 
         <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
+            android:id="@+id/button3"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Events (with sel date)"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.521"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.577" />
+            android:text="show all Events"
+            android:background="@drawable/my_button"
+            android:textColor="@android:color/white"
+            />
+
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/my_button"
             android:text="Clubs"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.521"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.577" />
+            />
 
         <Button
             android:id="@+id/refreshBtn"
+            android:layout_gravity="center"
             android:layout_width="268dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/white"
             android:text="Refresh with internet connection"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.521"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.577" />
+            android:background="@drawable/my_button"/>
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date"
-            android:text="Name" />
+
+
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

@@ -1,34 +1,79 @@
 package de.clubber_stuttgart.clubber;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class MainActivity extends Activity {
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+public class MainActivity extends Activity  {
 
     final private String LOG = "MainActivity";
     private Intent startEventActIntent;
     private Intent startClubActIntent;
     private EditText txt;
+    private EditText datePicker;
+    DatePickerDialog datePickerDialog;
+    DatePickerDialog.OnDateSetListener setListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        datePicker = findViewById(R.id.datePicker);
+        //hides the keyboard
+        datePicker.setInputType(InputType.TYPE_NULL);
+
+        Calendar calendar = Calendar.getInstance();
+        final int year =calendar.get(Calendar.YEAR);
+        final int month =calendar.get(Calendar.MONTH);
+        final int day =calendar.get(Calendar.DAY_OF_MONTH);
+
+
+        /*
+        start the datePicker Dialog
+         */
+        datePicker.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        month = month+1;
+                        String date = day+"/"+month+"/"+year;
+                        datePicker.setText(date);
+                    }
+                },year,month,day);
+                datePickerDialog.show();
+            }
+        });
+
+
+       /*
         //Set default date to current date
         txt = findViewById(R.id.editText);
         String currentDate = java.time.LocalDate.now().toString();
-        txt.setText(currentDate);
+        txt.setText(currentDate);*/
 
         startEventActIntent = new Intent(this, EventActivity.class);
         startClubActIntent = new Intent(this, ClubActivity.class);
@@ -41,7 +86,9 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                startEventActIntent.putExtra("selectedDate", txt.getText().toString());
+                //startEventActIntent.putExtra("selectedDate", txt.getText().toString());
+                //ToDo: wie kann man die Daten richtig übergeben, so dass sie angezeigt werden können ??
+                //startEventActIntent.putExtra("selectedDate",datePicker.getText().toString());
                 startActivity(startEventActIntent);
             }
         });
@@ -65,12 +112,9 @@ public class MainActivity extends Activity {
             }
         });
 
-
         //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
 
     }
-
-
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
