@@ -16,12 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-<<<<<<< HEAD:clubber/app/src/main/java/de/clubber_stuttgart/clubber/MainActivity.java
-import android.widget.TextView;
-=======
-
 import de.clubber_stuttgart.clubber.R;
->>>>>>> b43496471ce601f711078602c8190f0a9c0ffcea:clubber/app/src/main/java/de/clubber_stuttgart/clubber/business_logic/MainActivity.java
+
 
 
 import java.text.DateFormat;
