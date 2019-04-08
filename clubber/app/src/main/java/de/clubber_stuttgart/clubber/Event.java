@@ -11,7 +11,7 @@ public class Event {
     String btn;
     String genre;
 
-    Event (int id, String dte, String name, String club, String srttime, String btn, String genre){
+   public Event (int id, String dte, String name, String club, String srttime, String btn, String genre){
         this.id = id;
         this.dte = dte;
         this.name = name;

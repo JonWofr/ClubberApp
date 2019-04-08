@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber;
+package de.clubber_stuttgart.clubber.business_logic;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -11,9 +11,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import de.clubber_stuttgart.clubber.CardClubAdapter;
+import de.clubber_stuttgart.clubber.Club;
+import de.clubber_stuttgart.clubber.R;
+
 public class ClubActivity extends Activity {
 
     final private String LOG = "ClubActivity";
+
     private RecyclerView cRecyclerView;
     //Adapter is Bridge between Data and the Recycler View - only provides as many items as we currently need
     private RecyclerView.Adapter cAdapter;

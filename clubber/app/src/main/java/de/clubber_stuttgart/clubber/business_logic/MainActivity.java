@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber;
+package de.clubber_stuttgart.clubber.business_logic;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import de.clubber_stuttgart.clubber.R;
 
 public class MainActivity extends Activity {
 
@@ -19,6 +19,7 @@ public class MainActivity extends Activity {
     private Intent startEventActIntent;
     private Intent startClubActIntent;
     private EditText txt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,16 @@ public class MainActivity extends Activity {
         initDBConnectionService();
 
 
-        Button btn = findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
+        final Button eventBtn = findViewById(R.id.eventBtn);
+        eventBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(startEventActIntent);
+            }
+        });
+
+        Button eventWithDate = findViewById(R.id.button);
+        eventWithDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -47,8 +56,8 @@ public class MainActivity extends Activity {
         });
 
 
-        Button btn2 = findViewById(R.id.button2);
-        btn2.setOnClickListener(new View.OnClickListener() {
+        Button clubBtn = findViewById(R.id.button2);
+        clubBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(startClubActIntent);
