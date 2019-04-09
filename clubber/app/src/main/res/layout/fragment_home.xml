@@ -30,7 +30,7 @@
                 android:hint="Enter Date"/>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/eventBtnWithDate"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
@@ -38,7 +38,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/eventBtnWithoutDate"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
@@ -48,22 +48,8 @@
             android:textColor="@android:color/white"
             />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"/>
-
         <Button
-            android:id="@+id/eventBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/my_button"
-            android:textColor="@android:color/white"
-            android:text="Events "/>
-
-        <Button
-            android:id="@+id/button2"
+            android:id="@+id/clubBtn"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_width="wrap_content"

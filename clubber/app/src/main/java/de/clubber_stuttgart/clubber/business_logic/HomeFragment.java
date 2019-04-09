@@ -29,9 +29,8 @@ public class HomeFragment extends Fragment {
     final private String LOG = "MainActivity";
     private Intent startEventActIntent;
     private Intent startClubActIntent;
-    private EditText txt;
     private EditText datePicker;
-    DatePickerDialog datePickerDialog;
+    private String selectedDate;
     DatePickerDialog.OnDateSetListener setListener;
     private Context context;
 
@@ -65,8 +64,8 @@ public class HomeFragment extends Fragment {
 
         if (isNetworkAvailable()) {
             Log.i(LOG,"Network is available");
-            startEventActIntent.putExtra(noNetwork,false);
-            startClubActIntent.putExtra(noNetwork,false);
+            //startEventActIntent.putExtra(noNetwork,false);
+            //startClubActIntent.putExtra(noNetwork,false);
 
             Intent serviceIntent = new Intent(context, DBConnectionService.class);
             context.startService(serviceIntent);
@@ -74,9 +73,27 @@ public class HomeFragment extends Fragment {
         } else {
             Log.i(LOG, "no network available");
             //gives the intent some more information about the connection --> "carefull activity! You need to consider this to give the user information on the UI"
-            startEventActIntent.putExtra(noNetwork,true);
-            startClubActIntent.putExtra(noNetwork,true);
+            //startEventActIntent.putExtra(noNetwork,true);
+            //startClubActIntent.putExtra(noNetwork,true);
         }
+    }
+
+    public void formatDate (String year, String month, String day){
+        //ensures compatibility with db-query, because date formats are stored in a us-format (yyyy-mm-dd)
+
+        if (month.length() == 1){
+            month = "0" + month;
+        }
+
+        if (day.length() == 1){
+            day = "0" + day;
+        }
+
+        selectedDate = year + "-" + month + "-" + day;
+        Log.i(this.getClass().toString(), "The user selected " + selectedDate + " as date");
+        //this is for better readability for european users
+        String europeanDateFormat = day + "." + month + "." + year;
+        datePicker.setText(europeanDateFormat);
     }
 
 
@@ -93,60 +110,61 @@ public class HomeFragment extends Fragment {
         datePicker.setInputType(InputType.TYPE_NULL);
 
         Calendar calendar = Calendar.getInstance();
-        final int year =calendar.get(Calendar.YEAR);
-        final int month =calendar.get(Calendar.MONTH);
-        final int day =calendar.get(Calendar.DAY_OF_MONTH);
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
 
         /*
         start the datePicker Dialog
          */
-        datePicker.setOnClickListener(new View.OnClickListener(){
+
+
+        //TODO Datepicker .show() Methode kann anscheinend nicht in einem Fragment funktionieren
+        datePicker.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month = month+1;
-                        String date = day+"/"+month+"/"+year;
-                        datePicker.setText(date);
+                        month += 1;
+                        //method is used to correctly format the date to be able to do a sql query and to parse it into a form, which has better readability
+                        formatDate(String.valueOf(year), String.valueOf(month), String.valueOf(day));
                     }
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
 
-
-       /*
-        //Set default date to current date
-        txt = findViewById(R.id.editText);
-        String currentDate = java.time.LocalDate.now().toString();
-        txt.setText(currentDate);*/
-
-
-        final Button eventBtn = view.findViewById(R.id.eventBtn);
-        eventBtn.setOnClickListener(new View.OnClickListener() {
+        final Button eventBtnWithoutDate = view.findViewById(R.id.eventBtnWithoutDate);
+        eventBtnWithoutDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Checks if a date has been set previously (after the user navigated to the events with a date selected) and deletes the date
+                Bundle bundle = startEventActIntent.getExtras();
+                if (bundle.containsKey("selectedDate")) {
+                    startEventActIntent.removeExtra("selectedDate");
+                }
                 startActivity(startEventActIntent);
             }
         });
 
-        Button eventWithDate = view.findViewById(R.id.button);
-        eventWithDate.setOnClickListener(new View.OnClickListener() {
+        Button eventBtnWithDate = view.findViewById(R.id.eventBtnWithDate);
+        eventBtnWithDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                //startEventActIntent.putExtra("selectedDate", txt.getText().toString());
-                //ToDo: wie kann man die Daten richtig übergeben, so dass sie angezeigt werden können ??
-                //startEventActIntent.putExtra("selectedDate",datePicker.getText().toString());
+                //only set a date if one got selected
+                if (selectedDate != null) {
+                    startEventActIntent.putExtra("selectedDate", selectedDate);
+                }
                 startActivity(startEventActIntent);
             }
         });
 
 
-        Button clubBtn = view.findViewById(R.id.button2);
+        Button clubBtn = view.findViewById(R.id.clubBtn);
         clubBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +176,7 @@ public class HomeFragment extends Fragment {
         refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(LOG,"refresh button has been clicked, trying to refresh...");
+                Log.i(LOG, "refresh button has been clicked, trying to refresh...");
                 initDBConnectionService();
                 //ToDo: Rückmeldung an den user, ob er schon up to date ist und ob der refresh erfolgreich war.
             }
