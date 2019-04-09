@@ -19,8 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".business_logic.ClubActivity" />
-        <activity android:name=".business_logic.EventActivity" />
 
         <service
             android:name=".business_logic.DBConnectionService"
