@@ -21,14 +21,10 @@ import de.clubber_stuttgart.clubber.Event;
 import de.clubber_stuttgart.clubber.R;
 
 
-public class EventsFragment extends ListFragment {
+public class EventsFragment extends Fragment {
 
     //ToDo: die Navigation funktioniert nicht:  Error inflating class android.support.design.widget.BottomNavigationView
     final private String LOG = "EventActivity";
-
-    private RecyclerView eRecyclerView;
-    private RecyclerView.Adapter eAdapter;
-    private RecyclerView.LayoutManager eLayoutManager;
     private Context context;
 
     public EventsFragment() {
@@ -38,10 +34,9 @@ public class EventsFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.context = getActivity().getApplicationContext();
-
     }
+
 
 
     @Override
@@ -77,8 +72,8 @@ public class EventsFragment extends ListFragment {
         cursor.close();
 
 
-        //ToDo: das funktioniert hier nicht wie bisher...
-        boolean noNetwork = false;//bundle.getBoolean("noNetwork", false);
+        //ToDo: Funktioniert das nach der Implementierung der Navigation; Kommentar entfernen und testen
+        boolean noNetwork = true;//getArguments().getBoolean("noNetwork");
         Log.i(LOG, "Check if there is network access... result: " + !noNetwork);
 
         if (noNetwork) {
@@ -88,22 +83,24 @@ public class EventsFragment extends ListFragment {
                 Toast.makeText(context, "Keine Events vorhanden, bitte stelle eine Internetverbindung her.", Toast.LENGTH_LONG).show();
             } else {
                 Log.i(LOG, "There are entries in the database but they might not be up to date");
+                createRecyclerView(view,eventList);
                 //prints information about the lack of network access
                 Toast.makeText(context, "Achtung, keine Internetverbindung. Events eventuell unvollständig", Toast.LENGTH_LONG).show();
             }
+        }else{
+            createRecyclerView(view,eventList);
         }
-
-        eRecyclerView = view.findViewById(R.id.recycler_view);
-        //ToDo: enlische Kommentare
-        //wenn man weiß, dass sich die Größe des RecyclerView nicht verändern wird
-        eRecyclerView.setHasFixedSize(true);
-        eLayoutManager = new LinearLayoutManager(context);
-        eAdapter = new CardEventAdapter(eventList, context);
-        eRecyclerView.setLayoutManager(eLayoutManager);
-        eRecyclerView.setAdapter(eAdapter);
-
         return view;
     }
 
+    private void createRecyclerView(View view, ArrayList<Event> eventList) {
+        RecyclerView eRecyclerView = view.findViewById(R.id.recycler_view);
+        //we know that the size of the list won't change and is comparably small
+        eRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(context);
+        RecyclerView.Adapter eAdapter = new CardEventAdapter(eventList, context);
+        eRecyclerView.setLayoutManager(eLayoutManager);
+        eRecyclerView.setAdapter(eAdapter);
+    }
 
 }

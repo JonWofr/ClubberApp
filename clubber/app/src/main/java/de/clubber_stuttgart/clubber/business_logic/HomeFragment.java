@@ -27,8 +27,7 @@ import de.clubber_stuttgart.clubber.R;
 public class HomeFragment extends Fragment {
 
     final private String LOG = "MainActivity";
-    private Intent startEventActIntent;
-    private Intent startClubActIntent;
+    private Bundle bundle = new Bundle();
     private EditText datePicker;
     private String selectedDate;
     DatePickerDialog.OnDateSetListener setListener;
@@ -49,6 +48,7 @@ public class HomeFragment extends Fragment {
         //startEventActIntent = new Intent(context, EventActivity.class);
         //startClubActIntent = new Intent(context, ClubActivity.class);
 
+
         initDBConnectionService();
     }
 
@@ -58,24 +58,27 @@ public class HomeFragment extends Fragment {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+
     private void initDBConnectionService(){
         Log.i(LOG,"Checking if network is available...");
         String noNetwork = "noNetwork";
 
+        ClubsFragment clubsFragment = new ClubsFragment();
+        EventsFragment eventsFragment = new EventsFragment();
+
         if (isNetworkAvailable()) {
             Log.i(LOG,"Network is available");
-            //startEventActIntent.putExtra(noNetwork,false);
-            //startClubActIntent.putExtra(noNetwork,false);
+            bundle.putBoolean(noNetwork, false);
 
             Intent serviceIntent = new Intent(context, DBConnectionService.class);
             context.startService(serviceIntent);
-
         } else {
             Log.i(LOG, "no network available");
-            //gives the intent some more information about the connection --> "carefull activity! You need to consider this to give the user information on the UI"
-            //startEventActIntent.putExtra(noNetwork,true);
-            //startClubActIntent.putExtra(noNetwork,true);
+            //gives the fragments some more information about the connection --> "carefull! You need to consider this to give the user information on the UI"
+            bundle.putBoolean(noNetwork, true);
         }
+        clubsFragment.setArguments(bundle);
+        eventsFragment.setArguments(bundle);
     }
 
     public void formatDate (String year, String month, String day){
@@ -137,40 +140,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        final Button eventBtnWithoutDate = view.findViewById(R.id.eventBtnWithoutDate);
-        eventBtnWithoutDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Checks if a date has been set previously (after the user navigated to the events with a date selected) and deletes the date
-                Bundle bundle = startEventActIntent.getExtras();
-                if (bundle.containsKey("selectedDate")) {
-                    startEventActIntent.removeExtra("selectedDate");
-                }
-                startActivity(startEventActIntent);
-            }
-        });
 
-        Button eventBtnWithDate = view.findViewById(R.id.eventBtnWithDate);
-        eventBtnWithDate.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                //only set a date if one got selected
-                if (selectedDate != null) {
-                    startEventActIntent.putExtra("selectedDate", selectedDate);
-                }
-                startActivity(startEventActIntent);
-            }
-        });
-
-
-        Button clubBtn = view.findViewById(R.id.clubBtn);
-        clubBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(startClubActIntent);
-            }
-        });
 
         Button refreshBtn = view.findViewById(R.id.refreshBtn);
         refreshBtn.setOnClickListener(new View.OnClickListener() {

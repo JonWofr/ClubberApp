@@ -24,14 +24,7 @@ import de.clubber_stuttgart.clubber.R;
 public class ClubsFragment extends Fragment {
 
     final private String LOG = "ClubActivity";
-
-    private RecyclerView cRecyclerView;
-    //Adapter is Bridge between Data and the Recycler View - only provides as many items as we currently need
-    private RecyclerView.Adapter cAdapter;
-    private RecyclerView.LayoutManager cLayoutManager;
     private Context context;
-
-
 
     public ClubsFragment() {
         // Required empty public constructor
@@ -68,9 +61,11 @@ public class ClubsFragment extends Fragment {
             clubList.add(new Club(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
         }
 
+        cursor.close();
 
-        //ToDo: Das hier wird nicht so gehen, muss mit bundle gelöst werden..
-        boolean noNetwork = getActivity().getIntent().getBooleanExtra("noNetwork", false);
+
+        //ToDo: Funktioniert das nach der Implementierung der Navigation; Kommentar entfernen und testen
+        boolean noNetwork = true;//getArguments().getBoolean("noNetwork");
         Log.i(LOG, "Check if there is network access... result: " + !noNetwork);
 
         if (noNetwork) {
@@ -80,26 +75,29 @@ public class ClubsFragment extends Fragment {
                 Toast.makeText(context, "Keine Clubs vorhanden, bitte stelle eine Internetverbindung her.", Toast.LENGTH_LONG).show();
             } else {
                 Log.i(LOG, "There are entries in the database but they might not be up to date");
+                createRecyclerView(view, clubList);
                 //prints information about the lack of network access
                 Toast.makeText(context, "Achtung, keine Internetverbindung. Clubs eventuell unvollständig", Toast.LENGTH_LONG).show();
             }
+        } else{
+            createRecyclerView(view, clubList);
         }
+        return view;
+    }
 
+    private void createRecyclerView(View view, ArrayList<Club> clubList){
         //connect with the recyclerView from the Layout
-        cRecyclerView = view.findViewById(R.id.recycler_view2);
+        RecyclerView cRecyclerView = view.findViewById(R.id.recycler_view2);
         // if the RecyclerView wont change in size it makes the performance better
         cRecyclerView.setHasFixedSize(true);
         //asign LayoutManager
-        cLayoutManager = new LinearLayoutManager(context);
+        RecyclerView.LayoutManager cLayoutManager = new LinearLayoutManager(context);
         //asign Adapter - pass the Arraylist into it
-        cAdapter = new CardClubAdapter(clubList);
+        //Adapter is Bridge between Data and the Recycler View - only provides as many items as we currently need
+        RecyclerView.Adapter cAdapter = new CardClubAdapter(clubList);
         //pass LayoutManger to RecyclerView
         cRecyclerView.setLayoutManager(cLayoutManager);
         cRecyclerView.setAdapter(cAdapter);
-
-
-
-        return view;
     }
 
 }

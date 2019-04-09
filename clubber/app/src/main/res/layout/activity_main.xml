@@ -8,7 +8,8 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="de.clubber_stuttgart.clubber.business_logic.HomeFragment"
+        android:name="de.clubber_stuttgart.clubber.business_logic.ClubsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </LinearLayout>
