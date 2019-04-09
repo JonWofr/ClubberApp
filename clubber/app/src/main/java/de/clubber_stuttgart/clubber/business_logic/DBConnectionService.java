@@ -24,6 +24,8 @@ public class DBConnectionService extends IntentService {
         //ToDo: Das hier in eine Methode schreiben, da wir das auch ausführen müssen, wenn der Nutzer wieder Internet hat oder einen Refresh durchführen will.
         Log.i(LOG, "initiating setup and update of the database...");
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
+        //deletes all entries older than yesterday
+        dataBaseHelper.deleteOldEntries();
         String[] highestIds = dataBaseHelper.selectHighestIds();
         //init call to start async task which updates the database if needed.
         Log.i(LOG, "Requesting data from webserver database...");
