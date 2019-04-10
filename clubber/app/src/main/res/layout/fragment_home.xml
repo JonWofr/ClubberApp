@@ -37,7 +37,7 @@
 
         </LinearLayout>
 
-        <Button
+       <Button
             android:id="@+id/eventBtnWithoutDate"
             android:layout_gravity="center"
             android:layout_margin="10dp"

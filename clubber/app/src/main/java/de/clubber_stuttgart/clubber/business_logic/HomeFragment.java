@@ -2,12 +2,14 @@ package de.clubber_stuttgart.clubber.business_logic;
 
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import de.clubber_stuttgart.clubber.R;
 
@@ -28,7 +31,7 @@ public class HomeFragment extends Fragment {
 
     final private String LOG = "MainActivity";
     private Bundle bundle = new Bundle();
-    private EditText datePicker;
+    public EditText datePicker;
     private String selectedDate;
     DatePickerDialog.OnDateSetListener setListener;
     private Context context;
@@ -99,12 +102,10 @@ public class HomeFragment extends Fragment {
         datePicker.setText(europeanDateFormat);
     }
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -112,10 +113,11 @@ public class HomeFragment extends Fragment {
         //hides the keyboard
         datePicker.setInputType(InputType.TYPE_NULL);
 
-        Calendar calendar = Calendar.getInstance();
+        //ToDo: Teil des klassischen Date Picker Dialog
+        /*Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);*/
 
 
         /*
@@ -123,8 +125,19 @@ public class HomeFragment extends Fragment {
          */
 
 
-        //TODO Datepicker .show() Methode kann anscheinend nicht in einem Fragment funktionieren
+        //try to include Datepicker Dialog in Fragment
         datePicker.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+               /* DialogFragment dialogFragment = new SelectDateFragment();
+                dialogFragment.show(getFragmentManager(),"date");*/
+
+            }
+        });
+        //TODO Datepicker .show() Methode kann anscheinend nicht in einem Fragment funktionieren
+        /*datePicker.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -138,8 +151,7 @@ public class HomeFragment extends Fragment {
                 }, year, month, day);
                 datePickerDialog.show();
             }
-        });
-
+        });*/
 
 
         Button refreshBtn = view.findViewById(R.id.refreshBtn);

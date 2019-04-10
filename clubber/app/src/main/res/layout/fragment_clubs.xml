@@ -3,14 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".business_logic.ClubActivity"
+    android:id="@+id/fragment_clubs"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".business_logic.MainActivity"
     android:background="@color/background">
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!--android:layout_above="@id/bottom_navigation"-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view2"
@@ -20,18 +16,5 @@
             android:layout_margin="5dp"
             android:scrollbars="vertical">
         </android.support.v7.widget.RecyclerView>
-
-    </FrameLayout>
-
-    <!-- ToDo: Navigationsmenu funktioniert nicht, Dienstag nachfragen wenn bis dahin nicht gefixt-->
-
-    <!--<android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation"
-        android:background="?android:attr/windowBackground" />-->
-
 
 </RelativeLayout>
