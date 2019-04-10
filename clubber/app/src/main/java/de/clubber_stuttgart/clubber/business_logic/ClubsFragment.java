@@ -27,6 +27,7 @@ public class ClubsFragment extends Fragment {
     final private String LOG = "ClubActivity";
     private Context context;
 
+
     public ClubsFragment() {
         // Required empty public constructor
     }
@@ -65,11 +66,14 @@ public class ClubsFragment extends Fragment {
         cursor.close();
 
 
-        //ToDo: Funktioniert das nach der Implementierung der Navigation; Kommentar entfernen und testen
-        boolean noNetwork = true;//getArguments().getBoolean("noNetwork");
-        Log.i(LOG, "Check if there is network access... result: " + !noNetwork);
+        Bundle bundle = this.getArguments();
 
-        if (noNetwork) {
+        //ToDo: Funktioniert das nach der Implementierung der Navigation; Kommentar entfernen und testen
+        boolean networkAccess = bundle.getBoolean("networkAccess");
+        //bundle.getBoolean("networkAccess");
+        Log.i(LOG, "Check if there is network access... result: " + networkAccess);
+
+        if (!networkAccess) {
             if (clubList.isEmpty()) {
                 Log.w(LOG, "There are no entries in the database");
                 //ToDo: Hier evtl. eher eine TextView einfügen.

@@ -74,10 +74,10 @@ public class EventsFragment extends Fragment {
 
 
         //ToDo: Funktioniert das nach der Implementierung der Navigation; Kommentar entfernen und testen
-        boolean noNetwork = true;//getArguments().getBoolean("noNetwork");
-        Log.i(LOG, "Check if there is network access... result: " + !noNetwork);
+        boolean networkAccess = getArguments().getBoolean("networkAccess");
+        Log.i(LOG, "Check if there is network access... result: " + networkAccess);
 
-        if (noNetwork) {
+        if (!networkAccess) {
             if (eventList.isEmpty()) {
                 Log.w(LOG, "There are no entries in the database");
                 //ToDo: Hier evtl. eher eine TextView einfügen.

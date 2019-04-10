@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,11 +31,12 @@ import de.clubber_stuttgart.clubber.R;
 public class HomeFragment extends Fragment {
 
     final private String LOG = "MainActivity";
-    private Bundle bundle = new Bundle();
     public EditText datePicker;
     private String selectedDate;
     DatePickerDialog.OnDateSetListener setListener;
     private Context context;
+
+    static boolean networkAccess;
 
 
     public HomeFragment() {
@@ -47,9 +49,6 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         this.context = getActivity().getApplicationContext();
-
-        //startEventActIntent = new Intent(context, EventActivity.class);
-        //startClubActIntent = new Intent(context, ClubActivity.class);
 
 
         initDBConnectionService();
@@ -64,24 +63,19 @@ public class HomeFragment extends Fragment {
 
     private void initDBConnectionService(){
         Log.i(LOG,"Checking if network is available...");
-        String noNetwork = "noNetwork";
-
-        ClubsFragment clubsFragment = new ClubsFragment();
-        EventsFragment eventsFragment = new EventsFragment();
-
         if (isNetworkAvailable()) {
             Log.i(LOG,"Network is available");
-            bundle.putBoolean(noNetwork, false);
+            networkAccess = true;
 
             Intent serviceIntent = new Intent(context, DBConnectionService.class);
             context.startService(serviceIntent);
         } else {
             Log.i(LOG, "no network available");
             //gives the fragments some more information about the connection --> "carefull! You need to consider this to give the user information on the UI"
-            bundle.putBoolean(noNetwork, true);
+            networkAccess = false;
         }
-        clubsFragment.setArguments(bundle);
-        eventsFragment.setArguments(bundle);
+
+
     }
 
     public void formatDate (String year, String month, String day){

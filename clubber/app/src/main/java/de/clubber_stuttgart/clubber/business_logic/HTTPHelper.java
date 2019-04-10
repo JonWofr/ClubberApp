@@ -92,8 +92,6 @@ public class HTTPHelper extends AsyncTask {
             //connect to the server
             HttpURLConnection jsonResponse = (HttpURLConnection) url.openConnection();
             Log.d(LOG,"Connection to " + jsonResponse + " established");
-            //TODO weitermachen bruh?!
-
             //create inputstream which delivers server's response data
             InputStream in = new BufferedInputStream(jsonResponse.getInputStream());
             BufferedReader buf = new BufferedReader(new InputStreamReader(in));

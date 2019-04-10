@@ -3,6 +3,7 @@ package de.clubber_stuttgart.clubber.business_logic;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -40,33 +41,51 @@ public class MainActivity extends FragmentActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-
     }
+
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     Fragment selectedFragment = null;
+                    Bundle bundle = new Bundle();
 
                     switch (menuItem.getItemId()){
                         case R.id.nav_home:
-                        selectedFragment= new HomeFragment();
-                        break;
+                            selectedFragment= new HomeFragment();
+                            break;
                         case R.id.nav_events:
                             selectedFragment= new EventsFragment();
+                            putNetworkState(bundle,selectedFragment);
                             break;
                         case R.id.nav_location:
                             selectedFragment= new ClubsFragment();
+                            putNetworkState(bundle,selectedFragment);
                             break;
-
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            selectedFragment).commit();
+
+                    //ToDo: Vorsicht ist noch ineffizient, da wir das Home Fragment komplett zerstören! Die Struktur des Codes sieht das jedoch nicht vor. (
+                    //ToDo In der onCreate() wird die business logik ausgeführt und diese sollte nur ausgeführt werden, wenn die App das aller erste mal startet. Das ist bei uns nicht der Fall (siehe HomeFragment methode)
+                    //ToDo Die onCreateView() Methode erstellt nur die View und führt keine große Logik aus.
+                    //ToDo: hier der Lifecycle: https://developer.android.com/guide/components/fragments
+
+                    //ToDo: Die Methode onDestroy umgehen!
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
                 }
             };
+
+
+    void putNetworkState(Bundle bundle, Fragment fragment){
+        bundle.putBoolean("networkAccess", HomeFragment.networkAccess);
+        fragment.setArguments(bundle);
+
+    }
+
+
 
 }
 
