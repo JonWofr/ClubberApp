@@ -83,7 +83,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //deletes the tables and creates them all over again
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //ToDo: hier löschen der Tabellen einfügen und bei den anderen beiden Methoden rausnehmen.
         db.execSQL(DROP_TABLE_CLUBS);
         db.execSQL(DROP_TABLE_EVENTS);
         Log.d(LOG, "Table " + TABLE_NAME_CLUBS + " and table " + TABLE_NAME_EVENTS + " have been deleted.");
@@ -109,6 +108,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
         //ToDo: wie hängt onUpgrade damit zusammen?
+
         //gets the DB and calls the onCreate method
         SQLiteDatabase db = this.getWritableDatabase();
         //runs insert command as SQL
@@ -135,6 +135,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
         //ToDo: wie hängt onUpgrade damit zusammen?
+
         //gets the DB and calls the onCreate method
         SQLiteDatabase db = this.getWritableDatabase();
         //runs insert command as SQL
@@ -166,9 +167,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String eId = cursor.getString(0);
 
         cursor.close();
-        //TODO Sofern die Tabellen noch nicht bestehen zu diesem Zeitpunkt werden die Strings null und null wird an die URL, welche zu dem Server
-        //TODO geschickt wird, angehängt. Das Programm stürzt nicht ab und der Server antwortet sogar darauf, jedoch kann dies zu unerwünschtem
-        //TODO Verhalten führen.
 
         //get highest id of table events. If the table does not exist at this moment String eId will be null
         cursor = db.query(true, TABLE_NAME_CLUBS, new String[]{"MAX(" + C_ID + ")"}, null, null, null, null, null, null);
@@ -177,7 +175,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         db.close();
-        //save highest ids of both tables inside String array and return it
+        //save highest ids of both tables inside String array and return it. If the tables do not exist yet the values inside the array are null, null. This is actually no problem at all, because at the serverside the server knows what to do with that
         return new String[]{eId, cId};
     }
 

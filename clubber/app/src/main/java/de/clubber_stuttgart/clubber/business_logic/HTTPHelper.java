@@ -1,7 +1,9 @@
 package de.clubber_stuttgart.clubber.business_logic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -42,10 +44,12 @@ public class HTTPHelper extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        if(o == null){
-            //when null returned the user gets a response that the database is up to date
-            //ToDo: Achtung kann momentan nicht null sein --> was wenn json file mehr oder weniger leer ist und DB up to date ist?
-        }else{
+            //when an empty json String is returned
+            //TODO Hier einen Toast erstellen, sofern der User auf den Refresh button geklickt hat.
+            if (o.toString().equals("")) {
+
+            }
+            else {
 
             Log.i(LOG,"inserting received data to the database...");
 
@@ -78,11 +82,15 @@ public class HTTPHelper extends AsyncTask {
                 e.printStackTrace();
             }
         }
+        //Broadcast is used inside the EventsFragment class to update its UI when the refresh Button is pressed
+        Intent intent = new Intent();
+        intent.setAction("notifyEventFragment");
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     //this method is necessary to establish the connection to the server, send data to the server and retrieve responses, which are dependant on the sent requests
     private String requestResponseServer(String idEvent, String idClub){
-        //URL which leads to the php script on the server. Data for the request is sent via GET
+        //URL which leads to the php script on the server. Data for the request is sent via GET. idEvent and idClub might be null, but this does not yield errors.
         String urlString = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=" + idEvent + "&idClub=" + idClub;
         Log.d(LOG, "send request to following url: " + urlString);
         //this stringbuilder will be appended gradually and consists of the response of the server
@@ -92,6 +100,7 @@ public class HTTPHelper extends AsyncTask {
             //connect to the server
             HttpURLConnection jsonResponse = (HttpURLConnection) url.openConnection();
             Log.d(LOG,"Connection to " + jsonResponse + " established");
+
             //create inputstream which delivers server's response data
             InputStream in = new BufferedInputStream(jsonResponse.getInputStream());
             BufferedReader buf = new BufferedReader(new InputStreamReader(in));
@@ -105,12 +114,11 @@ public class HTTPHelper extends AsyncTask {
                 //jumps to next line
                 line = buf.readLine();
             }
-        }catch (MalformedURLException e) {
-            //ToDo: reicht hier eine Warnung oder stürzt die App danach ab?
-            Log.w(LOG, "URL is invalid");
+        }catch (MalformedURLException mlfE) {
+            Log.w(this.getClass().toString(), "The requested URL does not exist!");
         }
-        catch (IOException ioe){
-            ioe.printStackTrace();
+        catch (IOException ioE){
+            Log.w(this.getClass().toString(), "An I/O error whilst trying to read the server's response occured");
         }
         Log.d(LOG, "Data of server response: " + jsonString);
         return jsonString.toString();
