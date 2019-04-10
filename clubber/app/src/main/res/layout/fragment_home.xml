@@ -37,38 +37,6 @@
 
         </LinearLayout>
 
-       <Button
-            android:id="@+id/eventBtnWithoutDate"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="show all Events"
-            android:background="@drawable/my_button"
-            android:textColor="@android:color/white"
-            />
-
-        <Button
-            android:id="@+id/clubBtn"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:background="@drawable/my_button"
-            android:text="Clubs"
-            />
-
-        <Button
-            android:id="@+id/refreshBtn"
-            android:layout_gravity="center"
-            android:layout_width="268dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textColor="@android:color/white"
-            android:text="Refresh with internet connection"
-            android:background="@drawable/my_button"/>
-
 
     </LinearLayout>
 

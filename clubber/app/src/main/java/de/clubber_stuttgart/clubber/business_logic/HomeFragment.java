@@ -50,9 +50,11 @@ public class HomeFragment extends Fragment {
 
         this.context = getActivity().getApplicationContext();
 
-
-        initDBConnectionService();
+        if (MainActivity.initSetupDatabase) {
+            initDBConnectionService();
+        }
     }
+
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -148,15 +150,6 @@ public class HomeFragment extends Fragment {
         });*/
 
 
-        Button refreshBtn = view.findViewById(R.id.refreshBtn);
-        refreshBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(LOG, "refresh button has been clicked, trying to refresh...");
-                initDBConnectionService();
-                //ToDo: Rückmeldung an den user, ob er schon up to date ist und ob der refresh erfolgreich war.
-            }
-        });
 
         //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
 

@@ -65,12 +65,14 @@ public class EventsFragment extends Fragment {
         //on button click the server will be contacted and new event or club entries might be stored into the local db
         Button refreshBtn = view.findViewById(R.id.refreshBtn);
         refreshBtn.setOnClickListener(new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        Intent serviceIntent = new Intent(context, DBConnectionService.class);
-                                                        context.startService(serviceIntent);
-                                                    }
-                                                }
+                                          @Override
+                                          public void onClick(View v) {
+                                              Log.i(LOG, "refresh button has been clicked, trying to refresh...");
+                                              //ToDo: Rückmeldung an den user, ob er schon up to date ist und ob der refresh erfolgreich war.
+                                              Intent serviceIntent = new Intent(context, DBConnectionService.class);
+                                              context.startService(serviceIntent);
+                                          }
+                                      }
         );
 
 

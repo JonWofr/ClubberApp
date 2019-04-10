@@ -11,12 +11,9 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.text.InputType;
-import android.util.Log;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +30,9 @@ import java.util.Date;
 
 public class MainActivity extends FragmentActivity {
 
+    private final String LOG = "MainActiviy";
+    //To ensure that the HomeFragment won't start the DBConnectionService again after it has done it once and been called another time.
+    static boolean initSetupDatabase = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class MainActivity extends FragmentActivity {
                     switch (menuItem.getItemId()){
                         case R.id.nav_home:
                             selectedFragment= new HomeFragment();
+                            initSetupDatabase = false;
                             break;
                         case R.id.nav_events:
                             selectedFragment= new EventsFragment();
@@ -67,18 +68,13 @@ public class MainActivity extends FragmentActivity {
                             break;
                     }
 
-                    //ToDo: Vorsicht ist noch ineffizient, da wir das Home Fragment komplett zerstören! Die Struktur des Codes sieht das jedoch nicht vor. (
-                    //ToDo In der onCreate() wird die business logik ausgeführt und diese sollte nur ausgeführt werden, wenn die App das aller erste mal startet. Das ist bei uns nicht der Fall (siehe HomeFragment methode)
-                    //ToDo Die onCreateView() Methode erstellt nur die View und führt keine große Logik aus.
-                    //ToDo: hier der Lifecycle: https://developer.android.com/guide/components/fragments
-
-                    //ToDo: Die Methode onDestroy umgehen!
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
                 }
             };
 
 
+    //ToDo: Kommt eventuell noch weg, deswegen noch kein logging und Kommentare...
     void putNetworkState(Bundle bundle, Fragment fragment){
         bundle.putBoolean("networkAccess", HomeFragment.networkAccess);
         fragment.setArguments(bundle);
