@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-    final private String LOG = "HTTPHelper";
+    final private String LOG = "DataBaseHelper";
 
     //Database name
     private static final String DATABASE_NAME = "clubberDB";
@@ -181,16 +181,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public void deleteOldEntries (){
         //TODO Hier könnte ein Problem entstehen, wenn die Methode am 01. eines Monats aufgerufen wird, da die Methode nicht wissen kann, dass der Tag vor dem 01. nicht der 00. ist
-        //TODO Hier könnte ein weiteres Problem entstehen, wenn der Tag dd nicht zweistellig ist (z.B. 05). Beim Parsen zu einem Integer wird höchstwahrscheinlich eine 5 und nicht eine 05 erstellt, wodurch beim sql statement probleme auftreten können
         String currentDate = java.time.LocalDate.now().toString();
         String day = currentDate.substring(currentDate.length()- 2, currentDate.length());
-        String yearAndMonth = currentDate.substring(0, 8);
+        String yearAndMonthString = currentDate.substring(0, 8);
         int dayMinusOne = Integer.parseInt(day) - 1;
-        String dateOfYesterday = yearAndMonth + dayMinusOne;
-        Log.i(this.getClass().toString(), "Every event entry in the local db, which is older than " + dateOfYesterday + " will be deleted");
+        String dayMinusOneString = String.valueOf(dayMinusOne);
+        if (dayMinusOneString.length() == 1){
+            dayMinusOneString = 0 + String.valueOf(dayMinusOne);
+        }
+        String dateOfYesterday = yearAndMonthString + dayMinusOneString;
+        Log.i(LOG, "Every event entry in the local db, which is older than " + dateOfYesterday + " will be deleted");
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE from " + TABLE_NAME_EVENTS + " where " + E_DTE + " < " + dateOfYesterday);
         db.close();
     }
-
 }

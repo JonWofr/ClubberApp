@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +22,7 @@ import java.net.URL;
 
 public class HTTPHelper extends AsyncTask {
 
+    private static boolean refreshbuttonClicked;
     private String idEvent;
     private String idClub;
     private Context context;
@@ -45,9 +47,10 @@ public class HTTPHelper extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
             //when an empty json String is returned
-            //TODO Hier einen Toast erstellen, sofern der User auf den Refresh button geklickt hat.
-            if (o.toString().equals("")) {
-
+            if (o.toString().equals("{\"events\" : [],\"clubs\" : []}") && refreshbuttonClicked) {
+                Log.i(LOG, "The received data is empty and no entries will be made");
+                Toast.makeText(context, "Es wird kein Update benötigt, die Daten sind bereits aktuell.", Toast.LENGTH_LONG).show();
+                refreshbuttonClicked = false;
             }
             else {
 
@@ -122,6 +125,15 @@ public class HTTPHelper extends AsyncTask {
         }
         Log.d(LOG, "Data of server response: " + jsonString);
         return jsonString.toString();
+    }
+
+    public static void setRefreshButtonClicked (Boolean clicked){
+        refreshbuttonClicked = clicked;
+    }
+
+    //TODO eventuell nötig, um herauszufinden, ob der Button geklickt wurde, sobald die Internetverbindung gecheckt wird
+    public static Boolean getRefreshButtonClicked (){
+        return refreshbuttonClicked;
     }
 }
 

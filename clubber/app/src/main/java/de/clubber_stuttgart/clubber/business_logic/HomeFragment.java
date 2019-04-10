@@ -76,8 +76,6 @@ public class HomeFragment extends Fragment {
             //gives the fragments some more information about the connection --> "carefull! You need to consider this to give the user information on the UI"
             networkAccess = false;
         }
-
-
     }
 
     public void formatDate (String year, String month, String day){

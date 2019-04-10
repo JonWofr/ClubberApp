@@ -57,7 +57,7 @@ public class EventsFragment extends Fragment {
         dbConnectionServiceHasFinished = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d(this.getClass().toString(), "Broadcast received UI of EventsFragment is about to be updated");
+                Log.d(this.getClass().toString(), "Broadcast received. UI of EventsFragment is about to be updated");
                 reloadFragment();
             }
         };
@@ -67,6 +67,7 @@ public class EventsFragment extends Fragment {
         refreshBtn.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {
+                                              HTTPHelper.setRefreshButtonClicked(true);
                                               Log.i(LOG, "refresh button has been clicked, trying to refresh...");
                                               //ToDo: Rückmeldung an den user, ob er schon up to date ist und ob der refresh erfolgreich war.
                                               Intent serviceIntent = new Intent(context, DBConnectionService.class);
