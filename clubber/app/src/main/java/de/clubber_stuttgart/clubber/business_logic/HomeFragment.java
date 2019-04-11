@@ -30,7 +30,7 @@ import de.clubber_stuttgart.clubber.R;
  */
 public class HomeFragment extends Fragment {
 
-    final private String LOG = "MainActivity";
+    final private String LOG = "HomeFragment";
     public EditText datePicker;
     private String selectedDate;
     DatePickerDialog.OnDateSetListener setListener;
@@ -50,30 +50,13 @@ public class HomeFragment extends Fragment {
         this.context = getActivity().getApplicationContext();
 
         if (MainActivity.initSetupDatabase) {
+            Log.i(LOG,"initial setup of the database. App is being started for the first time");
             Intent serviceIntent = new Intent(context, DBConnectionService.class);
             context.startService(serviceIntent);
         }
     }
 
 
-
-    public void formatDate (String year, String month, String day){
-        //ensures compatibility with db-query, because date formats are stored in a us-format (yyyy-mm-dd)
-
-        if (month.length() == 1){
-            month = "0" + month;
-        }
-
-        if (day.length() == 1){
-            day = "0" + day;
-        }
-
-        selectedDate = year + "-" + month + "-" + day;
-        Log.i(this.getClass().toString(), "The user selected " + selectedDate + " as date");
-        //this is for better readability for european users
-        String europeanDateFormat = day + "." + month + "." + year;
-        datePicker.setText(europeanDateFormat);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -127,12 +110,29 @@ public class HomeFragment extends Fragment {
         });*/
 
 
-
-        //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
-
-
         return view;
 
+    }
+
+
+
+
+    //ToDo: Kann das hier raus?
+    public void formatDate (String year, String month, String day){
+        //ensures compatibility with db-query, because date formats are stored in a us-format (yyyy-mm-dd)
+
+        if (month.length() == 1){
+            month = "0" + month;
+        }
+
+        if (day.length() == 1){
+            day = "0" + day;
+        }
+        selectedDate = year + "-" + month + "-" + day;
+        Log.i(this.getClass().toString(), "The user selected " + selectedDate + " as date");
+        //this is for better readability for european users
+        String europeanDateFormat = day + "." + month + "." + year;
+        datePicker.setText(europeanDateFormat);
     }
 
 

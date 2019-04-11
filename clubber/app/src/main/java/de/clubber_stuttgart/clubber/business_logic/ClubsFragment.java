@@ -24,7 +24,7 @@ import de.clubber_stuttgart.clubber.R;
 
 public class ClubsFragment extends Fragment {
 
-    final private String LOG = "ClubActivity";
+    final private String LOG = "ClubFragment";
     private Context context;
 
 
@@ -55,8 +55,7 @@ public class ClubsFragment extends Fragment {
 
         //columns --> which should be selected (null = all)
         //selection null return all the rows (WHERE statement)
-        //selectionArgs where blabla is something (e.g. date)
-        //ToDo: orderby einfügen
+        //selectionArgs where column is something (e.g. date)
         Cursor cursor = db.query(true, DataBaseHelper.TABLE_NAME_CLUBS, null, null, null, null, null, "name asc", null);
 
         while (cursor.moveToNext()) {
@@ -65,12 +64,7 @@ public class ClubsFragment extends Fragment {
 
         cursor.close();
 
-
-        Bundle bundle = this.getArguments();
-
-        //ToDo: Funktioniert das nach der Implementierung der Navigation; Kommentar entfernen und testen
         boolean networkAccess = DBConnectionService.networkAccess;
-        //bundle.getBoolean("networkAccess");
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);
 
         if (!networkAccess) {

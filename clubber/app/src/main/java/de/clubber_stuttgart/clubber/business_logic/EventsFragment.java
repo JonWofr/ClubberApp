@@ -32,7 +32,7 @@ import de.clubber_stuttgart.clubber.R;
 public class EventsFragment extends Fragment {
 
     //ToDo: die Navigation funktioniert nicht:  Error inflating class android.support.design.widget.BottomNavigationView
-    final private String LOG = "EventActivity";
+    final private String LOG = "EventFragment";
     private BroadcastReceiver dbConnectionServiceHasFinished;
     private Context context;
 
@@ -57,7 +57,7 @@ public class EventsFragment extends Fragment {
         dbConnectionServiceHasFinished = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d(this.getClass().toString(), "Broadcast received. UI of EventsFragment is about to be updated");
+                Log.d(LOG, "Broadcast received. UI of EventsFragment is about to be updated");
                 reloadFragment();
             }
         };
@@ -68,21 +68,18 @@ public class EventsFragment extends Fragment {
                                           @Override
                                           public void onClick(View v) {
                                               Log.i(LOG, "refresh button has been clicked, trying to refresh...");
-                                              //ToDo: Rückmeldung an den user, ob er schon up to date ist und ob der refresh erfolgreich war.
                                               Intent serviceIntent = new Intent(context, DBConnectionService.class);
-
                                               context.startService(serviceIntent);
                                           }
                                       }
         );
-
 
         //creates an Array List of event items
         ArrayList<Event> eventList = new ArrayList<>();
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
 
-        Log.d(this.getClass().toString(), db.getPath());
+        Log.d(LOG, db.getPath());
 
         Bundle bundle = getActivity().getIntent().getExtras();
 

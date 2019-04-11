@@ -66,7 +66,7 @@ public class HTTPHelper extends AsyncTask {
             }
         }
         else {
-            Log.i(LOG, "The received data is empty and no entries will be made");
+            Log.i(LOG, "The received data is empty and no entries will be inserted");
 
         }
         return jsonString;

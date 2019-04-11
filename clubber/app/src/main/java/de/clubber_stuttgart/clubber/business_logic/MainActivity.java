@@ -1,13 +1,6 @@
 package de.clubber_stuttgart.clubber.business_logic;
 
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,20 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import de.clubber_stuttgart.clubber.R;
 
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 public class MainActivity extends FragmentActivity {
+
+    //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
 
     private final String LOG = "MainActiviy";
     //To ensure that the HomeFragment won't start the DBConnectionService again after it has done it once and been called another time.
