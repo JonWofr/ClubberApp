@@ -31,33 +31,13 @@ public class HTTPHelper extends AsyncTask {
     //is called after execute() call and calls method requestResponseServer(). This method runs in its own thread
     @Override
     protected Object doInBackground(Object[] objects) {
-        return requestResponseServer(idEvent, idClub);
-    }
-
-    //method to be called on a HTTPHelper object to initiate the AsyncTask methods
-    void initiateServerCommunication(String idEvent, String idClub, Context context){
-        this.context = context;
-        this.idEvent = idEvent;
-        this.idClub = idClub;
-        this.execute();
-    }
-
-    //is called after doInBackground() finished its tasks and the return value of doInBackground() is passed to this method
-    @Override
-    protected void onPostExecute(Object o) {
-        super.onPostExecute(o);
-            //when an empty json String is returned
-            if (o.toString().equals("{\"events\" : [],\"clubs\" : []}") && refreshbuttonClicked) {
-                Log.i(LOG, "The received data is empty and no entries will be made");
-                Toast.makeText(context, "Es wird kein Update benötigt, die Daten sind bereits aktuell.", Toast.LENGTH_LONG).show();
-                refreshbuttonClicked = false;
-            }
-            else {
+        String jsonString = requestResponseServer(idEvent, idClub);
+        //when an empty json String is returned
+        if (!jsonString.equals("{\"events\" : [],\"clubs\" : []}")) {
 
             Log.i(LOG,"inserting received data to the database...");
-
             try {
-                JSONObject jsonObject = new JSONObject(o.toString());
+                JSONObject jsonObject = new JSONObject(jsonString);
                 Log.d(LOG, "A JSONObject has been created with the received data from the server");
 
                 //Jsons's file content are two arrays "events" and "clubs"
@@ -85,6 +65,34 @@ public class HTTPHelper extends AsyncTask {
                 e.printStackTrace();
             }
         }
+        else {
+            Log.i(LOG, "The received data is empty and no entries will be made");
+
+        }
+        return jsonString;
+    }
+
+    //method to be called on a HTTPHelper object to initiate the AsyncTask methods
+    void initiateServerCommunication(String idEvent, String idClub, Context context){
+        this.context = context;
+        this.idEvent = idEvent;
+        this.idClub = idClub;
+        this.execute();
+    }
+
+    @Override
+    protected void onPostExecute(Object o) {
+        super.onPostExecute(o);
+
+        String jsonString = o.toString();
+
+        if (jsonString.equals("{\"events\" : [],\"clubs\" : []}") && !MainActivity.initSetupDatabase) {
+            Toast.makeText(context, "Es wird kein Update benötigt, die Daten sind bereits aktuell.", Toast.LENGTH_LONG).show();
+        }else if(!MainActivity.initSetupDatabase){
+            Toast.makeText(context, "Du bist jetzt wieder up to date!", Toast.LENGTH_LONG).show();
+        }
+
+
         //Broadcast is used inside the EventsFragment class to update its UI when the refresh Button is pressed
         Intent intent = new Intent();
         intent.setAction("notifyEventFragment");
@@ -125,10 +133,6 @@ public class HTTPHelper extends AsyncTask {
         }
         Log.d(LOG, "Data of server response: " + jsonString);
         return jsonString.toString();
-    }
-
-    public static void setRefreshButtonClicked (Boolean clicked){
-        refreshbuttonClicked = clicked;
     }
 
     //TODO eventuell nötig, um herauszufinden, ob der Button geklickt wurde, sobald die Internetverbindung gecheckt wird

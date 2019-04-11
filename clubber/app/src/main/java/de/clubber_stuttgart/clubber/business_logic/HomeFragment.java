@@ -36,7 +36,6 @@ public class HomeFragment extends Fragment {
     DatePickerDialog.OnDateSetListener setListener;
     private Context context;
 
-    static boolean networkAccess;
 
 
     public HomeFragment() {
@@ -51,32 +50,12 @@ public class HomeFragment extends Fragment {
         this.context = getActivity().getApplicationContext();
 
         if (MainActivity.initSetupDatabase) {
-            initDBConnectionService();
-        }
-    }
-
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-
-    private void initDBConnectionService(){
-        Log.i(LOG,"Checking if network is available...");
-        if (isNetworkAvailable()) {
-            Log.i(LOG,"Network is available");
-            networkAccess = true;
-
             Intent serviceIntent = new Intent(context, DBConnectionService.class);
             context.startService(serviceIntent);
-        } else {
-            Log.i(LOG, "no network available");
-            //gives the fragments some more information about the connection --> "carefull! You need to consider this to give the user information on the UI"
-            networkAccess = false;
         }
     }
+
+
 
     public void formatDate (String year, String month, String day){
         //ensures compatibility with db-query, because date formats are stored in a us-format (yyyy-mm-dd)

@@ -69,7 +69,7 @@ public class ClubsFragment extends Fragment {
         Bundle bundle = this.getArguments();
 
         //ToDo: Funktioniert das nach der Implementierung der Navigation; Kommentar entfernen und testen
-        boolean networkAccess = bundle.getBoolean("networkAccess");
+        boolean networkAccess = DBConnectionService.networkAccess;
         //bundle.getBoolean("networkAccess");
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);
 

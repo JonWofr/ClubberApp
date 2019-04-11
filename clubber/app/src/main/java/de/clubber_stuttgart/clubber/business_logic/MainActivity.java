@@ -51,37 +51,25 @@ public class MainActivity extends FragmentActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     Fragment selectedFragment = null;
-                    Bundle bundle = new Bundle();
 
                     switch (menuItem.getItemId()){
                         case R.id.nav_home:
                             selectedFragment= new HomeFragment();
-                            initSetupDatabase = false;
                             break;
                         case R.id.nav_events:
                             selectedFragment= new EventsFragment();
-                            putNetworkState(bundle,selectedFragment);
                             break;
                         case R.id.nav_location:
                             selectedFragment= new ClubsFragment();
-                            putNetworkState(bundle,selectedFragment);
                             break;
                     }
+                    //ToDo: workaround abchecken (passt initSetupDatabase oder sollen das Fragment bei onCreateView() weiterlaufen?
+                    initSetupDatabase = false;
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
                 }
             };
-
-
-    //ToDo: Kommt eventuell noch weg, deswegen noch kein logging und Kommentare...
-    void putNetworkState(Bundle bundle, Fragment fragment){
-        bundle.putBoolean("networkAccess", HomeFragment.networkAccess);
-        fragment.setArguments(bundle);
-
-    }
-
-
 
 }
 

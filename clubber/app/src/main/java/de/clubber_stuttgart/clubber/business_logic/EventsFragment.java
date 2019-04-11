@@ -67,10 +67,10 @@ public class EventsFragment extends Fragment {
         refreshBtn.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {
-                                              HTTPHelper.setRefreshButtonClicked(true);
                                               Log.i(LOG, "refresh button has been clicked, trying to refresh...");
                                               //ToDo: Rückmeldung an den user, ob er schon up to date ist und ob der refresh erfolgreich war.
                                               Intent serviceIntent = new Intent(context, DBConnectionService.class);
+
                                               context.startService(serviceIntent);
                                           }
                                       }
@@ -85,6 +85,7 @@ public class EventsFragment extends Fragment {
         Log.d(this.getClass().toString(), db.getPath());
 
         Bundle bundle = getActivity().getIntent().getExtras();
+
         Cursor cursor;
 
         //Intent does not have to contain any selected date (for example if the events tab is reached via the tab bar)
@@ -104,13 +105,13 @@ public class EventsFragment extends Fragment {
 
 
         //ToDo: Funktioniert das nach der Implementierung der Navigation; Kommentar entfernen und testen
-        boolean networkAccess = getArguments().getBoolean("networkAccess");
+        boolean networkAccess = DBConnectionService.networkAccess;
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);
 
         if (!networkAccess) {
             if (eventList.isEmpty()) {
                 Log.w(LOG, "There are no entries in the database");
-                //ToDo: Hier evtl. eher eine TextView einfügen.
+                //ToDo: Hier evtl. eher eine TextView einfügen.!!!!!!!!!!!!!
                 Toast.makeText(context, "Keine Events vorhanden, bitte stelle eine Internetverbindung her.", Toast.LENGTH_LONG).show();
             } else {
                 Log.i(LOG, "There are entries in the database but they might not be up to date");
