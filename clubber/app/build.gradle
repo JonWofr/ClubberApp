@@ -18,6 +18,12 @@ android {
     }
     productFlavors {
     }
+
+    // ... THIS IS FOR TESTING WITH JUNIT - DELETE IF THIS DOES NOT HELP ~ Jonas
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
 }
 
 dependencies {

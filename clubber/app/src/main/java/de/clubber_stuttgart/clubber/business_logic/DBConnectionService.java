@@ -49,12 +49,10 @@ public class DBConnectionService extends IntentService {
             //gives the fragments some more information about the connection --> "carefull! You need to consider this to give the user information on the UI"
             networkAccess = false;
         }
-
     }
 
     @Override
     public void onDestroy() {
-
         if(!MainActivity.initSetupDatabase && !networkAccess){
             Log.i(LOG,"refresh not possible because no network");
             Toast.makeText(this, "keine Aktualisierung möglich, bitte stelle eine Internetverbindung her", Toast.LENGTH_LONG).show();
@@ -68,7 +66,6 @@ public class DBConnectionService extends IntentService {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
 }
 
 
