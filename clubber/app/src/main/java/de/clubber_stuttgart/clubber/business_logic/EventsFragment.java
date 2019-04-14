@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,9 +30,8 @@ import de.clubber_stuttgart.clubber.Event;
 import de.clubber_stuttgart.clubber.R;
 
 
-public class EventsFragment extends Fragment {
+public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    //ToDo: die Navigation funktioniert nicht:  Error inflating class android.support.design.widget.BottomNavigationView
     final private String LOG = "EventFragment";
     private BroadcastReceiver dbConnectionServiceHasFinished;
     private Context context;
@@ -62,17 +62,14 @@ public class EventsFragment extends Fragment {
             }
         };
 
-        //on button click the server will be contacted and new event or club entries might be stored into the local db
-        Button refreshBtn = view.findViewById(R.id.refreshBtn);
-        refreshBtn.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
-                                              Log.i(LOG, "refresh button has been clicked, trying to refresh...");
-                                              Intent serviceIntent = new Intent(context, DBConnectionService.class);
-                                              context.startService(serviceIntent);
-                                          }
-                                      }
-        );
+        //get the swipeLayout
+        SwipeRefreshLayout refresh = (SwipeRefreshLayout) view.findViewById(R.id.fragment_events);
+        //set RefreshListener
+        refresh.setOnRefreshListener(this);
+        Log.i(LOG,"OnRefreshListener has been set");
+        //ad color sheme
+        refresh.setColorSchemeColors(getResources().getColor(R.color.colorAccent),
+                getResources().getColor(R.color.colorPrimary));
 
         //creates an Array List of event items
         ArrayList<Event> eventList = new ArrayList<>();
@@ -120,6 +117,15 @@ public class EventsFragment extends Fragment {
             createRecyclerView(view, eventList);
         }
         return view;
+    }
+
+    //gets called when you pull down the events list = it reloads the Data in the RecyclerView
+    @Override
+    public void onRefresh() {
+        Log.i(LOG, "recyclerView has been pulled down, trying to refresh...");
+        Intent serviceIntent = new Intent(context, DBConnectionService.class);
+        context.startService(serviceIntent);
+
     }
 
     //gets called every time this activity gets into focus

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -28,13 +29,14 @@ import de.clubber_stuttgart.clubber.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     final private String LOG = "HomeFragment";
     public EditText datePicker;
     private String selectedDate;
     DatePickerDialog.OnDateSetListener setListener;
     private Context context;
+    private Button filterDate;
 
 
 
@@ -69,52 +71,39 @@ public class HomeFragment extends Fragment {
         //hides the keyboard
         datePicker.setInputType(InputType.TYPE_NULL);
 
-        //ToDo: Teil des klassischen Date Picker Dialog
-        /*Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);*/
+        //start the datePicker Dialog
+        SelectDate date= new SelectDate(datePicker, getContext());
+        Log.i(LOG,"calls SelectDate class and opens Datepickerdialog");
 
-
-        /*
-        start the datePicker Dialog
-         */
-
-
-        //try to include Datepicker Dialog in Fragment
-        datePicker.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-               /* DialogFragment dialogFragment = new SelectDateFragment();
-                dialogFragment.show(getFragmentManager(),"date");*/
-
-            }
-        });
-        //TODO Datepicker .show() Methode kann anscheinend nicht in einem Fragment funktionieren
-        /*datePicker.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month += 1;
-                        //method is used to correctly format the date to be able to do a sql query and to parse it into a form, which has better readability
-                        formatDate(String.valueOf(year), String.valueOf(month), String.valueOf(day));
-                    }
-                }, year, month, day);
-                datePickerDialog.show();
-            }
-        });*/
-
+        filterDate = (Button) view.findViewById(R.id.eventBtnWithDate);
+        filterDate.setOnClickListener(this);
 
         return view;
 
     }
 
 
+    //to open filtered Events Fragment
+    @Override
+    public void onClick(View v) {
+
+        Fragment fragment = null;
+        switch (v.getId()) {
+            case R.id.eventBtnWithDate:
+                fragment = new EventsFragment();
+                replaceFragment(fragment);
+                break;
+        }
+    }
+
+    public void replaceFragment(Fragment someFragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, someFragment);
+        //ToDo: Jonas wir kann ich hier dem Fragment Events das Datum übergeben ??
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+    }
 
 
     //ToDo: Kann das hier raus?
@@ -134,10 +123,5 @@ public class HomeFragment extends Fragment {
         String europeanDateFormat = day + "." + month + "." + year;
         datePicker.setText(europeanDateFormat);
     }
-
-
-
-
-
 
 }
