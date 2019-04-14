@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		036AF9C2226352A30011BDCD /* Club.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AF9C1226352A30011BDCD /* Club.swift */; };
+		036AF9C4226352C70011BDCD /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AF9C3226352C70011BDCD /* Event.swift */; };
+		036AF9C6226353090011BDCD /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AF9C5226353090011BDCD /* HTTPHelper.swift */; };
+		036AF9C8226353210011BDCD /* DataBaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AF9C7226353210011BDCD /* DataBaseHelper.swift */; };
 		03D4CCF1225DE82100D0A779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D4CCF0225DE82100D0A779 /* AppDelegate.swift */; };
 		03D4CCF3225DE82100D0A779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D4CCF2225DE82100D0A779 /* ViewController.swift */; };
 		03D4CCF6225DE82100D0A779 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03D4CCF4225DE82100D0A779 /* Main.storyboard */; };
@@ -15,6 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		036AF9C1226352A30011BDCD /* Club.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Club.swift; sourceTree = "<group>"; };
+		036AF9C3226352C70011BDCD /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		036AF9C5226353090011BDCD /* HTTPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
+		036AF9C7226353210011BDCD /* DataBaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseHelper.swift; sourceTree = "<group>"; };
 		03D4CCED225DE82100D0A779 /* clubber(ios).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "clubber(ios).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D4CCF0225DE82100D0A779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03D4CCF2225DE82100D0A779 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +62,10 @@
 		03D4CCEF225DE82100D0A779 /* clubber(ios) */ = {
 			isa = PBXGroup;
 			children = (
+				036AF9C7226353210011BDCD /* DataBaseHelper.swift */,
+				036AF9C5226353090011BDCD /* HTTPHelper.swift */,
+				036AF9C3226352C70011BDCD /* Event.swift */,
+				036AF9C1226352A30011BDCD /* Club.swift */,
 				03D4CCF0225DE82100D0A779 /* AppDelegate.swift */,
 				03D4CCF2225DE82100D0A779 /* ViewController.swift */,
 				03D4CCF4225DE82100D0A779 /* Main.storyboard */,
@@ -135,7 +147,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				036AF9C4226352C70011BDCD /* Event.swift in Sources */,
 				03D4CCF3225DE82100D0A779 /* ViewController.swift in Sources */,
+				036AF9C6226353090011BDCD /* HTTPHelper.swift in Sources */,
+				036AF9C2226352A30011BDCD /* Club.swift in Sources */,
+				036AF9C8226353210011BDCD /* DataBaseHelper.swift in Sources */,
 				03D4CCF1225DE82100D0A779 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

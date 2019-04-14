@@ -13,8 +13,7 @@
         <!--Home-->
         <scene sceneID="aLn-wn-ykz">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gEq-dT-cmx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="JRG-R7-5KA" sceneMemberID="viewController">
+                <viewController id="JRG-R7-5KA" customClass="ViewController" customModule="clubber_ios_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jg9-h6-mHr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,13 +22,13 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" id="pmu-PN-md1"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gEq-dT-cmx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1710" y="1135"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="xVp-ts-Abq">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MTr-ke-4A5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController id="41e-pY-MQX" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AWp-0y-qlt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
@@ -42,6 +41,7 @@
                         <segue destination="qu9-hR-Pyl" kind="relationship" relationship="viewControllers" id="MCu-cY-nUY"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MTr-ke-4A5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-579" y="116"/>
         </scene>
