@@ -67,6 +67,9 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         //ad color sheme
         refresh.setColorSchemeColors(getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.colorPrimary));
+        if (refresh.isRefreshing()) {
+            refresh.setRefreshing(false);
+        }
 
         //creates an Array List of event items
         ArrayList<Event> eventList = new ArrayList<>();
