@@ -106,6 +106,7 @@ public class HTTPHelper extends AsyncTask {
         //this stringbuilder will be appended gradually and consists of the response of the server
         StringBuilder jsonString = new StringBuilder();
         try {
+            //TODO was soll passieren, wenn es die URL nicht gibt, wenn die URL nicht valide ist
             URL url = new URL(urlString);
             //connect to the server
             HttpURLConnection jsonResponse = (HttpURLConnection) url.openConnection();

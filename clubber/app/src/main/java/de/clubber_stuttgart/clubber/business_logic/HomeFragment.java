@@ -92,10 +92,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 try {
                     EditText dateInput = getView().findViewById(R.id.datePicker);
                     String date = dateInput.getText().toString();
-                    date = formatDate(date);
                     //if the date is empty, the button has been clicked without a chosen date. We print out a toast.
                     //if there is a date, we pass the date through the MainActivity and replace the HomeFragment with the EventFragment
                     if(!(date.equals(""))){
+                        date = formatDate(date);
                         Log.d(LOG,"A date has been picked, replacing HomeFragment with EventsFragment...");
                         MainActivity.setDateInBundle(fragment, date);
                         replaceFragment(fragment);
@@ -115,7 +115,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         transaction.replace(R.id.fragment_container, someFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
 
 
