@@ -7,33 +7,70 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		036AF9C2226352A30011BDCD /* Club.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AF9C1226352A30011BDCD /* Club.swift */; };
-		036AF9C4226352C70011BDCD /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AF9C3226352C70011BDCD /* Event.swift */; };
-		036AF9C6226353090011BDCD /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AF9C5226353090011BDCD /* HTTPHelper.swift */; };
-		036AF9C8226353210011BDCD /* DataBaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036AF9C7226353210011BDCD /* DataBaseHelper.swift */; };
-		03D4CCF1225DE82100D0A779 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D4CCF0225DE82100D0A779 /* AppDelegate.swift */; };
-		03D4CCF3225DE82100D0A779 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D4CCF2225DE82100D0A779 /* ViewController.swift */; };
-		03D4CCF6225DE82100D0A779 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03D4CCF4225DE82100D0A779 /* Main.storyboard */; };
-		03D4CCF8225DE82200D0A779 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03D4CCF7225DE82200D0A779 /* Assets.xcassets */; };
-		03D4CCFB225DE82200D0A779 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03D4CCF9225DE82200D0A779 /* LaunchScreen.storyboard */; };
+		036BD43B226615A200036F3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD43A226615A200036F3E /* AppDelegate.swift */; };
+		036BD43D226615A200036F3E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD43C226615A200036F3E /* ViewController.swift */; };
+		036BD440226615A200036F3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 036BD43E226615A200036F3E /* Main.storyboard */; };
+		036BD443226615A200036F3E /* clubber_ios_.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 036BD441226615A200036F3E /* clubber_ios_.xcdatamodeld */; };
+		036BD445226615A300036F3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 036BD444226615A300036F3E /* Assets.xcassets */; };
+		036BD448226615A300036F3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 036BD446226615A300036F3E /* LaunchScreen.storyboard */; };
+		036BD453226615A300036F3E /* clubber_ios_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD452226615A300036F3E /* clubber_ios_Tests.swift */; };
+		036BD45E226615A300036F3E /* clubber_ios_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD45D226615A300036F3E /* clubber_ios_UITests.swift */; };
+		036BD46C226616E300036F3E /* DataBaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD46B226616E300036F3E /* DataBaseHelper.swift */; };
+		036BD46E2266171500036F3E /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD46D2266171500036F3E /* HTTPHelper.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		036BD44F226615A300036F3E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 036BD42F226615A200036F3E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 036BD436226615A200036F3E;
+			remoteInfo = "clubber(ios)";
+		};
+		036BD45A226615A300036F3E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 036BD42F226615A200036F3E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 036BD436226615A200036F3E;
+			remoteInfo = "clubber(ios)";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		036AF9C1226352A30011BDCD /* Club.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Club.swift; sourceTree = "<group>"; };
-		036AF9C3226352C70011BDCD /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		036AF9C5226353090011BDCD /* HTTPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
-		036AF9C7226353210011BDCD /* DataBaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseHelper.swift; sourceTree = "<group>"; };
-		03D4CCED225DE82100D0A779 /* clubber(ios).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "clubber(ios).app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		03D4CCF0225DE82100D0A779 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		03D4CCF2225DE82100D0A779 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		03D4CCF5225DE82100D0A779 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		03D4CCF7225DE82200D0A779 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		03D4CCFA225DE82200D0A779 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		03D4CCFC225DE82200D0A779 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		036BD437226615A200036F3E /* clubber(ios).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "clubber(ios).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		036BD43A226615A200036F3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		036BD43C226615A200036F3E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		036BD43F226615A200036F3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		036BD442226615A200036F3E /* clubber_ios_.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = clubber_ios_.xcdatamodel; sourceTree = "<group>"; };
+		036BD444226615A300036F3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		036BD447226615A300036F3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		036BD449226615A300036F3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		036BD44E226615A300036F3E /* clubber(ios)Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "clubber(ios)Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		036BD452226615A300036F3E /* clubber_ios_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clubber_ios_Tests.swift; sourceTree = "<group>"; };
+		036BD454226615A300036F3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		036BD459226615A300036F3E /* clubber(ios)UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "clubber(ios)UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		036BD45D226615A300036F3E /* clubber_ios_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clubber_ios_UITests.swift; sourceTree = "<group>"; };
+		036BD45F226615A300036F3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		036BD46B226616E300036F3E /* DataBaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseHelper.swift; sourceTree = "<group>"; };
+		036BD46D2266171500036F3E /* HTTPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		03D4CCEA225DE82100D0A779 /* Frameworks */ = {
+		036BD434226615A200036F3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		036BD44B226615A300036F3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		036BD456226615A300036F3E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -43,49 +80,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		03D4CCE4225DE82100D0A779 = {
+		036BD42E226615A200036F3E = {
 			isa = PBXGroup;
 			children = (
-				03D4CCEF225DE82100D0A779 /* clubber(ios) */,
-				03D4CCEE225DE82100D0A779 /* Products */,
+				036BD439226615A200036F3E /* clubber(ios) */,
+				036BD451226615A300036F3E /* clubber(ios)Tests */,
+				036BD45C226615A300036F3E /* clubber(ios)UITests */,
+				036BD438226615A200036F3E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		03D4CCEE225DE82100D0A779 /* Products */ = {
+		036BD438226615A200036F3E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				03D4CCED225DE82100D0A779 /* clubber(ios).app */,
+				036BD437226615A200036F3E /* clubber(ios).app */,
+				036BD44E226615A300036F3E /* clubber(ios)Tests.xctest */,
+				036BD459226615A300036F3E /* clubber(ios)UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		03D4CCEF225DE82100D0A779 /* clubber(ios) */ = {
+		036BD439226615A200036F3E /* clubber(ios) */ = {
 			isa = PBXGroup;
 			children = (
-				036AF9C7226353210011BDCD /* DataBaseHelper.swift */,
-				036AF9C5226353090011BDCD /* HTTPHelper.swift */,
-				036AF9C3226352C70011BDCD /* Event.swift */,
-				036AF9C1226352A30011BDCD /* Club.swift */,
-				03D4CCF0225DE82100D0A779 /* AppDelegate.swift */,
-				03D4CCF2225DE82100D0A779 /* ViewController.swift */,
-				03D4CCF4225DE82100D0A779 /* Main.storyboard */,
-				03D4CCF7225DE82200D0A779 /* Assets.xcassets */,
-				03D4CCF9225DE82200D0A779 /* LaunchScreen.storyboard */,
-				03D4CCFC225DE82200D0A779 /* Info.plist */,
+				036BD46D2266171500036F3E /* HTTPHelper.swift */,
+				036BD46B226616E300036F3E /* DataBaseHelper.swift */,
+				036BD43A226615A200036F3E /* AppDelegate.swift */,
+				036BD43C226615A200036F3E /* ViewController.swift */,
+				036BD43E226615A200036F3E /* Main.storyboard */,
+				036BD444226615A300036F3E /* Assets.xcassets */,
+				036BD446226615A300036F3E /* LaunchScreen.storyboard */,
+				036BD449226615A300036F3E /* Info.plist */,
+				036BD441226615A200036F3E /* clubber_ios_.xcdatamodeld */,
 			);
 			path = "clubber(ios)";
+			sourceTree = "<group>";
+		};
+		036BD451226615A300036F3E /* clubber(ios)Tests */ = {
+			isa = PBXGroup;
+			children = (
+				036BD452226615A300036F3E /* clubber_ios_Tests.swift */,
+				036BD454226615A300036F3E /* Info.plist */,
+			);
+			path = "clubber(ios)Tests";
+			sourceTree = "<group>";
+		};
+		036BD45C226615A300036F3E /* clubber(ios)UITests */ = {
+			isa = PBXGroup;
+			children = (
+				036BD45D226615A300036F3E /* clubber_ios_UITests.swift */,
+				036BD45F226615A300036F3E /* Info.plist */,
+			);
+			path = "clubber(ios)UITests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		03D4CCEC225DE82100D0A779 /* clubber(ios) */ = {
+		036BD436226615A200036F3E /* clubber(ios) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 03D4CCFF225DE82200D0A779 /* Build configuration list for PBXNativeTarget "clubber(ios)" */;
+			buildConfigurationList = 036BD462226615A300036F3E /* Build configuration list for PBXNativeTarget "clubber(ios)" */;
 			buildPhases = (
-				03D4CCE9225DE82100D0A779 /* Sources */,
-				03D4CCEA225DE82100D0A779 /* Frameworks */,
-				03D4CCEB225DE82100D0A779 /* Resources */,
+				036BD433226615A200036F3E /* Sources */,
+				036BD434226615A200036F3E /* Frameworks */,
+				036BD435226615A200036F3E /* Resources */,
 			);
 			buildRules = (
 			);
@@ -93,25 +151,69 @@
 			);
 			name = "clubber(ios)";
 			productName = "clubber(ios)";
-			productReference = 03D4CCED225DE82100D0A779 /* clubber(ios).app */;
+			productReference = 036BD437226615A200036F3E /* clubber(ios).app */;
 			productType = "com.apple.product-type.application";
+		};
+		036BD44D226615A300036F3E /* clubber(ios)Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 036BD465226615A300036F3E /* Build configuration list for PBXNativeTarget "clubber(ios)Tests" */;
+			buildPhases = (
+				036BD44A226615A300036F3E /* Sources */,
+				036BD44B226615A300036F3E /* Frameworks */,
+				036BD44C226615A300036F3E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				036BD450226615A300036F3E /* PBXTargetDependency */,
+			);
+			name = "clubber(ios)Tests";
+			productName = "clubber(ios)Tests";
+			productReference = 036BD44E226615A300036F3E /* clubber(ios)Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		036BD458226615A300036F3E /* clubber(ios)UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 036BD468226615A300036F3E /* Build configuration list for PBXNativeTarget "clubber(ios)UITests" */;
+			buildPhases = (
+				036BD455226615A300036F3E /* Sources */,
+				036BD456226615A300036F3E /* Frameworks */,
+				036BD457226615A300036F3E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				036BD45B226615A300036F3E /* PBXTargetDependency */,
+			);
+			name = "clubber(ios)UITests";
+			productName = "clubber(ios)UITests";
+			productReference = 036BD459226615A300036F3E /* clubber(ios)UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		03D4CCE5225DE82100D0A779 /* Project object */ = {
+		036BD42F226615A200036F3E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "hdm-stuttgart";
 				TargetAttributes = {
-					03D4CCEC225DE82100D0A779 = {
+					036BD436226615A200036F3E = {
 						CreatedOnToolsVersion = 10.1;
+					};
+					036BD44D226615A300036F3E = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 036BD436226615A200036F3E;
+					};
+					036BD458226615A300036F3E = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 036BD436226615A200036F3E;
 					};
 				};
 			};
-			buildConfigurationList = 03D4CCE8225DE82100D0A779 /* Build configuration list for PBXProject "clubber(ios)" */;
+			buildConfigurationList = 036BD432226615A200036F3E /* Build configuration list for PBXProject "clubber(ios)" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -119,58 +221,102 @@
 				en,
 				Base,
 			);
-			mainGroup = 03D4CCE4225DE82100D0A779;
-			productRefGroup = 03D4CCEE225DE82100D0A779 /* Products */;
+			mainGroup = 036BD42E226615A200036F3E;
+			productRefGroup = 036BD438226615A200036F3E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				03D4CCEC225DE82100D0A779 /* clubber(ios) */,
+				036BD436226615A200036F3E /* clubber(ios) */,
+				036BD44D226615A300036F3E /* clubber(ios)Tests */,
+				036BD458226615A300036F3E /* clubber(ios)UITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		03D4CCEB225DE82100D0A779 /* Resources */ = {
+		036BD435226615A200036F3E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03D4CCFB225DE82200D0A779 /* LaunchScreen.storyboard in Resources */,
-				03D4CCF8225DE82200D0A779 /* Assets.xcassets in Resources */,
-				03D4CCF6225DE82100D0A779 /* Main.storyboard in Resources */,
+				036BD448226615A300036F3E /* LaunchScreen.storyboard in Resources */,
+				036BD445226615A300036F3E /* Assets.xcassets in Resources */,
+				036BD440226615A200036F3E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		036BD44C226615A300036F3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		036BD457226615A300036F3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		03D4CCE9225DE82100D0A779 /* Sources */ = {
+		036BD433226615A200036F3E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				036AF9C4226352C70011BDCD /* Event.swift in Sources */,
-				03D4CCF3225DE82100D0A779 /* ViewController.swift in Sources */,
-				036AF9C6226353090011BDCD /* HTTPHelper.swift in Sources */,
-				036AF9C2226352A30011BDCD /* Club.swift in Sources */,
-				036AF9C8226353210011BDCD /* DataBaseHelper.swift in Sources */,
-				03D4CCF1225DE82100D0A779 /* AppDelegate.swift in Sources */,
+				036BD46C226616E300036F3E /* DataBaseHelper.swift in Sources */,
+				036BD43D226615A200036F3E /* ViewController.swift in Sources */,
+				036BD46E2266171500036F3E /* HTTPHelper.swift in Sources */,
+				036BD443226615A200036F3E /* clubber_ios_.xcdatamodeld in Sources */,
+				036BD43B226615A200036F3E /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		036BD44A226615A300036F3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				036BD453226615A300036F3E /* clubber_ios_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		036BD455226615A300036F3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				036BD45E226615A300036F3E /* clubber_ios_UITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		036BD450226615A300036F3E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 036BD436226615A200036F3E /* clubber(ios) */;
+			targetProxy = 036BD44F226615A300036F3E /* PBXContainerItemProxy */;
+		};
+		036BD45B226615A300036F3E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 036BD436226615A200036F3E /* clubber(ios) */;
+			targetProxy = 036BD45A226615A300036F3E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
-		03D4CCF4225DE82100D0A779 /* Main.storyboard */ = {
+		036BD43E226615A200036F3E /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				03D4CCF5225DE82100D0A779 /* Base */,
+				036BD43F226615A200036F3E /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		03D4CCF9225DE82200D0A779 /* LaunchScreen.storyboard */ = {
+		036BD446226615A300036F3E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				03D4CCFA225DE82200D0A779 /* Base */,
+				036BD447226615A300036F3E /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -178,7 +324,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		03D4CCFD225DE82200D0A779 /* Debug */ = {
+		036BD460226615A300036F3E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -239,7 +385,7 @@
 			};
 			name = Debug;
 		};
-		03D4CCFE225DE82200D0A779 /* Release */ = {
+		036BD461226615A300036F3E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -294,7 +440,7 @@
 			};
 			name = Release;
 		};
-		03D4CD00225DE82200D0A779 /* Debug */ = {
+		036BD463226615A300036F3E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -312,7 +458,7 @@
 			};
 			name = Debug;
 		};
-		03D4CD01225DE82200D0A779 /* Release */ = {
+		036BD464226615A300036F3E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -330,28 +476,141 @@
 			};
 			name = Release;
 		};
+		036BD466226615A300036F3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C44K2Z4B36;
+				INFOPLIST_FILE = "clubber(ios)Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de-clubber-stuttgart.clubber-ios-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clubber(ios).app/clubber(ios)";
+			};
+			name = Debug;
+		};
+		036BD467226615A300036F3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C44K2Z4B36;
+				INFOPLIST_FILE = "clubber(ios)Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de-clubber-stuttgart.clubber-ios-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clubber(ios).app/clubber(ios)";
+			};
+			name = Release;
+		};
+		036BD469226615A300036F3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C44K2Z4B36;
+				INFOPLIST_FILE = "clubber(ios)UITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de-clubber-stuttgart.clubber-ios-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "clubber(ios)";
+			};
+			name = Debug;
+		};
+		036BD46A226615A300036F3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C44K2Z4B36;
+				INFOPLIST_FILE = "clubber(ios)UITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de-clubber-stuttgart.clubber-ios-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "clubber(ios)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		03D4CCE8225DE82100D0A779 /* Build configuration list for PBXProject "clubber(ios)" */ = {
+		036BD432226615A200036F3E /* Build configuration list for PBXProject "clubber(ios)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				03D4CCFD225DE82200D0A779 /* Debug */,
-				03D4CCFE225DE82200D0A779 /* Release */,
+				036BD460226615A300036F3E /* Debug */,
+				036BD461226615A300036F3E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		03D4CCFF225DE82200D0A779 /* Build configuration list for PBXNativeTarget "clubber(ios)" */ = {
+		036BD462226615A300036F3E /* Build configuration list for PBXNativeTarget "clubber(ios)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				03D4CD00225DE82200D0A779 /* Debug */,
-				03D4CD01225DE82200D0A779 /* Release */,
+				036BD463226615A300036F3E /* Debug */,
+				036BD464226615A300036F3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		036BD465226615A300036F3E /* Build configuration list for PBXNativeTarget "clubber(ios)Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				036BD466226615A300036F3E /* Debug */,
+				036BD467226615A300036F3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		036BD468226615A300036F3E /* Build configuration list for PBXNativeTarget "clubber(ios)UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				036BD469226615A300036F3E /* Debug */,
+				036BD46A226615A300036F3E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		036BD441226615A200036F3E /* clubber_ios_.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				036BD442226615A200036F3E /* clubber_ios_.xcdatamodel */,
+			);
+			currentVersion = 036BD442226615A200036F3E /* clubber_ios_.xcdatamodel */;
+			path = clubber_ios_.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
-	rootObject = 03D4CCE5225DE82100D0A779 /* Project object */;
+	rootObject = 036BD42F226615A200036F3E /* Project object */;
 }
