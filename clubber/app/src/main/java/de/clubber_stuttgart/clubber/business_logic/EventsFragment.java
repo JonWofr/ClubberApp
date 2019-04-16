@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -32,6 +33,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     final private String LOG = "EventFragment";
     private BroadcastReceiver dbConnectionServiceHasFinished;
     private Context context;
+    private SwipeRefreshLayout refresh;
 
 
     public EventsFragment() {
@@ -60,16 +62,13 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         };
 
         //get the swipeLayout
-        SwipeRefreshLayout refresh = (SwipeRefreshLayout) view.findViewById(R.id.fragment_events);
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.fragment_events);
         //set RefreshListener
         refresh.setOnRefreshListener(this);
         Log.i(LOG,"OnRefreshListener has been set");
         //ad color sheme
         refresh.setColorSchemeColors(getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.colorPrimary));
-        if (refresh.isRefreshing()) {
-            refresh.setRefreshing(false);
-        }
 
         //creates an Array List of event items
         ArrayList<Event> eventList = new ArrayList<>();
@@ -125,6 +124,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         Log.i(LOG, "recyclerView has been pulled down, trying to refresh...");
         Intent serviceIntent = new Intent(context, DBConnectionService.class);
         context.startService(serviceIntent);
+        refresh.setRefreshing(false);
 
     }
 
