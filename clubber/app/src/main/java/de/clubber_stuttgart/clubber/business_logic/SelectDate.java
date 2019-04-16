@@ -17,7 +17,7 @@ import java.util.Locale;
 
 import de.clubber_stuttgart.clubber.R;
 
-public class SelectDate implements View.OnFocusChangeListener, DatePickerDialog.OnDateSetListener {
+public class SelectDate implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
 
     private EditText editText;
@@ -27,18 +27,17 @@ public class SelectDate implements View.OnFocusChangeListener, DatePickerDialog.
     public SelectDate(EditText editText, Context ctx){
         this.ctx=ctx;
         this.editText = editText;
-        this.editText.setOnFocusChangeListener(this);
+        this.editText.setOnClickListener(this);
         myCalendar = Calendar.getInstance();
     }
 
     @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        if(hasFocus){
-            new DatePickerDialog(ctx, this, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-        }
+    public void onClick(View v) {
+         DatePickerDialog dialog =new DatePickerDialog(ctx, this,
+                myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH));
 
+         dialog.show();
     }
 
     @Override
