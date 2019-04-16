@@ -16,9 +16,12 @@ public class MainActivity extends FragmentActivity {
 
     //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
 
+    //ToDo: Baut sich das Event Fragment komplett neu auf, wenn refreshed wird (obwohl keine neuen Einträge vorhanden sind)?
+
     private final String LOG = "MainActiviy";
     //To ensure that the HomeFragment won't start the DBConnectionService again after it has done it once and been called another time.
     static boolean initSetupDatabase = true;
+    private static Bundle bundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +33,21 @@ public class MainActivity extends FragmentActivity {
     }
 
 
-
-
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     Fragment selectedFragment = null;
 
-                    switch (menuItem.getItemId()){
+                    switch (menuItem.getItemId()) {
                         case R.id.nav_home:
-                            selectedFragment= new HomeFragment();
+                            selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_events:
-                            selectedFragment= new EventsFragment();
+                            selectedFragment = new EventsFragment();
                             break;
                         case R.id.nav_location:
-                            selectedFragment= new ClubsFragment();
+                            selectedFragment = new ClubsFragment();
                             break;
                     }
                     //ToDo: workaround abchecken (passt initSetupDatabase oder sollen das Fragment bei onCreateView() weiterlaufen?
@@ -57,6 +58,11 @@ public class MainActivity extends FragmentActivity {
                 }
             };
 
+
+    static void setDateInBundle(Fragment fragment, String date) {
+        bundle.putString("selectedDate", date);
+        fragment.setArguments(bundle);
+    }
 }
 
 

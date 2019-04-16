@@ -2,14 +2,9 @@ package de.clubber_stuttgart.clubber.business_logic;
 
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
@@ -18,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -37,6 +32,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     DatePickerDialog.OnDateSetListener setListener;
     private Context context;
     private Button filterDate;
+
 
 
 
@@ -89,17 +85,33 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         Fragment fragment = null;
         switch (v.getId()) {
+            //if our button for submitting the date is clicked, this will happen
             case R.id.eventBtnWithDate:
                 fragment = new EventsFragment();
-                replaceFragment(fragment);
-                break;
+                Log.i(LOG,"The datepicker button has been taped...");
+                try {
+                    EditText dateInput = getView().findViewById(R.id.datePicker);
+                    String date = dateInput.getText().toString();
+                    //if the date is empty, the button has been clicked without a chosen date. We print out a toast.
+                    //if there is a date, we pass the date through the MainActivity and replace the HomeFragment with the EventFragment
+                    if(!(date.equals(""))){
+                        Log.d(LOG,"A date has been picked, replacing HomeFragment with EventsFragment...");
+                        MainActivity.setDateInBundle(fragment, date);
+                        replaceFragment(fragment);
+                    }else {
+                        Log.d(LOG, "No date has been picked");
+                        Toast.makeText(context, "Du musst noch ein Datum auswählen", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                }catch (NullPointerException e){
+                    Log.w(LOG,"No datepicker view");
+                }
         }
     }
 
     public void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, someFragment);
-        //ToDo: Jonas wir kann ich hier dem Fragment Events das Datum übergeben ??
         transaction.addToBackStack(null);
         transaction.commit();
 

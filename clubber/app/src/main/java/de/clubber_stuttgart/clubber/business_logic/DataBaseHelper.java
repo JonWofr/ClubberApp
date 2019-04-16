@@ -179,7 +179,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return new String[]{eId, cId};
     }
 
-    public void deleteOldEntries (){
+    void deleteOldEntries (){
         //TODO Hier könnte ein Problem entstehen, wenn die Methode am 01. eines Monats aufgerufen wird, da die Methode nicht wissen kann, dass der Tag vor dem 01. nicht der 00. ist
         String currentDate = java.time.LocalDate.now().toString();
         String day = currentDate.substring(currentDate.length()- 2, currentDate.length());
