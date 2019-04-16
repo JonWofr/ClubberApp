@@ -9,26 +9,8 @@ import java.lang.reflect.Method;
 
 import static org.junit.Assert.*;
 
-import android.support.test.*;
-
 
 public class HTTPHelperTest {
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void doInBackground() {
-    }
-
-    @Test
-    public void initiateServerCommunication() {
-    }
 
     @Test
     public void requestResponseServer() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -57,9 +39,5 @@ public class HTTPHelperTest {
         output = (String) method.invoke(httpHelper, "5325.23", "5325.23");
         assertEquals("{\"events\" : [", output.substring(0, 13));
         assertEquals("]}", output.substring(output.length()-2, output.length()));
-    }
-
-    @Test
-    public void onPostExecute() {
     }
 }

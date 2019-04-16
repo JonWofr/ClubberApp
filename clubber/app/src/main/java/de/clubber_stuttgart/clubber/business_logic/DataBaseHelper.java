@@ -181,6 +181,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     void deleteOldEntries (){
         //TODO Hier könnte ein Problem entstehen, wenn die Methode am 01. eines Monats aufgerufen wird, da die Methode nicht wissen kann, dass der Tag vor dem 01. nicht der 00. ist
+        //Get the date of yesterday
         String currentDate = java.time.LocalDate.now().toString();
         String day = currentDate.substring(currentDate.length()- 2, currentDate.length());
         String yearAndMonthString = currentDate.substring(0, 8);
@@ -190,9 +191,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             dayMinusOneString = 0 + String.valueOf(dayMinusOne);
         }
         String dateOfYesterday = yearAndMonthString + dayMinusOneString;
+        //delete every event entry, which is older than yesterday
         Log.i(LOG, "Every event entry in the local db, which is older than " + dateOfYesterday + " will be deleted");
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE from " + TABLE_NAME_EVENTS + " where " + E_DTE + " < " + dateOfYesterday);
+        int rowsDeletedCount = db.delete(TABLE_NAME_EVENTS, 	E_DTE + " < '" + dateOfYesterday + "'", null);
+        Log.i(LOG, rowsDeletedCount + " entries have been deleted because corresponding events were outdated");
         db.close();
     }
 }

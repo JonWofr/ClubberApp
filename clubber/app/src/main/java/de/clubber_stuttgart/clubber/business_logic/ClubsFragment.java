@@ -98,5 +98,4 @@ public class ClubsFragment extends Fragment {
         cRecyclerView.setLayoutManager(cLayoutManager);
         cRecyclerView.setAdapter(cAdapter);
     }
-
 }

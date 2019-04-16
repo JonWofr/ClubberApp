@@ -19,7 +19,7 @@ public class Event {
         this.srttime = srttime;
         this.btn = btn;
         this.genre = genre;
-    }
+   }
 }
 
 

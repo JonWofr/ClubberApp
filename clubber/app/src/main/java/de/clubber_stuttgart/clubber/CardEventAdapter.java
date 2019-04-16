@@ -20,6 +20,7 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
 
     private ArrayList<Event> mCarditems;
     private Context context;
+    final private String LOG = "CardEventAdapter";
 
     @NonNull
     @Override
@@ -47,9 +48,10 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
             public void onClick(View v) {
                 Uri uri = Uri.parse(currentItem.btn);
                 Intent toExternalSite =  new Intent(Intent.ACTION_VIEW, uri);
-                System.out.println(uri + "" + toExternalSite);
+                //This flag is required to be able to use startActivity() outside of an Activity
+                toExternalSite.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(toExternalSite);
-                Log.i(this.getClass().toString(), "External site " + uri + " has been clicked on");
+                Log.i(LOG, "External site " + uri + " has been clicked on");
             }
         });
     }
