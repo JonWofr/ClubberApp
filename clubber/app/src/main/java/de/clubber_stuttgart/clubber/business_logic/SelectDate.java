@@ -1,29 +1,25 @@
 package de.clubber_stuttgart.clubber.business_logic;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
-import java.text.NumberFormat;
 import java.util.Locale;
 
-import de.clubber_stuttgart.clubber.R;
 
 public class SelectDate implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
-
+    final private String LOG = "SelectDate";
     private EditText editText;
     private Calendar myCalendar;
     private Context ctx;
 
+    //Contructor
     public SelectDate(EditText editText, Context ctx){
         this.ctx=ctx;
         this.editText = editText;
@@ -36,7 +32,7 @@ public class SelectDate implements View.OnClickListener, DatePickerDialog.OnDate
          DatePickerDialog dialog =new DatePickerDialog(ctx, this,
                 myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH));
-
+        Log.d(LOG,"set Context + Day,Month,Year of Calendar for EditdText");
          dialog.show();
     }
 
@@ -50,6 +46,8 @@ public class SelectDate implements View.OnClickListener, DatePickerDialog.OnDate
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
         editText.setText(sdformat.format(myCalendar.getTime()));
+
+        Log.i(LOG,"set and show Date in EditText");
 
 
     }

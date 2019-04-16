@@ -16,9 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-
 import de.clubber_stuttgart.clubber.R;
 
 /**
@@ -69,7 +66,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         //start the datePicker Dialog
         SelectDate date= new SelectDate(datePicker, getContext());
-        Log.i(LOG,"calls SelectDate class and opens Datepickerdialog");
+        Log.d(LOG,"calls SelectDate class and opens Datepickerdialog");
 
         filterDate = (Button) view.findViewById(R.id.eventBtnWithDate);
         filterDate.setOnClickListener(this);
@@ -83,7 +80,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        Fragment fragment = null;
+        Fragment fragment;
         switch (v.getId()) {
             //if our button for submitting the date is clicked, this will happen
             case R.id.eventBtnWithDate:
@@ -110,6 +107,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    //if you click on Button after selecting Date Fragment is replaced by filtered Eventlist
     public void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, someFragment);
@@ -118,8 +116,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    //ensures compatibility with db-query, because date formats are stored in a us-format (yyyy-mm-dd)
     public String formatDate (String date){
-        //ensures compatibility with db-query, because date formats are stored in a us-format (yyyy-mm-dd)
         String[] dates = date.split(",");
         String day = dates[0].substring(dates[0].length()-2, dates[0].length());
         String month = dates[0].substring(0, dates[0].length()-3);

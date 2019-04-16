@@ -16,11 +16,37 @@ import java.util.ArrayList;
 
 public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.ExampleViewHolder>{
 
-    //ToDo: Variablen, die private gemacht werden können, private oder protected machen
 
     private ArrayList<Event> mCarditems;
     private Context context;
     final private String LOG = "CardEventAdapter";
+
+    public CardEventAdapter(ArrayList<Event> cardList, Context context){
+        mCarditems=cardList;
+        this.context = context;
+    }
+
+    protected static class ExampleViewHolder extends RecyclerView.ViewHolder{
+        private TextView textView1;
+        private TextView textView2;
+        private TextView textView3;
+        private TextView textView4;
+        private TextView textView5;
+        private Button button;
+
+
+        private ExampleViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textView1=itemView.findViewById(R.id.eventTitle);
+            textView2=itemView.findViewById(R.id.musicDirection);
+            textView3=itemView.findViewById(R.id.date);
+            textView4=itemView.findViewById(R.id.startTime);
+            textView5=itemView.findViewById(R.id.club);
+            button = itemView.findViewById(R.id.linkToEvent);
+
+        }
+
+    }
 
     @NonNull
     @Override
@@ -57,36 +83,9 @@ public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.Exam
     }
 
     @Override
-    //definiert wieviele Items eine Liste haben wird später
+    //defines how many items the ArrayList will hold
     public int getItemCount() {
         return mCarditems.size();
-    }
-
-    public CardEventAdapter(ArrayList<Event> cardList, Context context){
-        mCarditems=cardList;
-        this.context = context;
-    }
-
-    public static class ExampleViewHolder extends RecyclerView.ViewHolder{
-        public TextView textView1;
-        public TextView textView2;
-        public TextView textView3;
-        public TextView textView4;
-        public TextView textView5;
-        public Button button;
-
-
-        public ExampleViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textView1=itemView.findViewById(R.id.eventTitle);
-            textView2=itemView.findViewById(R.id.musicDirection);
-            textView3=itemView.findViewById(R.id.date);
-            textView4=itemView.findViewById(R.id.startTime);
-            textView5=itemView.findViewById(R.id.club);
-            button = itemView.findViewById(R.id.linkToEvent);
-
-        }
-
     }
 
 

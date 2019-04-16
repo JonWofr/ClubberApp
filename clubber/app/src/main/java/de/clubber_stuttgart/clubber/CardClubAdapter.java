@@ -11,18 +11,21 @@ import java.util.ArrayList;
 
 public class CardClubAdapter extends RecyclerView.Adapter<CardClubAdapter.ExampleViewHolder> {
 
-    //ToDo: Variablen, die private gemacht werden können, private oder protected machen
-
     private ArrayList<Club> clubList;
 
-    //ViewHolder for Adapter
-    public static class ExampleViewHolder extends RecyclerView.ViewHolder{
-        public TextView clubName;
-        public TextView clubAdr;
-        public TextView clubTel;
-        public TextView clubWeb;
+    //Contructor to get the Data from ArrayList into the Adapter
+    public CardClubAdapter(ArrayList<Club> clubList){
+        this.clubList=clubList;
+    }
 
-        public ExampleViewHolder(@NonNull View itemView) {
+    //ViewHolder for Adapter
+    protected static class ExampleViewHolder extends RecyclerView.ViewHolder{
+        private TextView clubName;
+        private TextView clubAdr;
+        private TextView clubTel;
+        private TextView clubWeb;
+
+        private ExampleViewHolder(@NonNull View itemView) {
             super(itemView);
             // create references to the Views
             clubName=itemView.findViewById(R.id.club_name);
@@ -30,14 +33,6 @@ public class CardClubAdapter extends RecyclerView.Adapter<CardClubAdapter.Exampl
             clubTel=itemView.findViewById(R.id.club_tel);
             clubWeb=itemView.findViewById(R.id.club_web);
         }
-    }
-
-    /**
-     * @param clubList Arraylist that puts Data into the Adapter
-     */
-    //get the Data from ArrayList into the Adapter
-    public CardClubAdapter(ArrayList<Club> clubList){
-        this.clubList=clubList;
     }
 
     //pass the layout to the Adapter

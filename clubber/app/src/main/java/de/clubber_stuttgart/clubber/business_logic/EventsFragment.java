@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -97,7 +96,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         cursor.close();
 
 
-        //ToDo: Funktioniert das nach der Implementierung der Navigation; Kommentar entfernen und testen
         boolean networkAccess = DBConnectionService.networkAccess;
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);
 
@@ -126,6 +124,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         context.startService(serviceIntent);
         //refresh stopps after the Toas apears
         refresh.setRefreshing(false);
+        Log.d(LOG," stop onRefreshListener when Toast appears");
 
     }
 

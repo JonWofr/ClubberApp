@@ -36,7 +36,6 @@ public class ClubsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.context = getActivity().getApplicationContext();
 
     }
@@ -96,6 +95,8 @@ public class ClubsFragment extends Fragment {
         RecyclerView.Adapter cAdapter = new CardClubAdapter(clubList);
         //pass LayoutManger to RecyclerView
         cRecyclerView.setLayoutManager(cLayoutManager);
+        Log.d(LOG,"LayoutManager has been set");
         cRecyclerView.setAdapter(cAdapter);
+        Log.d(LOG,"Adapter has been set");
     }
 }
