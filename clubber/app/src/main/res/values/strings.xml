@@ -5,4 +5,9 @@
     <string name="welcome_text">Finde alle aktuellen Partys in Stuttgart</string>
     <string name="wann">Wann?</string>
     <string name="datePicker">Enter Date</string>
+    <string name="phone_desc">Telephone icon</string>
+    <string name="world_desc">globe icon</string>
+    <string name="location_desc">location icon</string>
+    <string name="calendar_desc">calendar icon in primary color</string>
+    <string name="zum_event">zum Event >></string>
 </resources>

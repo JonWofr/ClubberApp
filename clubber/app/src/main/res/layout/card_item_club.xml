@@ -23,8 +23,7 @@
             android:layout_marginTop="5dp"
             android:textStyle="bold"
             android:layout_gravity="center"
-            android:textColor="@android:color/black"
-            android:text="Schräglage"/>
+            android:textColor="@android:color/black" />
 
         <View
             android:id="@+id/horizontalLine"
@@ -47,7 +46,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="15dp"
                 android:padding="2dp"
-                android:contentDescription="Icon Location in primary color"
+                android:contentDescription="@string/location_desc"
                 android:background="@drawable/ic_location"/>
 
 
@@ -57,10 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:textSize="18sp"
-                android:paddingLeft="10dp"
-                android:paddingRight="5dp"
-                android:textColor="@android:color/black"
-                android:text="Libanonstraße 73, 70186 Stuttgart" />
+                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
+                android:textColor="@android:color/black" />
 
 
         </LinearLayout>
@@ -76,7 +74,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="15dp"
                 android:padding="2dp"
-                android:contentDescription="Icon Telephone in primary color"
+                android:contentDescription="@string/phone_desc"
                 android:background="@drawable/ic_phone"/>
 
 
@@ -86,10 +84,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:textSize="18sp"
-                android:paddingLeft="10dp"
-                android:paddingRight="5dp"
-                android:textColor="@android:color/black"
-                android:text="0711 483699" />
+                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
 
@@ -104,7 +101,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="15dp"
                 android:padding="2dp"
-                android:contentDescription="Icon globe in primary color"
+                android:contentDescription="@string/world_desc"
                 android:background="@drawable/ic_language"/>
 
 
@@ -115,10 +112,9 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="30dp"
                 android:textSize="18sp"
-                android:paddingLeft="10dp"
-                android:paddingRight="5dp"
-                android:textColor="@android:color/black"
-                android:text="www.schraeglage.de" />
+                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
 
