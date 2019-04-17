@@ -2,4 +2,7 @@
     <string name="app_name">Clubber</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_text">Finde alle aktuellen Partys in Stuttgart</string>
+    <string name="wann">Wann?</string>
+    <string name="datePicker">Enter Date</string>
 </resources>
