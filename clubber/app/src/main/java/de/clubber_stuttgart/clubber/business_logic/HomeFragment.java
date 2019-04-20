@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     String date = dateInput.getText().toString();
                     //if the date is empty, the button has been clicked without a chosen date. We print out a toast.
                     //if there is a date, we pass the date through the MainActivity and replace the HomeFragment with the EventFragment
-                    if(!(date.equals(""))){
+                    if(!(date.equals("Enter Date"))){
                         date = formatDate(date);
                         Log.d(LOG,"A date has been picked, replacing HomeFragment with EventsFragment...");
                         MainActivity.setDateInBundle(fragment, date);
