@@ -6,6 +6,9 @@ This Project (Android and iOS) is still being developed. Thus, there might be so
 The Project is inspired by a website I have programmed with a fellow student. Despite the fact the website already exists, we decided on not developing a hybrid app but a native app.
 website: https://clubber-stuttgart.de/
 
+**design:**
+Not final. Still in development and just for debugging at the moment.
+
 **functionality:**
 
 The clubber app should help people in Stuttgart to find current events very easy and without looking at each and every site of the clubs on Facebook to check their events.
