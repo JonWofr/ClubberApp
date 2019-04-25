@@ -16,6 +16,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -44,6 +47,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         super.onCreate(savedInstanceState);
         this.context = getActivity().getApplicationContext();
     }
+
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -122,7 +126,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         Log.i(LOG, "recyclerView has been pulled down, trying to refresh...");
         Intent serviceIntent = new Intent(context, DBConnectionService.class);
         context.startService(serviceIntent);
-        //refresh stopps after the Toas apears
+        //refresh stops after the Toast appears
         refresh.setRefreshing(false);
         Log.d(LOG," stop onRefreshListener when Toast appears");
 

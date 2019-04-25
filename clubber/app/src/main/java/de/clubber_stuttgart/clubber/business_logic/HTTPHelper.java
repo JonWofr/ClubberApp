@@ -27,7 +27,7 @@ public class HTTPHelper extends AsyncTask {
     private Context context;
     final private String LOG = "HTTPHelper";
 
-    //is called after execute() call and calls method requestResponseServer(). This method runs in its own thread
+
     @Override
     protected Object doInBackground(Object[] objects) {
         String jsonString = requestResponseServer(idEvent, idClub);
@@ -65,7 +65,6 @@ public class HTTPHelper extends AsyncTask {
             }
         } else {
             Log.i(LOG, "The received data is empty and no entries will be inserted");
-
         }
         return jsonString;
     }
@@ -83,18 +82,20 @@ public class HTTPHelper extends AsyncTask {
         super.onPostExecute(o);
 
         String jsonString = o.toString();
+        //Broadcast is used inside the EventsFragment class to update its UI when the refresh Button is pressed. The Broadcast will only be send when there is data to be updated
+        Intent intent = new Intent();
+        intent.setAction("notifyEventFragment");
 
         if (jsonString.equals("{\"events\" : [],\"clubs\" : []}") && !MainActivity.initSetupDatabase) {
             Toast.makeText(context, "Es wird kein Update benötigt, die Daten sind bereits aktuell.", Toast.LENGTH_LONG).show();
+            Log.i(LOG, "The UI will not be updated");
         } else if (!MainActivity.initSetupDatabase) {
             Toast.makeText(context, "Du bist jetzt wieder up to date!", Toast.LENGTH_LONG).show();
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        } else if (MainActivity.initSetupDatabase){
+            //makes sure the initSetupDatabase boolean is set to false so the HomeFragment only sends a successful automatic request to the web server db once
+            MainActivity.initSetupDatabase = false;
         }
-
-
-        //Broadcast is used inside the EventsFragment class to update its UI when the refresh Button is pressed
-        Intent intent = new Intent();
-        intent.setAction("notifyEventFragment");
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     //this method is necessary to establish the connection to the server, send data to the server and retrieve responses, which are dependant on the sent requests

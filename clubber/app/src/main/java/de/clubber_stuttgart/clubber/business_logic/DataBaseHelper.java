@@ -107,8 +107,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
 
-        //ToDo: wie hängt onUpgrade damit zusammen?
-
         //gets the DB and calls the onCreate method
         SQLiteDatabase db = this.getWritableDatabase();
         //runs insert command as SQL
@@ -133,8 +131,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         catch(JSONException e){
             e.printStackTrace();
         }
-
-        //ToDo: wie hängt onUpgrade damit zusammen?
 
         //gets the DB and calls the onCreate method
         SQLiteDatabase db = this.getWritableDatabase();
