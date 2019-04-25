@@ -19,12 +19,13 @@ import android.widget.Toast;
 
 import de.clubber_stuttgart.clubber.R;
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment {
 
     final private String LOG = "HomeFragment";
     public EditText datePicker;
     private Context context;
     private Button filterDateButton;
+
 
 
 
@@ -64,53 +65,50 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         datePicker.setInputType(InputType.TYPE_NULL);
 
         //start the datePicker Dialog
+        new SelectDate(datePicker, getContext());
         Log.d(LOG,"calls SelectDate class and opens Datepickerdialog");
 
         filterDateButton = (Button) view.findViewById(R.id.eventBtnWithDate);
-        filterDateButton.setOnClickListener(this);
+        filterDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Fragment fragment;
+                switch (v.getId()) {
+                    //if our button for submitting the date is clicked, this will happen
+                    case R.id.eventBtnWithDate:
+                        fragment = new EventsFragment();
+                        Log.i(LOG,"The datepicker button has been taped...");
+                        try {
+                            EditText dateInput = getView().findViewById(R.id.datePicker);
+                            String date = dateInput.getText().toString();
+                            //if the date is empty, the button has been clicked without a chosen date. We print out a toast.
+                            //if there is a date, we pass the date through the MainActivity and replace the HomeFragment with the EventFragment
+                            if(!(date.equals("Enter Date"))){
+                                date = SelectDate.formatDate(date);
+                                Log.d(LOG,"A date has been picked, replacing HomeFragment with EventsFragment...");
+                                MainActivity.setDateInBundle(fragment, date);
+
+                                BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
+                                Log.d(LOG,"bottom navigation is being set to events...");
+                                bottomNav.setSelectedItemId(bottomNav.getMenu().findItem(R.id.nav_events).getItemId());
+                                replaceFragment(fragment);
+                            }else {
+                                Log.d(LOG, "No date has been picked");
+                                Toast.makeText(context, "Du musst noch ein Datum auswählen", Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        }catch (NullPointerException e){
+                            Log.w(LOG,e);
+                        }
+                        catch (DateFormattingException dateFormattingException){
+                            dateFormattingException.printStackTrace();
+                        }
+                }
+            }
+        });
 
         return view;
-    }
-
-
-
-
-    //to open filtered Events Fragment
-    @Override
-    public void onClick(View v) {
-
-        Fragment fragment;
-        switch (v.getId()) {
-            //if our button for submitting the date is clicked, this will happen
-            case R.id.eventBtnWithDate:
-                fragment = new EventsFragment();
-                Log.i(LOG,"The datepicker button has been taped...");
-                try {
-                    EditText dateInput = getView().findViewById(R.id.datePicker);
-                    String date = dateInput.getText().toString();
-                    //if the date is empty, the button has been clicked without a chosen date. We print out a toast.
-                    //if there is a date, we pass the date through the MainActivity and replace the HomeFragment with the EventFragment
-                    if(!(date.equals("Enter Date"))){
-                        date = SelectDate.formatDate(date);
-                        Log.d(LOG,"A date has been picked, replacing HomeFragment with EventsFragment...");
-                        MainActivity.setDateInBundle(fragment, date);
-
-                        BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
-                        Log.d(LOG,"bottom navigation is being set to events...");
-                        bottomNav.setSelectedItemId(bottomNav.getMenu().findItem(R.id.nav_events).getItemId());
-                        replaceFragment(fragment);
-                    }else {
-                        Log.d(LOG, "No date has been picked");
-                        Toast.makeText(context, "Du musst noch ein Datum auswählen", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                }catch (NullPointerException e){
-                    Log.w(LOG,e);
-                }
-                catch (DateFormattingException dateFormattingException){
-                    dateFormattingException.printStackTrace();
-                }
-        }
     }
 
     //if you click on Button after selecting Date Fragment is replaced by filtered Eventlist
