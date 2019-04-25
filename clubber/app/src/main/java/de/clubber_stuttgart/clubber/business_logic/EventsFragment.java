@@ -126,7 +126,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         Log.i(LOG, "recyclerView has been pulled down, trying to refresh...");
         Intent serviceIntent = new Intent(context, DBConnectionService.class);
         context.startService(serviceIntent);
-        //refresh stopps after the Toas apears
+        //refresh stops after the Toast appears
         refresh.setRefreshing(false);
         Log.d(LOG," stop onRefreshListener when Toast appears");
 

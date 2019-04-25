@@ -107,6 +107,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }catch (NullPointerException e){
                     Log.w(LOG,e);
                 }
+                catch (DateFormattingException dateFormattingException){
+                    dateFormattingException.printStackTrace();
+                }
         }
     }
 

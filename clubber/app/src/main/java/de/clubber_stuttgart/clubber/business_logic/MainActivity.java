@@ -24,7 +24,7 @@ public class MainActivity extends FragmentActivity {
     private final String LOG = "MainActiviy";
     //To ensure that the HomeFragment won't start the DBConnectionService again after it has done it once and been called another time.
     static boolean initSetupDatabase = true;
-    private static Bundle bundle = new Bundle();
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -63,6 +63,7 @@ public class MainActivity extends FragmentActivity {
 
 
     static void setDateInBundle(Fragment fragment, String date) {
+        Bundle bundle = new Bundle();
         bundle.putString("selectedDate", date);
         fragment.setArguments(bundle);
     }
