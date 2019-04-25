@@ -12,15 +12,13 @@ import os.log
 
 class HTTPHelper{
     
-    let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "network")
-
-    
     //JSONData struct that stores Event and Club object Arrays
     struct JSONData : Decodable {
         var events :[Event]!
         var clubs : [Club]!
     }
     
+    //comparabe with an event object
     struct Event : Decodable {
         var id : String!
         var dte : String!
@@ -31,6 +29,7 @@ class HTTPHelper{
         var btn : String!
     }
     
+    //comparabe with a club object
     struct Club : Decodable {
         var id : String!
         var name : String!
@@ -45,17 +44,20 @@ class HTTPHelper{
         let context = appDelegate.persistentContainer.viewContext
         
         
-        
+        //function to directly request the highest id stored in the coreData
         func requestHighestId(entity: String) -> Int {
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
             request.entity = NSEntityDescription.entity(forEntityName: entity, in: context)
             request.resultType = NSFetchRequestResultType.dictionaryResultType
             
+            //column to be selected
             let keypathExpression = NSExpression(forKeyPath: "id")
+            //maximum id should be replied
             let maxExpression = NSExpression(forFunction: "max:", arguments: [keypathExpression])
             
             let key = "maxId"
             
+            //key value pair
             let expressionDescription = NSExpressionDescription()
             expressionDescription.name = key
             expressionDescription.expression = maxExpression
@@ -67,6 +69,7 @@ class HTTPHelper{
             
             
             do{
+                //request with the specified key value pair
                 if let result = try context.fetch(request) as? [[String: Int]], let dict = result.first {
                     maxId = dict[key]
                 }
@@ -85,9 +88,10 @@ class HTTPHelper{
         print(highestClubId)
         
         let url = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=\(highestEventId)&&idClub=\(highestClubId)"
+
         let urlObj = URL(string: url)
         
-        //starts Thread
+        //starts request - reply to the server with url depending on the highest stored id in the local db
         URLSession.shared.dataTask(with: urlObj!) {(data, response, error) in
             do {
                 //jsonData is object of JSONData struct which contains an Object Array of Event- and Club-struct
@@ -99,38 +103,50 @@ class HTTPHelper{
             }catch{
                 print(error)
             }
-            
+            //WAS MACHT DAS HIER GENAU?
             }.resume()
         
         
         func saveArraysInDatabase(jsonDataObj: JSONData) {
             do{
+                //stores every event into the entity events in core object
                 for event in jsonDataObj.events {
+                    //mirror saves every value of each column
                     let eventMirror = Mirror(reflecting: event)
+                    //every mirror value will be gradually stored into the new row of the local db
                     let newEventEntry = NSEntityDescription.insertNewObject(forEntityName: "Events", into: context)
                     for children in eventMirror.children{
                         if (children.label! == "id"){
+                            //ids should be stored as integer
                             let id = children.value as! String
                             newEventEntry.setValue(Int(id), forKey: children.label!)
                         }else{
+                            //rest is stored as strings
                             newEventEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
                         }
                         print("value: \(children.value as! String) forKey: \(children.label!)")
+                        //the new row will be saved
                         try context.save()
                         print("saved")
                     }
                 }
+                //stores every club into the entity events in core object
                 for club in jsonDataObj.clubs {
+                    //mirror saves every value of each column
                     let clubMirror = Mirror(reflecting: club)
+                    //every mirror value will be gradually stored into the new row of the local db
                     let newClubEntry = NSEntityDescription.insertNewObject(forEntityName: "Clubs", into: context)
                     for children in clubMirror.children{
                         if (children.label! == "id"){
+                            //ids should be stored as integer
                             let id = children.value as! String
                             newClubEntry.setValue(Int(id), forKey: children.label!)
                         }else{
+                            //rest is stored as strings
                             newClubEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
                         }
                         print("value: \(children.value as! String) forKey: \(children.label!)")
+                        //the new row will be saved
                         try context.save()
                         print("saved")
                     }
