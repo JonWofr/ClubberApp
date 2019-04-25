@@ -7,14 +7,17 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
 import de.clubber_stuttgart.clubber.R;
 
 
 
 public class MainActivity extends FragmentActivity {
 
-    //ToDo: Überprüfen, ob external Storage erreichbar ist (benötigen wir das? Eigentlich schreiben wir auf internal Storage. --> Prüfen, ob das einen Unterschied macht)
 
     //ToDo: Baut sich das Event Fragment komplett neu auf, wenn refreshed wird (obwohl keine neuen Einträge vorhanden sind)?
 
@@ -23,14 +26,23 @@ public class MainActivity extends FragmentActivity {
     static boolean initSetupDatabase = true;
     private static Bundle bundle = new Bundle();
 
+    private BottomNavigationView bottomNav;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+
     }
+
+
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -50,8 +62,6 @@ public class MainActivity extends FragmentActivity {
                             selectedFragment = new ClubsFragment();
                             break;
                     }
-                    //ToDo: workaround abchecken (passt initSetupDatabase oder sollen das Fragment bei onCreateView() weiterlaufen?
-                    initSetupDatabase = false;
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
@@ -63,6 +73,7 @@ public class MainActivity extends FragmentActivity {
         bundle.putString("selectedDate", date);
         fragment.setArguments(bundle);
     }
+
 }
 
 

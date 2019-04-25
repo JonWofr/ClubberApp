@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
@@ -44,6 +45,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         this.context = getActivity().getApplicationContext();
 
+        //variable initSetupDatabase is stored in MainActivity because of its longer lifecycle
         if (MainActivity.initSetupDatabase) {
             Log.i(LOG,"initial setup of the database. App is being started for the first time");
             Intent serviceIntent = new Intent(context, DBConnectionService.class);
@@ -60,6 +62,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+
+
         datePicker = view.findViewById(R.id.datePicker);
         //hides the keyboard
         datePicker.setInputType(InputType.TYPE_NULL);
@@ -72,8 +76,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         filterDate.setOnClickListener(this);
 
         return view;
-
     }
+
+
 
 
     //to open filtered Events Fragment
@@ -95,6 +100,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         date = formatDate(date);
                         Log.d(LOG,"A date has been picked, replacing HomeFragment with EventsFragment...");
                         MainActivity.setDateInBundle(fragment, date);
+
+                        BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
+                        Log.d(LOG,"bottom navigation is being set to events...");
+                        bottomNav.setSelectedItemId(bottomNav.getMenu().findItem(R.id.nav_events).getItemId());
                         replaceFragment(fragment);
                     }else {
                         Log.d(LOG, "No date has been picked");
@@ -102,7 +111,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     }
                     break;
                 }catch (NullPointerException e){
-                    Log.w(LOG,"No datepicker view");
+                    Log.w(LOG,e);
                 }
         }
     }
@@ -111,7 +120,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, someFragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 

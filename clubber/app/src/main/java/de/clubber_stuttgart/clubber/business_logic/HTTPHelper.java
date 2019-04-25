@@ -27,7 +27,7 @@ public class HTTPHelper extends AsyncTask {
     private Context context;
     final private String LOG = "HTTPHelper";
 
-    //is called after execute() call and calls method requestResponseServer(). This method runs in its own thread
+
     @Override
     protected Object doInBackground(Object[] objects) {
         String jsonString = requestResponseServer(idEvent, idClub);
@@ -88,6 +88,9 @@ public class HTTPHelper extends AsyncTask {
             Toast.makeText(context, "Es wird kein Update benötigt, die Daten sind bereits aktuell.", Toast.LENGTH_LONG).show();
         } else if (!MainActivity.initSetupDatabase) {
             Toast.makeText(context, "Du bist jetzt wieder up to date!", Toast.LENGTH_LONG).show();
+        } else if (MainActivity.initSetupDatabase){
+            //makes sure the initSetupDatabase boolean is set to false so the HomeFragment only sends a successful automatic request to the web server db once
+            MainActivity.initSetupDatabase = false;
         }
 
 

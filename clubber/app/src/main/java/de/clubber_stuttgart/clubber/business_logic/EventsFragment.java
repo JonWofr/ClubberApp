@@ -16,6 +16,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -34,6 +37,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private Context context;
     private SwipeRefreshLayout refresh;
 
+    private MenuItem eventItem;
 
     public EventsFragment() {
         // Required empty public constructor
@@ -43,6 +47,13 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.context = getActivity().getApplicationContext();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        this.eventItem = menu.findItem(R.id.nav_events);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
