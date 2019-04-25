@@ -37,7 +37,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private Context context;
     private SwipeRefreshLayout refresh;
 
-    private MenuItem eventItem;
 
     public EventsFragment() {
         // Required empty public constructor
@@ -49,12 +48,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         this.context = getActivity().getApplicationContext();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        this.eventItem = menu.findItem(R.id.nav_events);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,

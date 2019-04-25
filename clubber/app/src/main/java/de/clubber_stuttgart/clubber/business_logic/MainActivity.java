@@ -26,24 +26,6 @@ public class MainActivity extends FragmentActivity {
     static boolean initSetupDatabase = true;
     private static Bundle bundle = new Bundle();
 
-    private BottomNavigationView bottomNav;
-
-
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-    }
-
-
-
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -63,10 +45,21 @@ public class MainActivity extends FragmentActivity {
                             break;
                     }
 
+                    //ToDo: Sollen wir addToBackStack verwenden, damit das Fragment nicht komplett zerstört wird?
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
                 }
             };
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+    }
 
 
     static void setDateInBundle(Fragment fragment, String date) {
