@@ -10,7 +10,7 @@
     <entity name="Events" representedClassName="Events" syncable="YES" codeGenerationType="class">
         <attribute name="btn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="club" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dte" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
