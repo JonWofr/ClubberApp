@@ -84,11 +84,9 @@ class HTTPHelper{
         let highestEventId = requestHighestId(entity: "Events")
         let highestClubId = requestHighestId(entity: "Clubs")
         
-       
-        print(highestClubId)
         
         let url = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=\(highestEventId)&&idClub=\(highestClubId)"
-
+        
         let urlObj = URL(string: url)
         
         //starts request - reply to the server with url depending on the highest stored id in the local db
@@ -103,7 +101,6 @@ class HTTPHelper{
             }catch{
                 print(error)
             }
-            //WAS MACHT DAS HIER GENAU?
             }.resume()
         
         
@@ -158,36 +155,3 @@ class HTTPHelper{
         }
     }
 }
-
-
-
-
-
-
-
-
-/*
- func requestDataFromDatabase(entity: String){
- let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
- request.returnsObjectsAsFaults = false
- do{
- let results = try context.fetch(request)
- if(results.count > 0){
- 
- for event in results {
- print((event as AnyObject).value(forKey: "id") as! Int)
- }
- }
- }
- catch{
- print(error)
- }
- }
- */
-
-
-
-
-
-
-

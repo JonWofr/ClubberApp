@@ -17,6 +17,8 @@
 		036BD45E226615A300036F3E /* clubber_ios_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD45D226615A300036F3E /* clubber_ios_UITests.swift */; };
 		036BD46C226616E300036F3E /* DataBaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD46B226616E300036F3E /* DataBaseHelper.swift */; };
 		036BD46E2266171500036F3E /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD46D2266171500036F3E /* HTTPHelper.swift */; };
+		0397BB5C2275E1EE00FDF73C /* TableViewControllerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */; };
+		0397BB5E2275F07900FDF73C /* TableViewControllerClubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		036BD45F226615A300036F3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		036BD46B226616E300036F3E /* DataBaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseHelper.swift; sourceTree = "<group>"; };
 		036BD46D2266171500036F3E /* HTTPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
+		0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerEvents.swift; sourceTree = "<group>"; };
+		0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerClubs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				036BD46D2266171500036F3E /* HTTPHelper.swift */,
 				036BD46B226616E300036F3E /* DataBaseHelper.swift */,
 				036BD43A226615A200036F3E /* AppDelegate.swift */,
+				0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */,
+				0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */,
 				036BD43C226615A200036F3E /* ViewController.swift */,
 				036BD43E226615A200036F3E /* Main.storyboard */,
 				036BD444226615A300036F3E /* Assets.xcassets */,
@@ -269,6 +275,8 @@
 				036BD43D226615A200036F3E /* ViewController.swift in Sources */,
 				036BD46E2266171500036F3E /* HTTPHelper.swift in Sources */,
 				036BD443226615A200036F3E /* clubber_ios_.xcdatamodeld in Sources */,
+				0397BB5E2275F07900FDF73C /* TableViewControllerClubs.swift in Sources */,
+				0397BB5C2275E1EE00FDF73C /* TableViewControllerEvents.swift in Sources */,
 				036BD43B226615A200036F3E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
