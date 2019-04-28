@@ -8,9 +8,10 @@
 import UIKit
 import Foundation
 import CoreData
-import os.log
 
 class HTTPHelper{
+    
+    
     
     //JSONData struct that stores Event and Club object Arrays
     struct JSONData : Decodable {
@@ -73,20 +74,22 @@ class HTTPHelper{
                 if let result = try context.fetch(request) as? [[String: Int]], let dict = result.first {
                     maxId = dict[key]
                 }
+                NSLog("Highest %@ id is %i", entity, maxId!)
                 return maxId!
             }
             catch{
-                print(error)
+                NSLog("The local db has not been created yet. There is no highest id of clubs, or events.")
                 return 0
             }
         }
         
         let highestEventId = requestHighestId(entity: "Events")
         let highestClubId = requestHighestId(entity: "Clubs")
-        
-        
+
         let url = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=\(highestEventId)&&idClub=\(highestClubId)"
         
+        NSLog("Requesting data from %@", url)
+
         let urlObj = URL(string: url)
         
         //starts request - reply to the server with url depending on the highest stored id in the local db
@@ -94,12 +97,11 @@ class HTTPHelper{
             do {
                 //jsonData is object of JSONData struct which contains an Object Array of Event- and Club-struct
                 let jsonData = try JSONDecoder().decode(JSONData.self, from: data!)
-                
+                NSLog("JSONData object has been created")
                 saveArraysInDatabase(jsonDataObj: jsonData)
-                
-                
             }catch{
-                print(error)
+                //localizedDescription is needed to convert NSError into String
+                NSLog("Requesting data from given URL has been unsuccessful. Error: %@", error.localizedDescription)
             }
             }.resume()
         
@@ -120,12 +122,12 @@ class HTTPHelper{
                         }else{
                             //rest is stored as strings
                             newEventEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
+                            print(children.value)
                         }
-                        print("value: \(children.value as! String) forKey: \(children.label!)")
                         //the new row will be saved
                         try context.save()
-                        print("saved")
                     }
+                    NSLog("A new event entry has been made")
                 }
                 //stores every club into the entity events in core object
                 for club in jsonDataObj.clubs {
@@ -141,16 +143,15 @@ class HTTPHelper{
                         }else{
                             //rest is stored as strings
                             newClubEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
+                            print(children.value)
                         }
-                        print("value: \(children.value as! String) forKey: \(children.label!)")
                         //the new row will be saved
                         try context.save()
-                        print("saved")
                     }
+                    NSLog("A new club entry has been made")
                 }
             }catch{
-                print("opps")
-                print(error)
+                NSLog("Error saving data into local db. Error:%@", error.localizedDescription)
             }
         }
     }
