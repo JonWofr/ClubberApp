@@ -27,9 +27,6 @@ public class HomeFragment extends Fragment {
     private Button filterDateButton;
 
 
-
-
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -63,7 +60,6 @@ public class HomeFragment extends Fragment {
         datePicker = view.findViewById(R.id.datePicker);
         //hides the keyboard
         datePicker.setInputType(InputType.TYPE_NULL);
-
         //start the datePicker Dialog
         new SelectDate(datePicker, getContext());
         Log.d(LOG,"calls SelectDate class and opens Datepickerdialog");
@@ -114,6 +110,7 @@ public class HomeFragment extends Fragment {
     //if you click on Button after selecting Date Fragment is replaced by filtered Eventlist
     public void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        //ToDo: muss man hier auch addToBackstack einfügen ??
         transaction.replace(R.id.fragment_container, someFragment);
         transaction.commit();
     }
