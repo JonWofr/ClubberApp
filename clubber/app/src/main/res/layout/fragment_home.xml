@@ -4,59 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:background="@drawable/audience_band">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_shape"
-        android:orientation="vertical"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/clubber_icon"
+            android:contentDescription="@string/clubber_icon"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/welcome_text"
             android:textColor="@android:color/black"
-            android:gravity="center"
-            android:textSize="26sp"
+            android:textSize="40sp"
             android:textStyle="bold"
-            android:textAlignment="center"
-            android:layout_margin="15dp"
-            android:layout_marginBottom="25dp" />
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="15dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/wann"
             android:textColor="@android:color/black"
-            android:textSize="26sp"
-            android:layout_marginStart="100dp"
-            android:textStyle="bold"
-            />
+            android:text="@string/wann"
+            android:textSize="20sp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="20dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:gravity="center">
 
             <EditText
                 android:id="@+id/datePicker"
-                android:layout_marginStart="70dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="false"
-                android:padding="10dp"
                 android:inputType="datetime"
                 android:text="@string/datePicker"
-                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                android:textSize="30sp" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="28sp" />
 
             <Button
                 android:id="@+id/eventBtnWithDate"
@@ -65,6 +58,5 @@
                 android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
         </LinearLayout>
-    </LinearLayout>
 
 </LinearLayout>
