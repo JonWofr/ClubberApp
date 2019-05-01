@@ -8,9 +8,28 @@
 import UIKit
 import Foundation
 import CoreData
+import Network
 
 class HTTPHelper{
     
+    static var hasNetworkAccess : Bool = true
+    
+    static func startConnectionListener(){
+        let monitor = NWPathMonitor()
+        
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                print("We're connected!")
+                hasNetworkAccess = true
+            } else {
+                print("No connection.")
+                hasNetworkAccess = false
+            }
+        }
+        
+        let queue = DispatchQueue(label: "Monitor")
+        monitor.start(queue: queue)
+    }
     
     
     //JSONData struct that stores Event and Club object Arrays
@@ -155,4 +174,5 @@ class HTTPHelper{
             }
         }
     }
+    
 }

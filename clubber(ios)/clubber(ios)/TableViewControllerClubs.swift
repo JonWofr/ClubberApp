@@ -17,9 +17,11 @@ class TableViewControllerClubs : UITableViewController {
         super.viewDidLoad()
         //requests data from the database
         clubArr = DataBaseHelper.requestDataFromDatabase(entity: "Clubs")
+        
+        checkArrayAndConnection(arr: clubArr)
     }
     
-    //sets how many rows the table will have
+    //sets the amount of rows the table will have
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return clubArr.count
     }

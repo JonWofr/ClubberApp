@@ -25,9 +25,14 @@ class TableViewControllerEvents : UITableViewController{
         
         //requests data from the database
         eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
+        
+        checkArrayAndConnection(arr: eventArr)
+        createAlert(title: "fdskalfjalsköf", message: "kdlafösjdsklö")
+        
+        
     }
     
-    //sets how many rows the table will have
+    //sets the amount of rows the table will have
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return eventArr.count
     }

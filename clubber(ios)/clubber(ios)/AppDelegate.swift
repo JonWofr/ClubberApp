@@ -17,7 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        HTTPHelper.requestResponseServer()
+        HTTPHelper.startConnectionListener()
+        
+        if(HTTPHelper.hasNetworkAccess){
+            HTTPHelper.requestResponseServer()
+        } 
         
         return true
     }
