@@ -11,9 +11,18 @@ import UIKit
 class TableViewControllerEvents : UITableViewController{
     
     var eventArr : [String] = []
+    var refreshcontrol : UIRefreshControl?
+    @IBOutlet var table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        refreshcontrol = UIRefreshControl()
+        //selector is called when the refreshControl is swiped down
+        refreshcontrol?.addTarget(self, action: #selector(refreshClicked) , for: .valueChanged)
+        
+        table.addSubview(refreshcontrol!)
+        
         //requests data from the database
         eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
     }
@@ -30,6 +39,12 @@ class TableViewControllerEvents : UITableViewController{
         cell.textLabel?.text = eventArr[indexPath.row]
         
         return cell;
+    }
+    
+    @objc func refreshClicked(){
+        print("test")
+        //needs to be called in order for the refresh process to be stopped
+        refreshcontrol?.endRefreshing()
     }
     
 }
