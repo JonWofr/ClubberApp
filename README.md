@@ -4,9 +4,10 @@
 
 This Project (Android and iOS) is **still being developed**. Thus, there might be some bugs and some functionalities might not work.
 The Project is inspired by a website I have programmed with a fellow student. Despite the fact that the website already exists, we decided on not developing a hybrid app but a native app.
-website: https://clubber-stuttgart.de/
+Website: https://clubber-stuttgart.de/
 
 **design:**
+
 Not final. Still in development and just for debugging at the moment.
 
 **functionality:**
