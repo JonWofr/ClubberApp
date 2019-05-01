@@ -26,9 +26,7 @@ class TableViewControllerEvents : UITableViewController{
         //requests data from the database
         eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
         
-        checkArrayAndConnection(arr: eventArr)
-        createAlert(title: "fdskalfjalsköf", message: "kdlafösjdsklö")
-        
+        giveUserFeedbackIfNecessary(arr: eventArr)
         
     }
     

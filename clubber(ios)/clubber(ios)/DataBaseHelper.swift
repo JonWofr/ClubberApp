@@ -12,7 +12,7 @@ import UIKit
 
 class DataBaseHelper {
     
-    
+    //returns an array of requested data from the database, for example Events/Clubs
     static func requestDataFromDatabase(entity: String) -> [String]{
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext

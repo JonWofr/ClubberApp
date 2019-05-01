@@ -14,15 +14,18 @@ class HTTPHelper{
     
     static var hasNetworkAccess : Bool = true
     
+    //checks if device got internetAccess
+    //is updated when network state is changed (turned off/on)
     static func startConnectionListener(){
         let monitor = NWPathMonitor()
         
+        //sets the static variable hasNetworkAccess true/false to check in different context the connection
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
-                print("We're connected!")
+                //We are connected!
                 hasNetworkAccess = true
             } else {
-                print("No connection.")
+                //No network available...
                 hasNetworkAccess = false
             }
         }
@@ -58,7 +61,7 @@ class HTTPHelper{
         var web : String!
     }
     
-    
+    //For requesting and receiving a json file from our webserver
     static func requestResponseServer(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext

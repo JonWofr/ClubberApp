@@ -18,7 +18,7 @@ class TableViewControllerClubs : UITableViewController {
         //requests data from the database
         clubArr = DataBaseHelper.requestDataFromDatabase(entity: "Clubs")
         
-        checkArrayAndConnection(arr: clubArr)
+        giveUserFeedbackIfNecessary(arr: clubArr)
     }
     
     //sets the amount of rows the table will have
