@@ -22,7 +22,6 @@ extension UITableViewController {
         
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
-            print ("ok")
         }))
     }
     
@@ -31,15 +30,14 @@ extension UITableViewController {
         
         //First checks if we have got internet connection and then looks at the different cases that could occur
         if(HTTPHelper.hasNetworkAccess){
-            if(arr.count != 0){
-                createAlert(title: "PlatzhalterTitel", message: "leere Datenbank")
-                //ToDo: Was wenn wir einen leeren array bekommen, wenn wir für ein bestimmtes Datum
+            if(arr.count == 0){
+                createAlert(title: "PlatzhalterTitel", message: "Leider sind derzeit keine Events vorhanden versuche zu refreshen")
+                //ToDo: Was wenn wir einen leeren Array bekommen, wenn wir für ein bestimmtes Datum
                 //anfragen und nicht nur die KOMPLETTE Db anfragen und einen leeren Array zurückbekommen...
             }
         }else{
-            createAlert(title: "PlatzhalterTitel", message: "Datenbankeinträge + keine Internetverbindung")
+            createAlert(title: "Platzhalter", message: "Du hast keine Internetverbindung, die Einträge sind eventuell unvollständig oder nicht vorhanden")
         }
-        //ToDo: implement more user feedback
     }
 
 }

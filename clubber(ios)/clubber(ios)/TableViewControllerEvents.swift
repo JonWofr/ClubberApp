@@ -44,10 +44,17 @@ class TableViewControllerEvents : UITableViewController{
         return cell;
     }
     
-    @objc func refreshClicked(){
-        print("test")
-        //needs to be called in order for the refresh process to be stopped
-        refreshcontrol?.endRefreshing()
-    }
     
+    
+    
+    @objc func refreshClicked(){
+        if(HTTPHelper.hasNetworkAccess){
+            HTTPHelper.requestResponseServer()
+            refreshcontrol?.endRefreshing()
+        }else{
+            //needs to be called in order for the refresh process to be stopped
+            refreshcontrol?.endRefreshing()
+            createAlert(title: "Platzhalter", message: "Stelle bitte eine Internetverbindung her")
+        }
+    }
 }

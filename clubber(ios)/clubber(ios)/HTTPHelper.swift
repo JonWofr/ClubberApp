@@ -12,37 +12,44 @@ import Network
 
 class HTTPHelper{
     
-    static var hasNetworkAccess : Bool = true
+    static var hasNetworkAccess : Bool = false
+    private static var automaticDownloadHasBeenSuccessful : Bool = false
     
     //checks if device got internetAccess
-    //is updated when network state is changed (turned off/on)
+    //is updated when network state has changed (turned off/on)
     static func startConnectionListener(){
         let monitor = NWPathMonitor()
         
         //sets the static variable hasNetworkAccess true/false to check in different context the connection
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
-                //We are connected!
+                print("We are connected!")
                 hasNetworkAccess = true
             } else {
-                //No network available...
+                print("No connection available...")
                 hasNetworkAccess = false
             }
+            
+            //If we don't have network access at the beginning, but have internet while runtime, the app will start to request our webserver. if it was successful, it will set the automaticDownloadHasBeenSuccesful variable to true and we won't call the methode ever again while runtime
+            
+            if !automaticDownloadHasBeenSuccessful && hasNetworkAccess {
+                requestResponseServer()
+            }
+            
         }
-        
         let queue = DispatchQueue(label: "Monitor")
         monitor.start(queue: queue)
     }
     
     
     //JSONData struct that stores Event and Club object Arrays
-    struct JSONData : Decodable {
+    private struct JSONData : Decodable {
         var events :[Event]!
         var clubs : [Club]!
     }
     
     //comparabe with an event object
-    struct Event : Decodable {
+    private struct Event : Decodable {
         var id : String!
         var dte : String!
         var name : String!
@@ -53,7 +60,7 @@ class HTTPHelper{
     }
     
     //comparabe with a club object
-    struct Club : Decodable {
+    private struct Club : Decodable {
         var id : String!
         var name : String!
         var adrs : String!
@@ -63,9 +70,13 @@ class HTTPHelper{
     
     //For requesting and receiving a json file from our webserver
     static func requestResponseServer(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
         
+        //----------------------
+        //ToDo: sollte in MainThread aufgerufen werden, in Vorlesung fragen warum
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //----------------------
+        
+        let context = appDelegate.persistentContainer.viewContext
         
         //function to directly request the highest id stored in the coreData
         func requestHighestId(entity: String) -> Int {
@@ -121,6 +132,13 @@ class HTTPHelper{
                 let jsonData = try JSONDecoder().decode(JSONData.self, from: data!)
                 NSLog("JSONData object has been created")
                 saveArraysInDatabase(jsonDataObj: jsonData)
+                
+                //if this is the initial/automatic update of the database it will be set true, so the database isn't
+                //updating it self again, only the user is able to
+                if(!automaticDownloadHasBeenSuccessful){
+                    automaticDownloadHasBeenSuccessful = true
+                }
+                
             }catch{
                 //localizedDescription is needed to convert NSError into String
                 NSLog("Requesting data from given URL has been unsuccessful. Error: %@", error.localizedDescription)

@@ -17,14 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        //set up connectionListener
+        //set up connectionListener and initiates an automatic download of a JSON file from the webserver
         HTTPHelper.startConnectionListener()
         
-        //only if we have internet access we are able to request our webserver to receive a json file
-        if(HTTPHelper.hasNetworkAccess){
-            HTTPHelper.requestResponseServer()
-        } 
-        
+
         return true
     }
 
