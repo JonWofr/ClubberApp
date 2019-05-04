@@ -115,9 +115,9 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         //ToDo: Hier wird der traurige Smiley angezeigt + die Message dass es an dem Datum keine Events gibt - muss noch an der richtigen Stelle eingefügt werden
         //ToDo: die Recycler View muss man "verschwinden" lassen und von den anderen beiden Elementen die Visibility auf visible setzten
-        eRecyclerView.setVisibility(View.GONE);
-        noEvents.setVisibility(View.VISIBLE);
-        sadSmileyNoEvents.setVisibility(View.VISIBLE);
+        //eRecyclerView.setVisibility(View.GONE);
+        //noEvents.setVisibility(View.VISIBLE);
+        //sadSmileyNoEvents.setVisibility(View.VISIBLE);
 
         boolean networkAccess = DBConnectionService.networkAccess;
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);

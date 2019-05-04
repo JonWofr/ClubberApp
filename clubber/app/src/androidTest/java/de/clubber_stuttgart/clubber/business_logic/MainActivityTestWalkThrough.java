@@ -51,7 +51,7 @@ public class MainActivityTestWalkThrough {
 
             //select a date - May 03, 2019
             onView(
-                    withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2019, 05, 03));
+                    withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2019, 12, 8));
 
             //click ok - set date
             ViewInteraction button = onView(
@@ -61,9 +61,9 @@ public class MainActivityTestWalkThrough {
 
             //check if the selected date matches the one shown on the editText
             ViewInteraction editText2 = onView(
-                    allOf(withId(R.id.datePicker), withText("May 03, 2019")
+                    allOf(withId(R.id.datePicker), withText("Dec 08, 2019")
                     ));
-            editText2.check(matches(withText("May 03, 2019")));
+            editText2.check(matches(withText("Dec 08, 2019")));
 
             //click on button to display filtered Events
             ViewInteraction button2 = onView(
@@ -73,9 +73,9 @@ public class MainActivityTestWalkThrough {
 
             //check if the Events are filtered correctly - filtered by selected date
             ViewInteraction textView = onView(
-                    allOf(withId(R.id.date), withText(is("2019-05-03"))
+                    allOf(withId(R.id.date), withText(is("2019-12-08"))
                     ));
-            textView.check(matches(withText("2019-05-03")));
+            textView.check(matches(withText("2019-12-08")));
 
             //click on the event tab in the navigation bar
             ViewInteraction bottomNavigationItemView = onView(
