@@ -109,12 +109,12 @@
 		036BD439226615A200036F3E /* clubber(ios) */ = {
 			isa = PBXGroup;
 			children = (
+				036BD43C226615A200036F3E /* ViewController.swift */,
 				036BD46D2266171500036F3E /* HTTPHelper.swift */,
 				036BD46B226616E300036F3E /* DataBaseHelper.swift */,
 				036BD43A226615A200036F3E /* AppDelegate.swift */,
 				0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */,
 				0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */,
-				036BD43C226615A200036F3E /* ViewController.swift */,
 				03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */,
 				036BD43E226615A200036F3E /* Main.storyboard */,
 				036BD444226615A300036F3E /* Assets.xcassets */,
