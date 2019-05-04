@@ -35,12 +35,10 @@ class HTTPHelper{
             if !automaticDownloadHasBeenSuccessful && hasNetworkAccess {
                 requestResponseServer()
             }
-            
         }
         let queue = DispatchQueue(label: "Monitor")
         monitor.start(queue: queue)
     }
-    
     
     //JSONData struct that stores Event and Club object Arrays
     private struct JSONData : Decodable {
@@ -159,11 +157,20 @@ class HTTPHelper{
                             //ids should be stored as integer
                             let id = children.value as! String
                             newEventEntry.setValue(Int(id), forKey: children.label!)
-                        }else{
-                            //rest is stored as strings
-                            newEventEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
-                            print(children.value)
                         }
+                        else if (children.label! == "dte"){
+                            //date has to be stored in date format
+                            let dateFormatter = DateFormatter()
+                            //the date datatype has an unchangeable format (i.e.) yyyy-MM-dd hh:mm:ss. dateFormat defines what the input String looks like
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                            let dte = dateFormatter.date(from: children.value as! String)
+                            newEventEntry.setValue(dte!, forKey: children.label!)
+                        }
+                        else{
+                            //rest is stored as stringsy
+                            newEventEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
+                        }
+                        print(children.value)
                         //the new row will be saved
                         try context.save()
                     }
@@ -180,7 +187,8 @@ class HTTPHelper{
                             //ids should be stored as integer
                             let id = children.value as! String
                             newClubEntry.setValue(Int(id), forKey: children.label!)
-                        }else{
+                        }
+                        else{
                             //rest is stored as strings
                             newClubEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
                             print(children.value)

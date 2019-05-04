@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //set up connectionListener and initiates an automatic download of a JSON file from the webserver
         HTTPHelper.startConnectionListener()
         
+        DataBaseHelper.deleteOldEntries()
+        
 
         return true
     }
