@@ -11,5 +11,7 @@
     <string name="calendar_desc">calendar icon in primary color</string>
     <string name="zum_event">zum Event >></string>
     <string name="clubber_icon">Clubber Icon</string>
+    <string name="sad_smiley">Sad Smiley</string>
+    <string name="no_events">Es tut und sehr leid! An dem ausgewählten Datum gibt es leider keine Events in Stuttgart</string>
 </resources>
 

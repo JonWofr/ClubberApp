@@ -8,14 +8,38 @@
     tools:context=".business_logic.MainActivity"
     android:background="@color/background">
 
-                <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="4dp"
-                        android:layout_margin="5dp"
-                        android:scrollbars="vertical">
-                </android.support.v7.widget.RecyclerView>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        android:layout_margin="5dp"
+        android:scrollbars="vertical">
+    </android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/sad_smiley"
+        android:background="@drawable/ic_sentiment_dissatisfied_black_24dp"
+        android:contentDescription="@string/sad_smiley"
+        android:foregroundGravity="center"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/no_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:text="@string/no_events"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="gone"/>
 
 </android.support.v4.widget.SwipeRefreshLayout>

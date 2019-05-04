@@ -21,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,6 +38,10 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private BroadcastReceiver dbConnectionServiceHasFinished;
     private Context context;
     private SwipeRefreshLayout refresh;
+    private RecyclerView eRecyclerView;
+    private TextView noEvents;
+    private ImageView sadSmileyNoEvents;
+
 
 
     public EventsFragment() {
@@ -52,8 +58,16 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_events, container, false);
+
+        //get the RecyclerView
+        eRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        //get the TextView
+        noEvents = (TextView) view.findViewById(R.id.no_events);
+        //get the ImageView
+        sadSmileyNoEvents = (ImageView) view.findViewById(R.id.sad_smiley);
 
         //When Broadcast is received UI is updated
         dbConnectionServiceHasFinished = new BroadcastReceiver() {
@@ -99,6 +113,11 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         }
         cursor.close();
 
+        //ToDo: Hier wird der traurige Smiley angezeigt + die Message dass es an dem Datum keine Events gibt - muss noch an der richtigen Stelle eingefügt werden
+        //ToDo: die Recycler View muss man "verschwinden" lassen und von den anderen beiden Elementen die Visibility auf visible setzten
+        eRecyclerView.setVisibility(View.GONE);
+        noEvents.setVisibility(View.VISIBLE);
+        sadSmileyNoEvents.setVisibility(View.VISIBLE);
 
         boolean networkAccess = DBConnectionService.networkAccess;
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);
@@ -106,7 +125,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         if (!networkAccess) {
             if (eventList.isEmpty()) {
                 Log.w(LOG, "There are no entries in the database");
-                //ToDo: Hier evtl. eher eine TextView einfügen.!!!!!!!!!!!!!
                 Toast.makeText(context, "Keine Events vorhanden, bitte stelle eine Internetverbindung her.", Toast.LENGTH_LONG).show();
             } else {
                 Log.i(LOG, "There are entries in the database but they might not be up to date");
@@ -151,7 +169,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     private void createRecyclerView(View view, ArrayList<Event> eventList) {
-        RecyclerView eRecyclerView = view.findViewById(R.id.recycler_view);
+        eRecyclerView = view.findViewById(R.id.recycler_view);
         //we know that the size of the list won't change and is comparably small
         eRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(context);
