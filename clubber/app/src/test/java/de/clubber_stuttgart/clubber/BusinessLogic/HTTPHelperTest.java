@@ -1,7 +1,5 @@
-package de.clubber_stuttgart.clubber.business_logic;
+package de.clubber_stuttgart.clubber.BusinessLogic;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;

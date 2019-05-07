@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber.business_logic;
+package de.clubber_stuttgart.clubber.BusinessLogic;
 
 import android.content.ContentValues;
 import android.content.Context;

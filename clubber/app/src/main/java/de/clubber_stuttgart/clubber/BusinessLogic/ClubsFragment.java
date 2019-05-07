@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber.business_logic;
+package de.clubber_stuttgart.clubber.BusinessLogic;
 
 
 import android.content.Context;
@@ -48,6 +48,8 @@ public class ClubsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_clubs, container, false);
 
         //creates an Array List of event items
+        //ToDo: Das holen der Daten in den DataBaseHelper einfügen und hier nur Methode davon aufrufen
+        //ToDo: danach das Club Fragment in UI Package verschieben
         ArrayList<Club> clubList = new ArrayList<>();
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
