@@ -6,10 +6,16 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import de.clubber_stuttgart.clubber.UI.Club;
+import de.clubber_stuttgart.clubber.UI.Event;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -59,7 +65,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private final String DROP_TABLE_EVENTS = "DROP IF TABLE EXISTS " + TABLE_NAME_EVENTS;
 
 
-    DataBaseHelper (Context context){
+    public DataBaseHelper (Context context){
         super(context, DATABASE_NAME, null, 1);
     }
 
@@ -176,7 +182,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     void deleteOldEntries (){
-        //TODO Hier könnte ein Problem entstehen, wenn die Methode am 01. eines Monats aufgerufen wird, da die Methode nicht wissen kann, dass der Tag vor dem 01. nicht der 00. ist
         //Get the date of yesterday
         String currentDate = java.time.LocalDate.now().toString();
         String day = currentDate.substring(currentDate.length()- 2, currentDate.length());
@@ -193,5 +198,48 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int rowsDeletedCount = db.delete(TABLE_NAME_EVENTS, 	E_DTE + " < '" + dateOfYesterday + "'", null);
         Log.i(LOG, rowsDeletedCount + " entries have been deleted because corresponding events were outdated");
         db.close();
+    }
+
+    public ArrayList<Event> getEventArrayList(Bundle bundle){
+
+        ArrayList<Event> eventList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        //Intent does not have to contain any selected date (for example if the events tab is reached via the tab bar)
+        if (bundle != null && bundle.containsKey("selectedDate")) {
+            //custom query
+            Log.i(LOG, "Events will be filtered for date " + bundle.getString("selectedDate"));
+            cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, "dte = ?", new String[]{bundle.getString("selectedDate")}, null, null, "dte, srttime asc", null);
+        } else {
+            //default query
+            cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, null, null, null, null, "dte, srttime asc", null);
+        }
+
+        while (cursor.moveToNext()) {
+            eventList.add(new Event(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6)));
+        }
+        cursor.close();
+
+        return eventList;
+    }
+
+    public ArrayList<Club> getClubArrayList(){
+        ArrayList<Club> clubList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //columns --> which should be selected (null = all)
+        //selection null return all the rows (WHERE statement)
+        //selectionArgs where column is something (e.g. date)
+        Cursor cursor = db.query(true, DataBaseHelper.TABLE_NAME_CLUBS, null, null, null, null, null, "name asc", null);
+
+        while (cursor.moveToNext()) {
+            clubList.add(new Club(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+        }
+        cursor.close();
+
+        return clubList;
     }
 }

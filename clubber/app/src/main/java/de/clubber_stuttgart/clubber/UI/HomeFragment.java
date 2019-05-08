@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber.BusinessLogic;
+package de.clubber_stuttgart.clubber.UI;
 
 
 import android.content.Context;
@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import de.clubber_stuttgart.clubber.BusinessLogic.DBConnectionService;
+import de.clubber_stuttgart.clubber.BusinessLogic.SelectDate;
 import de.clubber_stuttgart.clubber.R;
 import de.clubber_stuttgart.clubber.Exception.DateFormattingException;
 

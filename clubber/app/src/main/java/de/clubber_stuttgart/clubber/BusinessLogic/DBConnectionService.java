@@ -8,6 +8,8 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
+import de.clubber_stuttgart.clubber.UI.MainActivity;
+
 
 public class DBConnectionService extends IntentService {
 
@@ -16,7 +18,7 @@ public class DBConnectionService extends IntentService {
     }
 
     final private String LOG = "DBConnectionService";
-    static boolean networkAccess;
+    public static boolean networkAccess;
 
     @Override
     protected void onHandleIntent(Intent intent) {

@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber;
+package de.clubber_stuttgart.clubber.UI;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import de.clubber_stuttgart.clubber.R;
 
 public class CardEventAdapter extends RecyclerView.Adapter<CardEventAdapter.ExampleViewHolder>{
 

@@ -1,11 +1,9 @@
-package de.clubber_stuttgart.clubber.BusinessLogic;
+package de.clubber_stuttgart.clubber.UI;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
@@ -24,11 +22,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import de.clubber_stuttgart.clubber.CardEventAdapter;
-import de.clubber_stuttgart.clubber.Event;
-import de.clubber_stuttgart.clubber.R;
 import de.clubber_stuttgart.clubber.BusinessLogic.DBConnectionService;
 import de.clubber_stuttgart.clubber.BusinessLogic.DataBaseHelper;
+import de.clubber_stuttgart.clubber.UI.CardEventAdapter;
+import de.clubber_stuttgart.clubber.UI.Event;
+import de.clubber_stuttgart.clubber.R;
 
 
 public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -86,34 +84,12 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         refresh.setColorSchemeColors(getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.colorPrimary));
 
-        //creates an Array List of event items
-        ArrayList<Event> eventList = new ArrayList<>();
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
-
-        Log.d(LOG, db.getPath());
-
+        //contains information about a potentially selected date
         Bundle bundle = getArguments();
+        //creates an Array List of event items
+        ArrayList<Event> eventList = dataBaseHelper.getEventArrayList(bundle);
 
-        Cursor cursor;
-
-        //Intent does not have to contain any selected date (for example if the events tab is reached via the tab bar)
-        if (bundle != null && bundle.containsKey("selectedDate")) {
-            //custom query
-            //ToDo: Daten aus Datenbank extern holen - abstahieren in DatabaseHelper
-            //ToDo: Das holen der Daten in den DataBaseHelper einfügen und hier nur Methode davon aufrufen
-            //ToDo: danach das Club Fragment in UI Package verschieben
-            Log.i(LOG, "Events will be filtered for date " + bundle.getString("selectedDate"));
-            cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, "dte = ?", new String[]{bundle.getString("selectedDate")}, null, null, "dte, srttime asc", null);
-        } else {
-            //default query
-            cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, null, null, null, null, "dte, srttime asc", null);
-        }
-
-        while (cursor.moveToNext()) {
-            eventList.add(new Event(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6)));
-        }
-        cursor.close();
 
         //ToDo: Hier wird der traurige Smiley angezeigt + die Message dass es an dem Datum keine Events gibt - muss noch an der richtigen Stelle eingefügt werden
         //ToDo: die Recycler View muss man "verschwinden" lassen und von den anderen beiden Elementen die Visibility auf visible setzten

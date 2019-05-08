@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber;
+package de.clubber_stuttgart.clubber.UI;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import de.clubber_stuttgart.clubber.R;
 
 public class CardClubAdapter extends RecyclerView.Adapter<CardClubAdapter.ExampleViewHolder> {
 

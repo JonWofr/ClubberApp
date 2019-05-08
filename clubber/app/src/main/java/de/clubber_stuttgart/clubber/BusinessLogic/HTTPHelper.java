@@ -20,6 +20,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import de.clubber_stuttgart.clubber.UI.MainActivity;
+
 public class HTTPHelper extends AsyncTask {
 
     private String idEvent;
