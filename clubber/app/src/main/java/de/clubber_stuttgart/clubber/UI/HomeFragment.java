@@ -71,6 +71,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                //todo bug --> wieso auch immer wird das eventfragment mit ausgewählten datum 2mal erstellt, die komplette oncreateview wird zweimal ausgeführt
                 Fragment fragment;
                 switch (v.getId()) {
                     //if our button for submitting the date is clicked, this will happen

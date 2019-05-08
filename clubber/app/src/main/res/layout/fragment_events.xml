@@ -8,38 +8,46 @@
     tools:context=".UI.MainActivity"
     android:background="@color/background">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:layout_margin="5dp"
-        android:scrollbars="vertical"/>
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:id="@+id/sad_smiley"
-        android:background="@drawable/ic_sentiment_dissatisfied_black_24dp"
-        android:contentDescription="@string/sad_smiley"
-        android:foregroundGravity="center"
-        android:visibility="gone"
-        />
-
-    <TextView
-        android:id="@+id/no_events"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAlignment="center"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="center"
-        android:text="@string/no_events"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:visibility="gone"/>
+        android:visibility="visible">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="4dp"
+            android:scrollbars="vertical"
+            android:visibility="visible"></android.support.v7.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/sad_smiley"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_sentiment_dissatisfied_black_24dp"
+            android:contentDescription="@string/sad_smiley"
+            android:foregroundGravity="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/no_events"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/no_events"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:text="@string/no_events"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

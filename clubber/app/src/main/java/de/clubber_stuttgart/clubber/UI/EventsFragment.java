@@ -4,8 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Image;
 import android.os.Bundle;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -19,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -36,8 +40,8 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private Context context;
     private SwipeRefreshLayout refresh;
     private RecyclerView eRecyclerView;
-    private TextView noEvents;
-    private ImageView sadSmileyNoEvents;
+    private ImageView eImageView;
+    private TextView eTextView;
 
 
 
@@ -61,11 +65,8 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         //get the RecyclerView
         eRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        //get the TextView
-        noEvents = (TextView) view.findViewById(R.id.no_events);
-        //get the ImageView
-        sadSmileyNoEvents = (ImageView) view.findViewById(R.id.sad_smiley);
-
+        eImageView = (ImageView) view.findViewById(R.id.sad_smiley);
+        eTextView = (TextView) view.findViewById(R.id.no_events);
         //When Broadcast is received UI is updated
         dbConnectionServiceHasFinished = new BroadcastReceiver() {
             @Override
@@ -90,27 +91,24 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         //creates an Array List of event items
         ArrayList<Event> eventList = dataBaseHelper.getEventArrayList(bundle);
 
-
-        //ToDo: Hier wird der traurige Smiley angezeigt + die Message dass es an dem Datum keine Events gibt - muss noch an der richtigen Stelle eingefügt werden
-        //ToDo: die Recycler View muss man "verschwinden" lassen und von den anderen beiden Elementen die Visibility auf visible setzten
-        //eRecyclerView.setVisibility(View.GONE);
-        //noEvents.setVisibility(View.VISIBLE);
-        //sadSmileyNoEvents.setVisibility(View.VISIBLE);
-
         boolean networkAccess = DBConnectionService.networkAccess;
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);
 
-        if (!networkAccess) {
-            if (eventList.isEmpty()) {
-                Log.w(LOG, "There are no entries in the database");
-                Toast.makeText(context, "Keine Events vorhanden, bitte stelle eine Internetverbindung her.", Toast.LENGTH_LONG).show();
-            } else {
+        if (eventList.isEmpty()){
+            Log.d(LOG, "There are no entries in the database for given query");
+            if (!networkAccess){
+                Toast.makeText(context, "Es sind keine Events für die Suche vorhanden, bitte stelle eine Internetverbindung her, um sicher zu gehen, dass die Daten aktuell sind.", Toast.LENGTH_LONG).show();
+            }
+            eRecyclerView.setVisibility(View.GONE);
+            eImageView.setVisibility(View.VISIBLE);
+            eTextView.setVisibility(View.VISIBLE);
+        }
+        else {
+            if (!networkAccess){
                 Log.i(LOG, "There are entries in the database but they might not be up to date");
-                createRecyclerView(view, eventList);
                 //prints information about the lack of network access
                 Toast.makeText(context, "Achtung, keine Internetverbindung. Events eventuell unvollständig", Toast.LENGTH_LONG).show();
             }
-        } else {
             createRecyclerView(view, eventList);
         }
         return view;
@@ -125,7 +123,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         //refresh stops after the Toast appears
         refresh.setRefreshing(false);
         Log.d(LOG," stop onRefreshListener when Toast appears");
-
     }
 
     //gets called every time this activity gets into focus
@@ -147,7 +144,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     private void createRecyclerView(View view, ArrayList<Event> eventList) {
-        eRecyclerView = view.findViewById(R.id.recycler_view);
         //we know that the size of the list won't change and is comparably small
         eRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(context);
