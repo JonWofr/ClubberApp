@@ -13,7 +13,7 @@ import Network
 class HTTPHelper{
     
     static var hasNetworkAccess : Bool = false
-    private static var automaticDownloadHasBeenSuccessful : Bool = false
+    static var automaticDownloadHasBeenSuccessful : Bool = false
     
     //checks if device got internetAccess
     //is updated when network state has changed (turned off/on)
@@ -30,13 +30,9 @@ class HTTPHelper{
                 hasNetworkAccess = false
             }
             
-            //If we don't have network access at the beginning, but have internet while runtime, the app will start to request our webserver. if it was successful, it will set the automaticDownloadHasBeenSuccesful variable to true and we won't call the methode ever again while runtime
-            
-            if !automaticDownloadHasBeenSuccessful && hasNetworkAccess {
-                requestResponseServer()
-            }
-            
         }
+
+        
         let queue = DispatchQueue(label: "Monitor")
         monitor.start(queue: queue)
     }
@@ -68,14 +64,12 @@ class HTTPHelper{
         var web : String!
     }
     
+    static var json : String! = ""
+    
     //For requesting and receiving a json file from our webserver
     static func requestResponseServer(){
         
-        //----------------------
-        //ToDo: sollte in MainThread aufgerufen werden, in Vorlesung fragen warum
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //----------------------
-        
         let context = appDelegate.persistentContainer.viewContext
         
         //function to directly request the highest id stored in the coreData
@@ -131,8 +125,9 @@ class HTTPHelper{
                 //jsonData is object of JSONData struct which contains an Object Array of Event- and Club-struct
                 let jsonData = try JSONDecoder().decode(JSONData.self, from: data!)
                 NSLog("JSONData object has been created")
-                saveArraysInDatabase(jsonDataObj: jsonData)
+                json = String(data: data!, encoding: String.Encoding.utf8)
                 
+                saveArraysInDatabase(jsonDataObj: jsonData)
                 //if this is the initial/automatic update of the database it will be set true, so the database isn't
                 //updating it self again, only the user is able to
                 if(!automaticDownloadHasBeenSuccessful){
@@ -164,7 +159,7 @@ class HTTPHelper{
                             newEventEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
                             print(children.value)
                         }
-                        //the new row will be saved
+                        //the new entry will be saved
                         try context.save()
                     }
                     NSLog("A new event entry has been made")
@@ -185,7 +180,7 @@ class HTTPHelper{
                             newClubEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
                             print(children.value)
                         }
-                        //the new row will be saved
+                        //the new entry will be saved
                         try context.save()
                     }
                     NSLog("A new club entry has been made")
@@ -195,5 +190,4 @@ class HTTPHelper{
             }
         }
     }
-    
 }

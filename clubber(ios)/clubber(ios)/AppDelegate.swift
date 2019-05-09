@@ -20,6 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //set up connectionListener and initiates an automatic download of a JSON file from the webserver
         HTTPHelper.startConnectionListener()
         
+        // Vielleicht wegen context... Thread 4: EXC_BAD_ACCESS (code=1, address=0x0)
+        sleep(1)
+        
+        //If we don't have network access at the beginning, but have internet while runtime, the app will start to request our webserver. if it was successful, it will set the automaticDownloadHasBeenSuccesful variable to true and we won't call the methode ever again while runtime
+        if !HTTPHelper.automaticDownloadHasBeenSuccessful && HTTPHelper.hasNetworkAccess {
+            HTTPHelper.requestResponseServer()
+        }
 
         return true
     }

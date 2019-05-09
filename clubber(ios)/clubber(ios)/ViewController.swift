@@ -11,8 +11,18 @@ import Network
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var jsonDebug: UITextView!
+    
+    @IBAction func getJson(_ sender: UIButton) {
+        if(HTTPHelper.automaticDownloadHasBeenSuccessful){
+            jsonDebug.text = HTTPHelper.json
+            DataBaseHelper.deleteOldEntries()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
 
 }
