@@ -146,6 +146,9 @@ class HTTPHelper{
         
         func saveArraysInDatabase(jsonDataObj: JSONData) {
             do{
+                if (jsonDataObj.events.count == 0){
+                    NSLog("There are no new events which should be stored into the local db")
+                }
                 //stores every event into the entity events in core object
                 for event in jsonDataObj.events {
                     //mirror saves every value of each column
@@ -170,11 +173,14 @@ class HTTPHelper{
                             //rest is stored as stringsy
                             newEventEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
                         }
-                        print(children.value)
+                        NSLog("%@ of a new event is about to be stored into local db", children.value as? String ?? "nil")
                         //the new row will be saved
                         try context.save()
                     }
                     NSLog("A new event entry has been made")
+                }
+                if (jsonDataObj.clubs.count == 0){
+                    NSLog("There are no new clubs which should be stored into the local db")
                 }
                 //stores every club into the entity events in core object
                 for club in jsonDataObj.clubs {
@@ -191,8 +197,8 @@ class HTTPHelper{
                         else{
                             //rest is stored as strings
                             newClubEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
-                            print(children.value)
                         }
+                        NSLog("%@ of a new club is about to be stored into local db", children.value as? String ?? "nil")
                         //the new row will be saved
                         try context.save()
                     }

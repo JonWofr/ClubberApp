@@ -40,27 +40,29 @@ class DataBaseHelper {
     }
     
     
-    static func deleteOldEntries(){
-        
-        
-        let context = getContext()
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Events")
-        print(getDateOfYesterday())
-        fetchRequest.predicate = NSPredicate(format: "dte < %@", getDateOfYesterday() as CVarArg)
-        let result = try? context.fetch(fetchRequest)
-        let resultData = result as! [Events]
-        
-        for object in resultData {
-            context.delete(object)
-        }
+    static func deleteOldEntries() {
         
         do {
+        let context = getContext()
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Events")
+        //fetch every entry, which is older than the date of yesterday
+        fetchRequest.predicate = NSPredicate(format: "dte < %@", getDateOfYesterday() as CVarArg)
+        let result = try context.fetch(fetchRequest)
+        let resultData = result as! [Events]
+            
+            NSLog("%@ Events are dated before the date of yesterday", resultData.count)
+
+            
+        if (resultData.count > 0){
+            //delete every fetched object
+            for object in resultData {
+                context.delete(object)
+            }
             try context.save()
-            print("An old entry has been deleted")
+            NSLog("%@ Events have been deleted", resultData.count)
+            }
         } catch let error as NSError  {
-            print("Error trying to delete old db entries \(error), \(error.userInfo)")
-        } catch {
-        
+            NSLog("An error occured trying to delete old db entries. Error code %@", error)
         }
     }
     
@@ -69,6 +71,7 @@ class DataBaseHelper {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let date = dateFormatter.string(from: currentDate)
+        NSLog("Todays date is %@", date)
         let dateOfYesterdayDate = dateFormatter.date(from: date)
         return dateOfYesterdayDate!
     }

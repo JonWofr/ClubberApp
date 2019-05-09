@@ -59,5 +59,6 @@ class TableViewControllerEvents : UITableViewController{
                 alert.dismiss(animated: true, completion: nil)
             }))
         }
+        NSLog("Refresh button has been clicked")
     }
 }
