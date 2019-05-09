@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber.business_logic;
+package de.clubber_stuttgart.clubber.BusinessLogic;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -9,8 +9,9 @@ import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
+
+import de.clubber_stuttgart.clubber.Exception.DateFormattingException;
 
 
 public class SelectDate implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
@@ -19,7 +20,6 @@ public class SelectDate implements View.OnClickListener, DatePickerDialog.OnDate
     private EditText editText;
     private Calendar myCalendar;
     private Context ctx;
-
     //Contructor
     public SelectDate(EditText editText, Context ctx){
         this.ctx=ctx;
@@ -52,7 +52,7 @@ public class SelectDate implements View.OnClickListener, DatePickerDialog.OnDate
     }
 
     //ensures compatibility with db-query, because date formats are stored in a us-format (yyyy-mm-dd)
-    static String formatDate (String date) throws DateFormattingException {
+    public static String formatDate (String date) throws DateFormattingException {
         String[] dates = date.split(",");
         String day = dates[0].substring(dates[0].length()-2, dates[0].length());
         String month = dates[0].substring(0, dates[0].length()-3);

@@ -1,13 +1,13 @@
-package de.clubber_stuttgart.clubber.business_logic;
+package de.clubber_stuttgart.clubber.UI;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.os.Bundle;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -16,17 +16,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-import de.clubber_stuttgart.clubber.CardEventAdapter;
-import de.clubber_stuttgart.clubber.Event;
+import de.clubber_stuttgart.clubber.BusinessLogic.DBConnectionService;
+import de.clubber_stuttgart.clubber.BusinessLogic.DataBaseHelper;
+import de.clubber_stuttgart.clubber.UI.CardEventAdapter;
+import de.clubber_stuttgart.clubber.UI.Event;
 import de.clubber_stuttgart.clubber.R;
 
 
@@ -36,6 +39,10 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private BroadcastReceiver dbConnectionServiceHasFinished;
     private Context context;
     private SwipeRefreshLayout refresh;
+    private RecyclerView eRecyclerView;
+    private ImageView eImageView;
+    private TextView eTextView;
+
 
 
     public EventsFragment() {
@@ -52,9 +59,14 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_events, container, false);
 
+        //get the RecyclerView
+        eRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        eImageView = (ImageView) view.findViewById(R.id.sad_smiley);
+        eTextView = (TextView) view.findViewById(R.id.no_events);
         //When Broadcast is received UI is updated
         dbConnectionServiceHasFinished = new BroadcastReceiver() {
             @Override
@@ -73,48 +85,30 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         refresh.setColorSchemeColors(getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.colorPrimary));
 
-        //creates an Array List of event items
-        ArrayList<Event> eventList = new ArrayList<>();
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
-
-        Log.d(LOG, db.getPath());
-
+        //contains information about a potentially selected date
         Bundle bundle = getArguments();
-
-        Cursor cursor;
-
-        //Intent does not have to contain any selected date (for example if the events tab is reached via the tab bar)
-        if (bundle != null && bundle.containsKey("selectedDate")) {
-            //custom query
-            Log.i(LOG, "Events will be filtered for date " + bundle.getString("selectedDate"));
-            cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, "dte = ?", new String[]{bundle.getString("selectedDate")}, null, null, "dte, srttime asc", null);
-        } else {
-            //default query
-            cursor = db.query(DataBaseHelper.TABLE_NAME_EVENTS, null, null, null, null, null, "dte, srttime asc", null);
-        }
-
-        while (cursor.moveToNext()) {
-            eventList.add(new Event(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6)));
-        }
-        cursor.close();
-
+        //creates an Array List of event items
+        ArrayList<Event> eventList = dataBaseHelper.getEventArrayList(bundle);
 
         boolean networkAccess = DBConnectionService.networkAccess;
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);
 
-        if (!networkAccess) {
-            if (eventList.isEmpty()) {
-                Log.w(LOG, "There are no entries in the database");
-                //ToDo: Hier evtl. eher eine TextView einfügen.!!!!!!!!!!!!!
-                Toast.makeText(context, "Keine Events vorhanden, bitte stelle eine Internetverbindung her.", Toast.LENGTH_LONG).show();
-            } else {
+        if (eventList.isEmpty()){
+            Log.d(LOG, "There are no entries in the database for given query");
+            if (!networkAccess){
+                Toast.makeText(context, "Es sind keine Events für die Suche vorhanden, bitte stelle eine Internetverbindung her, um sicher zu gehen, dass die Daten aktuell sind.", Toast.LENGTH_LONG).show();
+            }
+            eRecyclerView.setVisibility(View.GONE);
+            eImageView.setVisibility(View.VISIBLE);
+            eTextView.setVisibility(View.VISIBLE);
+        }
+        else {
+            if (!networkAccess){
                 Log.i(LOG, "There are entries in the database but they might not be up to date");
-                createRecyclerView(view, eventList);
                 //prints information about the lack of network access
                 Toast.makeText(context, "Achtung, keine Internetverbindung. Events eventuell unvollständig", Toast.LENGTH_LONG).show();
             }
-        } else {
             createRecyclerView(view, eventList);
         }
         return view;
@@ -129,7 +123,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         //refresh stops after the Toast appears
         refresh.setRefreshing(false);
         Log.d(LOG," stop onRefreshListener when Toast appears");
-
     }
 
     //gets called every time this activity gets into focus
@@ -151,7 +144,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     private void createRecyclerView(View view, ArrayList<Event> eventList) {
-        RecyclerView eRecyclerView = view.findViewById(R.id.recycler_view);
         //we know that the size of the list won't change and is comparably small
         eRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(context);

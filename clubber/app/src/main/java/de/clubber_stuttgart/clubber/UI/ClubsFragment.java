@@ -1,9 +1,7 @@
-package de.clubber_stuttgart.clubber.business_logic;
+package de.clubber_stuttgart.clubber.UI;
 
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
@@ -17,8 +15,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import de.clubber_stuttgart.clubber.CardClubAdapter;
-import de.clubber_stuttgart.clubber.Club;
+import de.clubber_stuttgart.clubber.BusinessLogic.DBConnectionService;
+import de.clubber_stuttgart.clubber.BusinessLogic.DataBaseHelper;
+import de.clubber_stuttgart.clubber.UI.CardClubAdapter;
+import de.clubber_stuttgart.clubber.UI.Club;
 import de.clubber_stuttgart.clubber.R;
 
 
@@ -47,21 +47,10 @@ public class ClubsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_clubs, container, false);
 
-        //creates an Array List of event items
-        ArrayList<Club> clubList = new ArrayList<>();
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
+        //creates an Array List of event items
+        ArrayList<Club> clubList = dataBaseHelper.getClubArrayList();
 
-        //columns --> which should be selected (null = all)
-        //selection null return all the rows (WHERE statement)
-        //selectionArgs where column is something (e.g. date)
-        Cursor cursor = db.query(true, DataBaseHelper.TABLE_NAME_CLUBS, null, null, null, null, null, "name asc", null);
-
-        while (cursor.moveToNext()) {
-            clubList.add(new Club(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
-        }
-
-        cursor.close();
 
         boolean networkAccess = DBConnectionService.networkAccess;
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);

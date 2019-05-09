@@ -2,8 +2,8 @@
     <string name="app_name">Clubber</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="welcome_text">Wo verbringen Sie Ihre Zeit?</string>
-    <string name="wann">Wir zeigen Ihnen, was alles in Stuttgart los ist.</string>
+    <string name="welcome_text">Wo verbringst Du Deine Zeit?</string>
+    <string name="wann">Wir zeigen Dir, was alles in Stuttgart los ist.</string>
     <string name="datePicker">Datum auswählen</string>
     <string name="phone_desc">Telephone icon</string>
     <string name="world_desc">globe icon</string>
@@ -11,5 +11,7 @@
     <string name="calendar_desc">calendar icon in primary color</string>
     <string name="zum_event">zum Event >></string>
     <string name="clubber_icon">Clubber Icon</string>
+    <string name="sad_smiley">Sad Smiley</string>
+    <string name="no_events">Es tut uns sehr leid! An dem ausgewählten Datum gibt es leider keine Events in Stuttgart</string>
 </resources>
 

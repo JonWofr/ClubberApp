@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber.business_logic;
+package de.clubber_stuttgart.clubber.BusinessLogic;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import de.clubber_stuttgart.clubber.UI.MainActivity;
 
 public class HTTPHelper extends AsyncTask {
 

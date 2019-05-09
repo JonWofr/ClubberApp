@@ -2,7 +2,7 @@
 
 **gereral:**
 
-This project (Android and iOS) is **still being developed**. Thus, there might be some bugs and some functionality might not work.
+This project (Android and iOS) is **still being developed**. Thus, there might be some bugs and some functionality might not work. Since this project is developed as a part of a course, we are **not allowed** to use any **external libraries**. 
 The project is inspired by a website I programmed with a fellow student. Despite the fact that the website already exists, we decided on not developing a hybrid app but a native app.
 Website: **https://clubber-stuttgart.de/**
 
@@ -38,10 +38,3 @@ which create an alert box and print specific messages. Since Clubs- and Events T
 
 
 
-**Team:**
-
-Nico Burkart:   Developer for business logic
-
-Jonas Wolfram:  Developer for business logic
-
-Magali Gröter:  Developer for userinterface

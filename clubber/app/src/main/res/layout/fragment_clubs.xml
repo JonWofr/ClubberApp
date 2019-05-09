@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_clubs"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".business_logic.MainActivity"
+    tools:context=".UI.MainActivity"
     android:background="@color/background">
 
         <android.support.v7.widget.RecyclerView

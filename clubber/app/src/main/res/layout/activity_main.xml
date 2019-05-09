@@ -14,7 +14,7 @@
         android:layout_above="@id/bottom_navigation">
         <fragment
             android:id="@+id/fragment"
-            android:name="de.clubber_stuttgart.clubber.business_logic.HomeFragment"
+            android:name="de.clubber_stuttgart.clubber.UI.HomeFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

@@ -1,10 +1,8 @@
-package de.clubber_stuttgart.clubber.business_logic;
+package de.clubber_stuttgart.clubber.BusinessLogic;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import de.clubber_stuttgart.clubber.Exception.DateFormattingException;
 
 import static org.junit.Assert.*;
 

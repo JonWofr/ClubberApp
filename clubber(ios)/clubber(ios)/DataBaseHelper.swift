@@ -11,7 +11,7 @@ import CoreData
 import UIKit
 
 class DataBaseHelper {
-    
+
     //returs Context
     static func getContext () -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -44,8 +44,33 @@ class DataBaseHelper {
     
     static func deleteOldEntries(){
         
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let date = dateFormatter.string(from: currentDate)
+        let dateOfYesterdayDate = dateFormatter.date(from: date)
+        
         let context = getContext()
-        //let predicate = NSPredicate(format: "dte <= %@", "")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Events")
+        print(dateOfYesterdayDate!)
+        fetchRequest.predicate = NSPredicate(format: "dte < %@", dateOfYesterdayDate! as CVarArg)
+        let result = try? context.fetch(fetchRequest)
+        let resultData = result as! [Events]
+        
+        for object in resultData {
+            context.delete(object)
+        }
+        
+        do {
+            try context.save()
+            print("An old entry has been deleted")
+        } catch let error as NSError  {
+            print("Error trying to delete old db entries \(error), \(error.userInfo)")
+        }
+    }
+    
+    static func deleteAll(){
+        let context = getContext()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Events")
         
         let result = try? context.fetch(fetchRequest)
@@ -57,20 +82,9 @@ class DataBaseHelper {
         
         do {
             try context.save()
-            print("saved!")
+            print("An old entry has been deleted")
         } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
-        } catch {
-            
+            print("Error trying to delete old db entries \(error), \(error.userInfo)")
         }
     }
-    
-    func getCurrentDate() -> String{
-        let dateObject = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        let date = formatter.string(from: dateObject)
-        return date
-    }
-        
 }

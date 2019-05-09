@@ -41,6 +41,22 @@
                                     <action selector="getJson:" destination="s6t-9e-eDg" eventType="touchUpInside" id="9qr-oz-4ey"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9c-jv-QxS">
+                                <rect key="frame" x="92" y="279" width="94" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="delete Entries"/>
+                                <connections>
+                                    <action selector="deleteBtn:" destination="s6t-9e-eDg" eventType="touchUpInside" id="8QD-4P-KH0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ws-D7-6vj">
+                                <rect key="frame" x="211" y="279" width="105" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Download Json"/>
+                                <connections>
+                                    <action selector="refreshBtn:" destination="s6t-9e-eDg" eventType="touchUpInside" id="Fhe-th-TEk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="bBy-Jq-Eyq"/>
@@ -63,12 +79,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseIdentEvents" rowHeight="91" id="qFa-0Q-Nmn">
-                                <rect key="frame" x="0.0" y="28" width="375" height="91"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseIdentEvents" rowHeight="175" id="qFa-0Q-Nmn">
+                                <rect key="frame" x="0.0" y="28" width="375" height="175"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qFa-0Q-Nmn" id="cNd-Ms-hcQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="174.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fhA-ZZ-6B6">
+                                            <rect key="frame" x="30" y="22" width="315" height="131"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="fhA-ZZ-6B6" secondAttribute="bottom" constant="11" id="2rD-x6-gpP"/>
+                                        <constraint firstItem="fhA-ZZ-6B6" firstAttribute="top" secondItem="cNd-Ms-hcQ" secondAttribute="topMargin" constant="11" id="VsT-Df-d7S"/>
+                                        <constraint firstItem="fhA-ZZ-6B6" firstAttribute="leading" secondItem="cNd-Ms-hcQ" secondAttribute="leadingMargin" constant="14" id="psk-Zi-FUb"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="fhA-ZZ-6B6" secondAttribute="trailing" constant="14" id="wss-Fd-8Im"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>

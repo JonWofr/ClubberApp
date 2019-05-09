@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber.business_logic;
+package de.clubber_stuttgart.clubber.BusinessLogic;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -6,27 +6,20 @@ import android.support.test.espresso.contrib.PickerActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.DatePicker;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.clubber_stuttgart.clubber.R;
+import de.clubber_stuttgart.clubber.UI.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -51,7 +44,7 @@ public class MainActivityTestWalkThrough {
 
             //select a date - May 03, 2019
             onView(
-                    withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2019, 05, 03));
+                    withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2019, 12, 8));
 
             //click ok - set date
             ViewInteraction button = onView(
@@ -61,9 +54,9 @@ public class MainActivityTestWalkThrough {
 
             //check if the selected date matches the one shown on the editText
             ViewInteraction editText2 = onView(
-                    allOf(withId(R.id.datePicker), withText("May 03, 2019")
+                    allOf(withId(R.id.datePicker), withText("Dec 08, 2019")
                     ));
-            editText2.check(matches(withText("May 03, 2019")));
+            editText2.check(matches(withText("Dec 08, 2019")));
 
             //click on button to display filtered Events
             ViewInteraction button2 = onView(
@@ -73,9 +66,9 @@ public class MainActivityTestWalkThrough {
 
             //check if the Events are filtered correctly - filtered by selected date
             ViewInteraction textView = onView(
-                    allOf(withId(R.id.date), withText(is("2019-05-03"))
+                    allOf(withId(R.id.date), withText(is("2019-12-08"))
                     ));
-            textView.check(matches(withText("2019-05-03")));
+            textView.check(matches(withText("2019-12-08")));
 
             //click on the event tab in the navigation bar
             ViewInteraction bottomNavigationItemView = onView(
