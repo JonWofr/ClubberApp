@@ -42,16 +42,11 @@ class DataBaseHelper {
     
     static func deleteOldEntries(){
         
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let date = dateFormatter.string(from: currentDate)
-        let dateOfYesterdayDate = dateFormatter.date(from: date)
         
         let context = getContext()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Events")
-        print(dateOfYesterdayDate!)
-        fetchRequest.predicate = NSPredicate(format: "dte < %@", dateOfYesterdayDate! as CVarArg)
+        print(getDateOfYesterday())
+        fetchRequest.predicate = NSPredicate(format: "dte < %@", getDateOfYesterday() as CVarArg)
         let result = try? context.fetch(fetchRequest)
         let resultData = result as! [Events]
         
@@ -65,7 +60,16 @@ class DataBaseHelper {
         } catch let error as NSError  {
             print("Error trying to delete old db entries \(error), \(error.userInfo)")
         } catch {
-            
+        
         }
+    }
+    
+    private static func getDateOfYesterday () -> Date {
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let date = dateFormatter.string(from: currentDate)
+        let dateOfYesterdayDate = dateFormatter.date(from: date)
+        return dateOfYesterdayDate!
     }
 }
