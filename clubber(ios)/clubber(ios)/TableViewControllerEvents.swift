@@ -45,9 +45,10 @@ class TableViewControllerEvents : UITableViewController{
     @objc func refreshClicked(){
         if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
             HTTPHelper.requestResponseServer()
-            refreshcontrol?.endRefreshing()
+            sleep(3)
+            eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
             table.reloadData()
-            
+            refreshcontrol?.endRefreshing()
         }else{
             //needs to be called in order for the refresh process to be stopped
             let alert = UIAlertController(title: "Placholder", message: "Stelle bitte eine Internetverbindung her", preferredStyle: UIAlertController.Style.alert)
