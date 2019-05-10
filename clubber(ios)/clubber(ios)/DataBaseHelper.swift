@@ -45,23 +45,22 @@ class DataBaseHelper {
     static func deleteOldEntries() {
         
         do {
-        let context = getContext()
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Events")
-        //fetch every entry, which is older than the date of yesterday
-        fetchRequest.predicate = NSPredicate(format: "dte < %@", getDateOfYesterday() as CVarArg)
-        let result = try context.fetch(fetchRequest)
-        let resultData = result as! [Events]
-            
+            let context = getContext()
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Events")
+            //fetch every entry, which is older than the date of yesterday
+            fetchRequest.predicate = NSPredicate(format: "dte < %@", getDateOfYesterday() as CVarArg)
+            let result = try context.fetch(fetchRequest)
+            let resultData = result as! [Events]
             NSLog("%@ Events are dated before the date of yesterday", resultData.count)
-
             
-        if (resultData.count > 0){
-            //delete every fetched object
-            for object in resultData {
-                context.delete(object)
-            }
-            try context.save()
-            NSLog("%@ Events have been deleted", resultData.count)
+            
+            if (resultData.count > 0){
+                //delete every fetched object
+                for object in resultData {
+                    context.delete(object)
+                }
+                try context.save()
+                NSLog("%@ Events have been deleted", resultData.count)
             }
         } catch let error as NSError  {
             print("Error trying to delete old db entries \(error), \(error.userInfo)")

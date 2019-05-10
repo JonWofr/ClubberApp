@@ -117,19 +117,19 @@ class HTTPHelper{
         NSLog("Requesting data from %@", url)
 
         let urlObj = URL(string: url)
-        var jsonData : JSONData?
         
         //starts request - reply to the server with url depending on the highest stored id in the local db
         URLSession.shared.dataTask(with: urlObj!) {(data, response, error) in
             do {
                 //jsonData is object of JSONData struct which contains an Object Array of Event- and Club-struct
-                jsonData = try JSONDecoder().decode(JSONData.self, from: data!)
+                let jsonData = try JSONDecoder().decode(JSONData.self, from: data!)
                 NSLog("JSONData object has been created")
                 json = String(data: data!, encoding: String.Encoding.utf8)
+                saveRequestedArraysInDatabase(jsonDataObj: jsonData)
                 
                 //if this is the initial/automatic update of the database it will be set true, so the database isn't
                 //updating it self again, only the user is able to
-                if(!automaticDownloadHasBeenSuccessful && jsonData != nil){
+                if(!automaticDownloadHasBeenSuccessful){
                     automaticDownloadHasBeenSuccessful = true
                 }
                 
@@ -138,6 +138,7 @@ class HTTPHelper{
                 NSLog("Requesting data from given URL has been unsuccessful. Error: %@", error.localizedDescription)
             }
             }.resume()
+        
         
         
         func saveRequestedArraysInDatabase(jsonDataObj: JSONData) {

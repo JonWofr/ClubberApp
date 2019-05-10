@@ -49,6 +49,7 @@ class TableViewControllerEvents : UITableViewController{
         if(HTTPHelper.hasNetworkAccess){
             HTTPHelper.requestResponseServer()
             refreshcontrol?.endRefreshing()
+            table.reloadData()
         }else{
             //needs to be called in order for the refresh process to be stopped
             let alert = UIAlertController(title: "Placholder", message: "Stelle bitte eine Internetverbindung her", preferredStyle: UIAlertController.Style.alert)
