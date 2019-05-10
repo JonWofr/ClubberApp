@@ -18,6 +18,8 @@ class TableViewControllerEvents : UITableViewController{
         super.viewDidLoad()
         
         refreshcontrol = UIRefreshControl()
+        //text displayed under the circle
+        refreshcontrol?.attributedTitle = NSAttributedString(string : "Pull to refresh")
         //selector is called when the refreshControl is swiped down
         refreshcontrol?.addTarget(self, action: #selector(refreshClicked) , for: .valueChanged)
         
@@ -45,14 +47,18 @@ class TableViewControllerEvents : UITableViewController{
     @objc func refreshClicked(){
         if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
             HTTPHelper.requestResponseServer()
-            sleep(3)
-            eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
-            table.reloadData()
-            refreshcontrol?.endRefreshing()
+            //Wait until the thread inside requestResponseServer() has done its job
+            HTTPHelper.dispatchGroup.notify(queue: .main){
+                self.eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
+                NSLog("TableView is about to be updated")
+                self.table.reloadData()
+                self.refreshcontrol?.endRefreshing()
+                }
         }else{
             //needs to be called in order for the refresh process to be stopped
             let alert = UIAlertController(title: "Placholder", message: "Stelle bitte eine Internetverbindung her", preferredStyle: UIAlertController.Style.alert)
-            
+        
+            //refreshControl will be stoped once user dialogue shows up
             self.present(alert, animated: true, completion: {() -> Void in self.refreshcontrol?.endRefreshing()})
             
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { (action) in

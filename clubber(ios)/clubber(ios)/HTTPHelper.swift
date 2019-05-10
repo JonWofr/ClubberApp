@@ -65,6 +65,8 @@ class HTTPHelper{
     }
     
     static var json : String! = ""
+    static let dispatchGroup = DispatchGroup()
+
     
     //For requesting and receiving a json file from our webserver
     static func requestResponseServer(){
@@ -121,6 +123,7 @@ class HTTPHelper{
         let urlObj = URL(string: url)
         
         //starts request - reply to the server with url depending on the highest stored id in the local db
+        dispatchGroup.enter()
         URLSession.shared.dataTask(with: urlObj!) {(data, response, error) in
             do {
                 //jsonData is object of JSONData struct which contains an Object Array of Event- and Club-struct
@@ -141,6 +144,7 @@ class HTTPHelper{
             }
             
             requestResponseServerIsRunning = false
+            dispatchGroup.leave()
             }.resume()
         
         
