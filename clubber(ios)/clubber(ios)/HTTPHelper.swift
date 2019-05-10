@@ -14,6 +14,7 @@ class HTTPHelper{
     
     static var hasNetworkAccess : Bool = false
     static var automaticDownloadHasBeenSuccessful : Bool = false
+    static var requestResponseServerIsRunning : Bool = false
     
     //checks if device got internetAccess
     //is updated when network state has changed (turned off/on)
@@ -67,6 +68,7 @@ class HTTPHelper{
     
     //For requesting and receiving a json file from our webserver
     static func requestResponseServer(){
+        requestResponseServerIsRunning = true
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
@@ -137,6 +139,8 @@ class HTTPHelper{
                 //localizedDescription is needed to convert NSError into String
                 NSLog("Requesting data from given URL has been unsuccessful. Error: %@", error.localizedDescription)
             }
+            
+            requestResponseServerIsRunning = false
             }.resume()
         
         

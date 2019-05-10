@@ -23,9 +23,7 @@ class TableViewControllerEvents : UITableViewController{
         
         table.addSubview(refreshcontrol!)
         
-        //requests data from the database
         eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
-        
         giveUserFeedbackIfNecessary(arr: eventArr)
         
     }
@@ -44,12 +42,12 @@ class TableViewControllerEvents : UITableViewController{
         return cell;
     }
     
-    
     @objc func refreshClicked(){
-        if(HTTPHelper.hasNetworkAccess){
+        if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
             HTTPHelper.requestResponseServer()
             refreshcontrol?.endRefreshing()
             table.reloadData()
+            
         }else{
             //needs to be called in order for the refresh process to be stopped
             let alert = UIAlertController(title: "Placholder", message: "Stelle bitte eine Internetverbindung her", preferredStyle: UIAlertController.Style.alert)
