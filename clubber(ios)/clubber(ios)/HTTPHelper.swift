@@ -13,7 +13,6 @@ import Network
 class HTTPHelper{
     
     static var hasNetworkAccess : Bool = false
-    static var automaticDownloadHasBeenSuccessful : Bool = false
     static var requestResponseServerIsRunning : Bool = false
     
     //checks if device got internetAccess
@@ -123,6 +122,7 @@ class HTTPHelper{
         let urlObj = URL(string: url)
         
         //starts request - reply to the server with url depending on the highest stored id in the local db
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         dispatchGroup.enter()
         URLSession.shared.dataTask(with: urlObj!) {(data, response, error) in
             do {
@@ -132,11 +132,6 @@ class HTTPHelper{
                 json = String(data: data!, encoding: String.Encoding.utf8)
                 saveRequestedArraysInDatabase(jsonDataObj: jsonData)
                 
-                //if this is the initial/automatic update of the database it will be set true, so the database isn't
-                //updating it self again, only the user is able to
-                if(!automaticDownloadHasBeenSuccessful){
-                    automaticDownloadHasBeenSuccessful = true
-                }
                 
             }catch{
                 //localizedDescription is needed to convert NSError into String

@@ -11,7 +11,7 @@ import UIKit
 
 //extension for TableViewControllerEvents/Clubs. They both need the methods below.
 
-extension UITableViewController {
+extension UIViewController{
     
     //creates an alert for the user with a simple "ok" button
     func createAlert (title:String, message:String){

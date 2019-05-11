@@ -21,11 +21,12 @@ class TableViewControllerEvents : UITableViewController{
         //text displayed under the circle
         refreshcontrol?.attributedTitle = NSAttributedString(string : "Pull to refresh")
         //selector is called when the refreshControl is swiped down
-        refreshcontrol?.addTarget(self, action: #selector(refreshClicked) , for: .valueChanged)
+        refreshcontrol?.addTarget(self, action: #selector(refreshControlPulledDown) , for: .valueChanged)
         
         table.addSubview(refreshcontrol!)
-        
-        eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
+        if !HTTPHelper.requestResponseServerIsRunning{
+            eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
+        }
         giveUserFeedbackIfNecessary(arr: eventArr)
         
     }
@@ -44,11 +45,12 @@ class TableViewControllerEvents : UITableViewController{
         return cell;
     }
     
-    @objc func refreshClicked(){
+    @objc func refreshControlPulledDown(){
         if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
             HTTPHelper.requestResponseServer()
-            //Wait until the thread inside requestResponseServer() has done its job
+            //wait until the thread inside requestResponseServer() has done its job
             HTTPHelper.dispatchGroup.notify(queue: .main){
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self.eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
                 NSLog("TableView is about to be updated")
                 self.table.reloadData()

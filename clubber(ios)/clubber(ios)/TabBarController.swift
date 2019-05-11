@@ -12,11 +12,12 @@ import UIKit
 class TabBarController: UITabBarController, UITabBarControllerDelegate{
     // UITabBarDelegate
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        //ToDo: Hier Sicherheit für den Download Thread einbauen, damit keine Datenbankabfrage vor dem einfügen in die Datenbank geschieht. Am besten rädchen einbauen, welches das Laden anzeigt.
-        
-        //Vorsicht, man weiß noch nicht welches item ausgewählt wurde.
-        
-        print("Selected item")
+        if item.title! == "Events" {
+            let timeoutReached = HTTPHelper.dispatchGroup.wait(timeout: .now() + 3)
+            if (timeoutReached == DispatchTimeoutResult.timedOut){
+                NSLog("The timeout has been reached. The Data could not be downloaded before the events view has been drawn")
+            }
+        }
     }
     
 }
