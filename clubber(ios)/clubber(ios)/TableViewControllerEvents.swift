@@ -45,7 +45,7 @@ class TableViewControllerEvents : UITableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentEvents", for: indexPath)
-       // cell.textLabel?.text = eventArr[indexPath.row]
+        
         
         cell.contentView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         
@@ -54,20 +54,13 @@ class TableViewControllerEvents : UITableViewController{
         return cell;
     }
     
-<<<<<<< HEAD
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+
     
-    
-    
-    
-    @objc func refreshClicked(){
-        if(HTTPHelper.hasNetworkAccess){
-=======
     @objc func refreshControlPulledDown(){
         if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
->>>>>>> c811b27135c05edd8835a58240fa3538f7e8ed42
             HTTPHelper.requestResponseServer()
             //wait until the thread inside requestResponseServer() has done its job
             HTTPHelper.dispatchGroup.notify(queue: .main){
