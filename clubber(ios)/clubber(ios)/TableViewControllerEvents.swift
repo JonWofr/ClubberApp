@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class TableViewControllerEvents : UITableViewController{
     
     var eventArr : [String] = []
@@ -16,6 +17,10 @@ class TableViewControllerEvents : UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.separatorColor = UIColor(white: 0.95, alpha: 1)
+        tableView.dataSource = self
+        tableView.delegate = self
         
         refreshcontrol = UIRefreshControl()
         //selector is called when the refreshControl is swiped down
@@ -39,9 +44,17 @@ class TableViewControllerEvents : UITableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentEvents", for: indexPath)
-        cell.textLabel?.text = eventArr[indexPath.row]
+       // cell.textLabel?.text = eventArr[indexPath.row]
+        
+        cell.contentView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        
+        cell.selectionStyle = .none
         
         return cell;
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
     

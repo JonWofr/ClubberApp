@@ -35,17 +35,15 @@ public class MainActivityTestWalkThrough {
 
     @Test
     public void mainActivityTest2() {
-            //open datePicker Dialog by clicking on editText
             ViewInteraction editText = onView(
                     allOf(withId(R.id.datePicker), withText(is("Datum auswählen"))
                     ));
             editText.perform(click());
 
-            //select a date - May 03, 2019
+            //select a date - Dec 08, 2019
             onView(
                     withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2019, 12, 8));
 
-            //click ok - set date
             ViewInteraction button = onView(
                     allOf(withId(android.R.id.button1), withText("OK")
                     ));
@@ -57,7 +55,6 @@ public class MainActivityTestWalkThrough {
                     ));
             editText2.check(matches(withText("Dec 08, 2019")));
 
-            //click on button to display filtered Events
             ViewInteraction button2 = onView(
                     allOf(withId(R.id.eventBtnWithDate)
                     ));
@@ -69,17 +66,14 @@ public class MainActivityTestWalkThrough {
                     ));
             textView.check(matches(withText("2019-12-08")));
 
-            //click on the event tab in the navigation bar
             ViewInteraction bottomNavigationItemView = onView(
                     allOf(withId(R.id.nav_events), withContentDescription("Events")));
             bottomNavigationItemView.perform(click());
 
-            //click on the club tab in the navigation bar
             ViewInteraction bottomNavigationItemView2 = onView(
                     allOf(withId(R.id.nav_location), withContentDescription("Clubs")));
             bottomNavigationItemView2.perform(click());
 
-            //click on the event tab in the navigation bar and reload it by pulling it down
             ViewInteraction bottomNavigationItemView3 = onView(
                     allOf(withId(R.id.nav_events), withContentDescription("Events")));
             bottomNavigationItemView3.perform(click());
