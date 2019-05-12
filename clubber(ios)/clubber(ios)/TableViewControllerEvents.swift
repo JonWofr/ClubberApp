@@ -23,14 +23,15 @@ class TableViewControllerEvents : UITableViewController{
         tableView.delegate = self
         
         refreshcontrol = UIRefreshControl()
+        //text displayed under the circle
+        refreshcontrol?.attributedTitle = NSAttributedString(string : "Pull to refresh")
         //selector is called when the refreshControl is swiped down
-        refreshcontrol?.addTarget(self, action: #selector(refreshClicked) , for: .valueChanged)
+        refreshcontrol?.addTarget(self, action: #selector(refreshControlPulledDown) , for: .valueChanged)
         
         table.addSubview(refreshcontrol!)
-        
-        //requests data from the database
-        eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
-        
+        if !HTTPHelper.requestResponseServerIsRunning{
+            eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
+        }
         giveUserFeedbackIfNecessary(arr: eventArr)
         
     }
@@ -53,6 +54,7 @@ class TableViewControllerEvents : UITableViewController{
         return cell;
     }
     
+<<<<<<< HEAD
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -62,12 +64,30 @@ class TableViewControllerEvents : UITableViewController{
     
     @objc func refreshClicked(){
         if(HTTPHelper.hasNetworkAccess){
+=======
+    @objc func refreshControlPulledDown(){
+        if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
+>>>>>>> c811b27135c05edd8835a58240fa3538f7e8ed42
             HTTPHelper.requestResponseServer()
-            refreshcontrol?.endRefreshing()
+            //wait until the thread inside requestResponseServer() has done its job
+            HTTPHelper.dispatchGroup.notify(queue: .main){
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                self.eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
+                NSLog("TableView is about to be updated")
+                self.table.reloadData()
+                self.refreshcontrol?.endRefreshing()
+                }
         }else{
             //needs to be called in order for the refresh process to be stopped
-            refreshcontrol?.endRefreshing()
-            createAlert(title: "Platzhalter", message: "Stelle bitte eine Internetverbindung her")
+            let alert = UIAlertController(title: "Placholder", message: "Stelle bitte eine Internetverbindung her", preferredStyle: UIAlertController.Style.alert)
+        
+            //refreshControl will be stoped once user dialogue shows up
+            self.present(alert, animated: true, completion: {() -> Void in self.refreshcontrol?.endRefreshing()})
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
         }
+        NSLog("Refresh button has been clicked")
     }
 }

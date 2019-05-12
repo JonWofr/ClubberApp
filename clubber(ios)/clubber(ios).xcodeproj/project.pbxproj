@@ -17,6 +17,7 @@
 		036BD45E226615A300036F3E /* clubber_ios_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD45D226615A300036F3E /* clubber_ios_UITests.swift */; };
 		036BD46C226616E300036F3E /* DataBaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD46B226616E300036F3E /* DataBaseHelper.swift */; };
 		036BD46E2266171500036F3E /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD46D2266171500036F3E /* HTTPHelper.swift */; };
+		03927BD7227E159600FB4E19 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03927BD6227E159600FB4E19 /* TabBarController.swift */; };
 		0397BB5C2275E1EE00FDF73C /* TableViewControllerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */; };
 		0397BB5E2275F07900FDF73C /* TableViewControllerClubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */; };
 		03DA9107227A06E2006EAEB8 /* AlertHelperExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */; };
@@ -57,6 +58,7 @@
 		036BD45F226615A300036F3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		036BD46B226616E300036F3E /* DataBaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseHelper.swift; sourceTree = "<group>"; };
 		036BD46D2266171500036F3E /* HTTPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
+		03927BD6227E159600FB4E19 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerEvents.swift; sourceTree = "<group>"; };
 		0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerClubs.swift; sourceTree = "<group>"; };
 		03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelperExtension.swift; sourceTree = "<group>"; };
@@ -111,13 +113,14 @@
 		036BD439226615A200036F3E /* clubber(ios) */ = {
 			isa = PBXGroup;
 			children = (
+				036BD43A226615A200036F3E /* AppDelegate.swift */,
 				036BD43C226615A200036F3E /* ViewController.swift */,
 				036BD46D2266171500036F3E /* HTTPHelper.swift */,
 				036BD46B226616E300036F3E /* DataBaseHelper.swift */,
-				036BD43A226615A200036F3E /* AppDelegate.swift */,
 				0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */,
 				0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */,
 				03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */,
+				03927BD6227E159600FB4E19 /* TabBarController.swift */,
 				036BD43E226615A200036F3E /* Main.storyboard */,
 				036BD444226615A300036F3E /* Assets.xcassets */,
 				036BD446226615A300036F3E /* LaunchScreen.storyboard */,
@@ -280,6 +283,7 @@
 				036BD46C226616E300036F3E /* DataBaseHelper.swift in Sources */,
 				036BD43D226615A200036F3E /* ViewController.swift in Sources */,
 				036BD46E2266171500036F3E /* HTTPHelper.swift in Sources */,
+				03927BD7227E159600FB4E19 /* TabBarController.swift in Sources */,
 				036BD443226615A200036F3E /* clubber_ios_.xcdatamodeld in Sources */,
 				03DA9107227A06E2006EAEB8 /* AlertHelperExtension.swift in Sources */,
 				0397BB5E2275F07900FDF73C /* TableViewControllerClubs.swift in Sources */,
@@ -461,13 +465,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C44K2Z4B36;
+				DEVELOPMENT_TEAM = 8C5J828CXA;
 				INFOPLIST_FILE = "clubber(ios)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "de-clubber-stuttgart.clubber-ios-";
+				PRODUCT_BUNDLE_IDENTIFIER = "de-clubber-stuttgart.clubber-ios-12345";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -479,13 +483,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C44K2Z4B36;
+				DEVELOPMENT_TEAM = 8C5J828CXA;
 				INFOPLIST_FILE = "clubber(ios)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "de-clubber-stuttgart.clubber-ios-";
+				PRODUCT_BUNDLE_IDENTIFIER = "de-clubber-stuttgart.clubber-ios-12345";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

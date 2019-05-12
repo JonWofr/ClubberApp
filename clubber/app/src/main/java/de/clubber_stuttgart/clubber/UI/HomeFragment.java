@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber.BusinessLogic;
+package de.clubber_stuttgart.clubber.UI;
 
 
 import android.content.Context;
@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import de.clubber_stuttgart.clubber.BusinessLogic.DBConnectionService;
+import de.clubber_stuttgart.clubber.BusinessLogic.SelectDate;
 import de.clubber_stuttgart.clubber.R;
 import de.clubber_stuttgart.clubber.Exception.DateFormattingException;
 
@@ -69,6 +71,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                //todo bug --> wieso auch immer wird das eventfragment mit ausgewählten datum 2mal erstellt, die komplette oncreateview wird zweimal ausgeführt
                 Fragment fragment;
                 switch (v.getId()) {
                     //if our button for submitting the date is clicked, this will happen

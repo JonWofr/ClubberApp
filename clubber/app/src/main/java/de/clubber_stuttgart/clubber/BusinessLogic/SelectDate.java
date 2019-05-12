@@ -52,7 +52,7 @@ public class SelectDate implements View.OnClickListener, DatePickerDialog.OnDate
     }
 
     //ensures compatibility with db-query, because date formats are stored in a us-format (yyyy-mm-dd)
-    static String formatDate (String date) throws DateFormattingException {
+    public static String formatDate (String date) throws DateFormattingException {
         String[] dates = date.split(",");
         String day = dates[0].substring(dates[0].length()-2, dates[0].length());
         String month = dates[0].substring(0, dates[0].length()-3);

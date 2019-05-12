@@ -38,10 +38,3 @@ which create an alert box and print specific messages. Since Clubs- and Events T
 
 
 
-**Team:**
-
-Nico Burkart:   Developer for business logic
-
-Jonas Wolfram:  Developer for business logic
-
-Magali Gröter:  Developer for userinterface

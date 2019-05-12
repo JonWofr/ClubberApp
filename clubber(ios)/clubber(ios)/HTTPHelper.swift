@@ -13,7 +13,7 @@ import Network
 class HTTPHelper{
     
     static var hasNetworkAccess : Bool = false
-    private static var automaticDownloadHasBeenSuccessful : Bool = false
+    static var requestResponseServerIsRunning : Bool = false
     
     //checks if device got internetAccess
     //is updated when network state has changed (turned off/on)
@@ -30,12 +30,9 @@ class HTTPHelper{
                 hasNetworkAccess = false
             }
             
-            //If we don't have network access at the beginning, but have internet while runtime, the app will start to request our webserver. if it was successful, it will set the automaticDownloadHasBeenSuccesful variable to true and we won't call the methode ever again while runtime
-            
-            if !automaticDownloadHasBeenSuccessful && hasNetworkAccess {
-                requestResponseServer()
-            }
         }
+
+        
         let queue = DispatchQueue(label: "Monitor")
         monitor.start(queue: queue)
     }
@@ -66,14 +63,15 @@ class HTTPHelper{
         var web : String!
     }
     
+    static var json : String! = ""
+    static let dispatchGroup = DispatchGroup()
+
+    
     //For requesting and receiving a json file from our webserver
     static func requestResponseServer(){
+        requestResponseServerIsRunning = true
         
-        //----------------------
-        //ToDo: sollte in MainThread aufgerufen werden, in Vorlesung fragen warum
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //----------------------
-        
         let context = appDelegate.persistentContainer.viewContext
         
         //function to directly request the highest id stored in the coreData
@@ -124,28 +122,33 @@ class HTTPHelper{
         let urlObj = URL(string: url)
         
         //starts request - reply to the server with url depending on the highest stored id in the local db
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        dispatchGroup.enter()
         URLSession.shared.dataTask(with: urlObj!) {(data, response, error) in
             do {
                 //jsonData is object of JSONData struct which contains an Object Array of Event- and Club-struct
                 let jsonData = try JSONDecoder().decode(JSONData.self, from: data!)
                 NSLog("JSONData object has been created")
-                saveArraysInDatabase(jsonDataObj: jsonData)
+                json = String(data: data!, encoding: String.Encoding.utf8)
+                saveRequestedArraysInDatabase(jsonDataObj: jsonData)
                 
-                //if this is the initial/automatic update of the database it will be set true, so the database isn't
-                //updating it self again, only the user is able to
-                if(!automaticDownloadHasBeenSuccessful){
-                    automaticDownloadHasBeenSuccessful = true
-                }
                 
             }catch{
                 //localizedDescription is needed to convert NSError into String
                 NSLog("Requesting data from given URL has been unsuccessful. Error: %@", error.localizedDescription)
             }
+            
+            requestResponseServerIsRunning = false
+            dispatchGroup.leave()
             }.resume()
         
         
-        func saveArraysInDatabase(jsonDataObj: JSONData) {
+        
+        func saveRequestedArraysInDatabase(jsonDataObj: JSONData) {
             do{
+                if (jsonDataObj.events.count == 0){
+                    NSLog("There are no new events which should be stored into the local db")
+                }
                 //stores every event into the entity events in core object
                 for event in jsonDataObj.events {
                     //mirror saves every value of each column
@@ -167,14 +170,20 @@ class HTTPHelper{
                             newEventEntry.setValue(dte!, forKey: children.label!)
                         }
                         else{
-                            //rest is stored as stringsy
+                            //rest is stored as strings
                             newEventEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
                         }
-                        print(children.value)
+                        //the new entry will be saved
+
+                        NSLog("%@ of a new event is about to be stored into local db", children.value as? String ?? "nil")
                         //the new row will be saved
+
                         try context.save()
                     }
                     NSLog("A new event entry has been made")
+                }
+                if (jsonDataObj.clubs.count == 0){
+                    NSLog("There are no new clubs which should be stored into the local db")
                 }
                 //stores every club into the entity events in core object
                 for club in jsonDataObj.clubs {
@@ -191,9 +200,10 @@ class HTTPHelper{
                         else{
                             //rest is stored as strings
                             newClubEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
-                            print(children.value)
                         }
-                        //the new row will be saved
+
+                        NSLog("%@ of a new club is about to be stored into local db", children.value as? String ?? "nil")
+                        //the new entry will be saved
                         try context.save()
                     }
                     NSLog("A new club entry has been made")
@@ -203,5 +213,4 @@ class HTTPHelper{
             }
         }
     }
-    
 }

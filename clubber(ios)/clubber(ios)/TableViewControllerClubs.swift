@@ -15,9 +15,7 @@ class TableViewControllerClubs : UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //requests data from the database
         clubArr = DataBaseHelper.requestDataFromDatabase(entity: "Clubs")
-        
         giveUserFeedbackIfNecessary(arr: clubArr)
     }
     

@@ -1,4 +1,4 @@
-package de.clubber_stuttgart.clubber.BusinessLogic;
+package de.clubber_stuttgart.clubber.UI;
 
 
 import android.os.Bundle;
@@ -19,7 +19,7 @@ public class MainActivity extends FragmentActivity {
 
     private final String LOG = "MainActiviy";
     //To ensure that the HomeFragment won't start the DBConnectionService again after it has done it once and been called another time.
-    static boolean initSetupDatabase = true;
+    public static boolean initSetupDatabase = true;
 
 
 
