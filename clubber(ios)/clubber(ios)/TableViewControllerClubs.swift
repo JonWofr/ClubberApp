@@ -12,9 +12,15 @@ import UIKit
 class TableViewControllerClubs : UITableViewController {
     
     var clubArr : [String] = []
+    @IBOutlet var table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.separatorColor = UIColor(white: 0.95, alpha: 1)
+        tableView.dataSource = self
+        tableView.delegate = self
+        
         clubArr = DataBaseHelper.requestDataFromDatabase(entity: "Clubs")
         giveUserFeedbackIfNecessary(arr: clubArr)
     }
@@ -28,8 +34,17 @@ class TableViewControllerClubs : UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentClubs", for: indexPath)
-        cell.textLabel?.text = clubArr[indexPath.row]
+        
+        //cell.textLabel?.text = clubArr[indexPath.row]
+        
+        cell.contentView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        
+        cell.selectionStyle = .none
         return cell;
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
 }
