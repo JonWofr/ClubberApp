@@ -17,8 +17,6 @@ import java.util.ArrayList;
 
 import de.clubber_stuttgart.clubber.BusinessLogic.DBConnectionService;
 import de.clubber_stuttgart.clubber.BusinessLogic.DataBaseHelper;
-import de.clubber_stuttgart.clubber.UI.CardClubAdapter;
-import de.clubber_stuttgart.clubber.UI.Club;
 import de.clubber_stuttgart.clubber.R;
 
 
@@ -52,7 +50,7 @@ public class ClubsFragment extends Fragment {
         ArrayList<Club> clubList = dataBaseHelper.getClubArrayList();
 
 
-        boolean networkAccess = DBConnectionService.networkAccess;
+        boolean networkAccess = DBConnectionService.hasNetworkAccess;
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);
 
         if (!networkAccess) {

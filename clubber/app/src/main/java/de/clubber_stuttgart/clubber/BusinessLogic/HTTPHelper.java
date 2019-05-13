@@ -53,7 +53,7 @@ public class HTTPHelper extends AsyncTask {
                 for (int countEntryE = 0; countEntryE < jsonEventArray.length(); countEntryE++) {
                     dbHelper.insertEventEntry(jsonEventArray.getJSONObject(countEntryE));
                 }
-                Log.d(LOG, jsonEventArray.length() + " event/s has/have been inserted to the database");
+                Log.d(LOG, jsonEventArray.length() + " event/s should have been inserted to the database");
 
                 Log.i(LOG, "inserting club entries to the database...");
                 //inserts every json club object into the db
@@ -88,15 +88,16 @@ public class HTTPHelper extends AsyncTask {
         Intent intent = new Intent();
         intent.setAction("notifyEventFragment");
 
-        if (jsonString.equals("{\"events\" : [],\"clubs\" : []}") && !MainActivity.initSetupDatabase) {
+        //if initialStartRequestResponseServer is false, the user is doing a manual update of the database
+        if (jsonString.equals("{\"events\" : [],\"clubs\" : []}") && !MainActivity.initialStartRequestResponseServer) {
             Toast.makeText(context, "Es wird kein Update benötigt, die Daten sind bereits aktuell.", Toast.LENGTH_LONG).show();
             Log.i(LOG, "The UI will not be updated");
-        } else if (!MainActivity.initSetupDatabase) {
+        } else if (!MainActivity.initialStartRequestResponseServer) {
             Toast.makeText(context, "Du bist jetzt wieder up to date!", Toast.LENGTH_LONG).show();
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-        } else if (MainActivity.initSetupDatabase){
-            //makes sure the initSetupDatabase boolean is set to false so the HomeFragment only sends a successful automatic request to the web server db once
-            MainActivity.initSetupDatabase = false;
+        } else if (MainActivity.initialStartRequestResponseServer){
+            //makes sure the initialStartRequestResponseServer boolean is set to false so the HomeFragment only sends a successful automatic request to the web server db once
+            MainActivity.initialStartRequestResponseServer = false;
         }
     }
 
@@ -109,7 +110,6 @@ public class HTTPHelper extends AsyncTask {
         //this stringbuilder will be appended gradually and consists of the response of the server
         StringBuilder jsonString = new StringBuilder();
         try {
-            //TODO was soll passieren, wenn es die URL nicht gibt, wenn die URL nicht valide ist
             URL url = new URL(urlString);
             //connect to the server
             HttpURLConnection jsonResponse = (HttpURLConnection) url.openConnection();
