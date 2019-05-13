@@ -12,7 +12,12 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import de.clubber_stuttgart.clubber.UI.Club;
 import de.clubber_stuttgart.clubber.UI.Event;
@@ -167,21 +172,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     void deleteOldEntries (){
-        //ToDo: Fix your shit!!!!!!!!!!
-        //Get the date of yesterday
-        String currentDate = java.time.LocalDate.now().toString();
-        String day = currentDate.substring(currentDate.length()- 2, currentDate.length());
-        String yearAndMonthString = currentDate.substring(0, 8);
-        int dayMinusOne = Integer.parseInt(day) - 1;
-        String dayMinusOneString = String.valueOf(dayMinusOne);
-        if (dayMinusOneString.length() == 1){
-            dayMinusOneString = 0 + String.valueOf(dayMinusOne);
-        }
-        String dateOfYesterday = yearAndMonthString + dayMinusOneString;
+
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        Date dateOfYesterday = cal.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        String dateOfYesterdayString = dateFormat.format(dateOfYesterday);
+
         //delete every event entry, which is older than yesterday
-        Log.i(LOG, "Every event entry in the local db, which is older than " + dateOfYesterday + " will be deleted");
+        Log.i(LOG, "Every event entry in the local db, which is older than " + dateOfYesterdayString + " will be deleted");
         SQLiteDatabase db = this.getWritableDatabase();
-        int rowsDeletedCount = db.delete(TABLE_NAME_EVENTS, 	E_DTE + " < '" + dateOfYesterday + "'", null);
+        int rowsDeletedCount = db.delete(TABLE_NAME_EVENTS, 	E_DTE + " < '" + dateOfYesterdayString + "'", null);
         Log.i(LOG, rowsDeletedCount + " entries have been deleted because corresponding events were outdated");
         db.close();
     }
