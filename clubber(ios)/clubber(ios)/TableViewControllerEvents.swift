@@ -46,8 +46,12 @@ class TableViewControllerEvents : UITableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentEvents", for: indexPath)
+<<<<<<< HEAD
        
         //cell.textLabel?.text = eventArr[indexPath.row]
+=======
+        
+>>>>>>> 362337d1bd3ab3a4f5c2b4050dd24accce8527de
         
         cell.contentView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         
@@ -59,11 +63,16 @@ class TableViewControllerEvents : UITableViewController{
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+
     
+<<<<<<< HEAD
     
     @objc func refreshClicked(){
         if(HTTPHelper.hasNetworkAccess){
             func refreshControlPulledDown(){
+=======
+    @objc func refreshControlPulledDown(){
+>>>>>>> 362337d1bd3ab3a4f5c2b4050dd24accce8527de
         if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
             HTTPHelper.requestResponseServer()
             //wait until the thread inside requestResponseServer() has done its job
