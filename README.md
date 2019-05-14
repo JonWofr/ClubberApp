@@ -3,7 +3,7 @@
 **gereral:**
 
 This project (Android and iOS) is **still being developed**. Thus, there might be some bugs and some functionality might not work. Since this project is developed as a part of a course, we are **not allowed** to use any **external libraries**. 
-The project is inspired by a website I programmed with a fellow student. Despite the fact that the website already exists, we decided on not developing a hybrid app but a native app.
+The project is inspired by a website we programmed. Despite the fact that the website already exists, we decided on not developing a hybrid app but a native app.
 Website: **https://clubber-stuttgart.de/**
 
 **design:**
@@ -29,6 +29,8 @@ The user has to manually refresh if he wants to update during runtime.
 
 We are currently fixing some bugs and finalizing the UI.
 
+
+
 **-->iOS:**
 
 The app has two TableViewControllers (Clubs, Events) and a basic ViewController. They are connected with a TabBarController to navigate in the application.
@@ -36,5 +38,8 @@ We download a JSON file (in its own thread) automatically by considering the app
 However the user can always refresh the database by pulling down the tableView in Events. To provide user feedback we extended the UITableViewController class with two methodes
 which create an alert box and print specific messages. Since Clubs- and Events TableViewContoller both inherite this class we can easily call these methodes.
 
+**-->Grading Categories**
 
+- Date Storage
+- Networking
 
