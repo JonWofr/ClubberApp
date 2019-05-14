@@ -10,7 +10,7 @@ Website: **https://clubber-stuttgart.de/**
 
 Android: for the event and club fragment we used a recycler view in which carviews are being shown. The cardviews are connected with the recycler view through an adapter. In the home fragment 
 we have a basic layout with an edit text. When you click on the edit text a datepicker dialog opens. After picking a date the user can click on a button. When clicking on that button the event fragment 
-opens and the user sees all events that are available filtered by the picked date. 
+opens and the user sees all events that are available filtered by the picked date. <br>
 IOS: Not final. Still in development and just for debugging at the moment.
 
 **functionality:**
