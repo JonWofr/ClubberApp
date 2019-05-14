@@ -15,13 +15,19 @@ import de.clubber_stuttgart.clubber.R;
 public class MainActivity extends FragmentActivity {
 
 
-    //ToDo: Baut sich das Event Fragment komplett neu auf, wenn refreshed wird (obwohl keine neuen Einträge vorhanden sind)?
-
     private final String LOG = "MainActiviy";
     //To ensure that the HomeFragment won't start the DBConnectionService again after it has done it once and been called another time.
-    public static boolean initSetupDatabase = true;
 
+    public static boolean initialStartRequestResponseServer = true;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -41,21 +47,11 @@ public class MainActivity extends FragmentActivity {
                             break;
                     }
 
-                    //ToDo: Sollen wir addToBackStack verwenden, damit das Fragment nicht komplett zerstört wird?
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
                 }
             };
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-    }
 
 
     static void setDateInBundle(Fragment fragment, String date) {

@@ -18,18 +18,19 @@ public class DBConnectionService extends IntentService {
     }
 
     final private String LOG = "DBConnectionService";
-    public static boolean networkAccess;
+
+    //to check internet connection in other fragments (needed to give user feedback)
+    public static boolean hasNetworkAccess;
+
 
     @Override
     protected void onHandleIntent(Intent intent) {
 
         Log.i(LOG,"Checking if network is available...");
 
-        if (isNetworkAvailable()) {
+        hasNetworkAccess = isNetworkAvailable();
+        if (hasNetworkAccess) {
             Log.i(LOG,"Network is available");
-            //ToDo warum boolean hier
-            networkAccess = true;
-
             Log.i(LOG, "initiating setup and update of the database...");
             DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
             //deletes all entries older than yesterday
@@ -43,13 +44,13 @@ public class DBConnectionService extends IntentService {
         }else{
             Log.i(LOG, "no network available");
             //gives the fragments some more information about the connection --> "carefull! You need to consider this to give the user information on the UI"
-            networkAccess = false;
+            hasNetworkAccess = false;
         }
     }
 
     @Override
     public void onDestroy() {
-        if(!MainActivity.initSetupDatabase && !networkAccess){
+        if(!MainActivity.initialStartRequestResponseServer && !hasNetworkAccess){
             Log.i(LOG,"refresh not possible because no network");
             Toast.makeText(this, "keine Aktualisierung möglich, bitte stelle eine Internetverbindung her", Toast.LENGTH_LONG).show();
         }

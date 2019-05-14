@@ -29,9 +29,7 @@ public class HomeFragment extends Fragment {
     private Button filterDateButton;
 
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+
 
 
     @Override
@@ -40,12 +38,13 @@ public class HomeFragment extends Fragment {
 
         this.context = getActivity().getApplicationContext();
 
-        //variable initSetupDatabase is stored in MainActivity because of its longer lifecycle
-        if (MainActivity.initSetupDatabase) {
+        //only requests the server automatically when starting the app for the first time with internet connection
+        if (MainActivity.initialStartRequestResponseServer) {
             Log.i(LOG,"initial setup of the database. App is being started for the first time");
             Intent serviceIntent = new Intent(context, DBConnectionService.class);
             context.startService(serviceIntent);
         }
+
     }
 
 

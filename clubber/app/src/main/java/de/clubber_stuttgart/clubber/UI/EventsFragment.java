@@ -4,10 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.Image;
 import android.os.Bundle;
 
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -22,14 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import de.clubber_stuttgart.clubber.BusinessLogic.DBConnectionService;
 import de.clubber_stuttgart.clubber.BusinessLogic.DataBaseHelper;
-import de.clubber_stuttgart.clubber.UI.CardEventAdapter;
-import de.clubber_stuttgart.clubber.UI.Event;
 import de.clubber_stuttgart.clubber.R;
 
 
@@ -40,14 +34,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     private Context context;
     private SwipeRefreshLayout refresh;
     private RecyclerView eRecyclerView;
-    private ImageView eImageView;
-    private TextView eTextView;
-
-
-
-    public EventsFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,18 +41,15 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         this.context = getActivity().getApplicationContext();
     }
 
-
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_events, container, false);
 
-        //get the RecyclerView
         eRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        eImageView = (ImageView) view.findViewById(R.id.sad_smiley);
-        eTextView = (TextView) view.findViewById(R.id.no_events);
+        ImageView eImageView = (ImageView) view.findViewById(R.id.sad_smiley);
+        TextView eTextView = (TextView) view.findViewById(R.id.no_events);
         //When Broadcast is received UI is updated
         dbConnectionServiceHasFinished = new BroadcastReceiver() {
             @Override
@@ -76,22 +59,18 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
             }
         };
 
-        //get the swipeLayout
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.fragment_events);
-        //set RefreshListener
         refresh.setOnRefreshListener(this);
         Log.i(LOG,"OnRefreshListener has been set");
-        //ad color sheme
         refresh.setColorSchemeColors(getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.colorPrimary));
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         //contains information about a potentially selected date
         Bundle bundle = getArguments();
-        //creates an Array List of event items
         ArrayList<Event> eventList = dataBaseHelper.getEventArrayList(bundle);
 
-        boolean networkAccess = DBConnectionService.networkAccess;
+        boolean networkAccess = DBConnectionService.hasNetworkAccess;
         Log.i(LOG, "Check if there is network access... result: " + networkAccess);
 
         if (eventList.isEmpty()){
@@ -125,26 +104,19 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         Log.d(LOG," stop onRefreshListener when Toast appears");
     }
 
-    //gets called every time this activity gets into focus
     @Override
     public void onResume() {
         super.onResume();
-
-        //Register created Receiver object and give it the specified action
         LocalBroadcastManager.getInstance(context).registerReceiver(dbConnectionServiceHasFinished, new IntentFilter("notifyEventFragment"));
     }
 
-    //gets called every time this activity gets out of focus
     @Override
     public void onPause() {
         super.onPause();
-
-        //Unsubscribe the receiver from the BroadcastManager
         LocalBroadcastManager.getInstance(context).unregisterReceiver(dbConnectionServiceHasFinished);
     }
 
     private void createRecyclerView(View view, ArrayList<Event> eventList) {
-        //we know that the size of the list won't change and is comparably small
         eRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager eLayoutManager = new LinearLayoutManager(context);
         RecyclerView.Adapter eAdapter = new CardEventAdapter(eventList, context);
@@ -152,7 +124,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         eRecyclerView.setAdapter(eAdapter);
     }
 
-    //needed to update the ui
     private void reloadFragment(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();

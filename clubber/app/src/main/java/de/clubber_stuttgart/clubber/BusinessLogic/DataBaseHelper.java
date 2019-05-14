@@ -12,7 +12,12 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import de.clubber_stuttgart.clubber.UI.Club;
 import de.clubber_stuttgart.clubber.UI.Event;
@@ -21,13 +26,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     final private String LOG = "DataBaseHelper";
 
-    //Database name
+
     private static final String DATABASE_NAME = "clubberDB";
-    //Database tablenames (are protected private so ClubActivity and EventActivity are able to get the names of the tables)
+
     static final String TABLE_NAME_EVENTS = "events";
     static final String TABLE_NAME_CLUBS = "clubs";
 
-    //Colum names from events table
     private static final String E_ID = "id";
     private static final String E_DTE = "dte";
     private static final String E_NAME = "name" ;
@@ -36,7 +40,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String E_BTN = "btn";
     private static final String E_GENRE = "genre";
 
-    //Colum names from clubs table
     private static final String C_ID = "id";
     private static final String C_NAME = "name";
     private static final String C_ADRS = "adrs";
@@ -44,7 +47,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String C_WEB = "web";
 
 
-    //SQL statement for creating events table
     private final String CREATE_TABLE_EVENTS = "CREATE TABLE " + TABLE_NAME_EVENTS + "(" + E_ID + " INTEGER PRIMARY KEY NOT NULL ," +
             E_DTE + " TEXT ," +
             E_NAME + " TEXT NOT NULL ," +
@@ -53,17 +55,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             E_BTN + " TEXT ," +
             E_GENRE + " TEXT)";
 
-    //SQL statement for creating clubs table
     private final String CREATE_TABLE_CLUBS = "CREATE TABLE " + TABLE_NAME_CLUBS + "(" + C_ID + " INTEGER PRIMARY KEY  NOT NULL , " +
             C_NAME + " TEXT , " +
             C_ADRS + " TEXT NOT NULL , " +
             C_TEL + " TEXT , " +
             C_WEB + " TEXT NOT NULL)";
 
-    //SQL statement to drop the specified tables
     private final String DROP_TABLE_CLUBS = "DROP IF TABLE EXISTS " + TABLE_NAME_CLUBS;
     private final String DROP_TABLE_EVENTS = "DROP IF TABLE EXISTS " + TABLE_NAME_EVENTS;
-
 
     public DataBaseHelper (Context context){
         super(context, DATABASE_NAME, null, 1);
@@ -75,7 +74,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         Log.d(LOG, "Creating tables...");
 
-        //creates events and clubs tables
         db.execSQL(CREATE_TABLE_EVENTS);
         Log.d(LOG, "Table " + TABLE_NAME_EVENTS + " got created with following SQL-statement: " + CREATE_TABLE_EVENTS);
 
@@ -86,7 +84,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    //deletes the tables and creates them all over again
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DROP_TABLE_CLUBS);
@@ -97,7 +94,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     void insertEventEntry(JSONObject event){
-        //inserts values for event table
         ContentValues values = new ContentValues();
         try {
             values.put(E_ID, event.getInt(E_ID));
@@ -113,19 +109,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
 
-        //gets the DB and calls the onCreate method
         SQLiteDatabase db = this.getWritableDatabase();
-        //runs insert command as SQL
         long resultCode = db.insert(TABLE_NAME_EVENTS, null, values);
         db.close();
 
-        if (resultCode == -1){
+        if (resultCode == -1) {
             Log.w(LOG, "The row of event data has not been inserted into the database");
         }
     }
 
     void insertClubEntry(JSONObject club){
-        //inserts values for clubs table
         ContentValues values = new ContentValues();
         try {
         values.put(C_ID, club.getInt(C_ID));
@@ -138,9 +131,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         }
 
-        //gets the DB and calls the onCreate method
         SQLiteDatabase db = this.getWritableDatabase();
-        //runs insert command as SQL
         long resultCode = db.insert(TABLE_NAME_CLUBS, null, values);
         db.close();
 
@@ -149,7 +140,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    //method to execute a SQL statement, which contains 'alter'
     public void alterTable (String command){
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -163,14 +153,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //method to fetch the highest id saved in the local db of table events and club. Is called inside MainActivity
     String[] selectHighestIds (){
         SQLiteDatabase db = this.getWritableDatabase();
-        //get highest id of table events. If the table does not exist at this moment String eId will be null
+        //get highest id of table events. If the table does not exist at this moment String eId will be null and the whole json will be returned
         Cursor cursor = db.query(true, TABLE_NAME_EVENTS, new String[]{"MAX(" + E_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
         String eId = cursor.getString(0);
 
         cursor.close();
 
-        //get highest id of table events. If the table does not exist at this moment String eId will be null
+        //get highest id of table events. If the table does not exist at this moment String eId will be null and the whole json will be returned
         cursor = db.query(true, TABLE_NAME_CLUBS, new String[]{"MAX(" + C_ID + ")"}, null, null, null, null, null, null);
         cursor.moveToNext();
         String cId = cursor.getString(0);
@@ -182,20 +172,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     void deleteOldEntries (){
-        //Get the date of yesterday
-        String currentDate = java.time.LocalDate.now().toString();
-        String day = currentDate.substring(currentDate.length()- 2, currentDate.length());
-        String yearAndMonthString = currentDate.substring(0, 8);
-        int dayMinusOne = Integer.parseInt(day) - 1;
-        String dayMinusOneString = String.valueOf(dayMinusOne);
-        if (dayMinusOneString.length() == 1){
-            dayMinusOneString = 0 + String.valueOf(dayMinusOne);
-        }
-        String dateOfYesterday = yearAndMonthString + dayMinusOneString;
+
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        Date dateOfYesterday = cal.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        String dateOfYesterdayString = dateFormat.format(dateOfYesterday);
+
         //delete every event entry, which is older than yesterday
-        Log.i(LOG, "Every event entry in the local db, which is older than " + dateOfYesterday + " will be deleted");
+        Log.i(LOG, "Every event entry in the local db, which is older than " + dateOfYesterdayString + " will be deleted");
         SQLiteDatabase db = this.getWritableDatabase();
-        int rowsDeletedCount = db.delete(TABLE_NAME_EVENTS, 	E_DTE + " < '" + dateOfYesterday + "'", null);
+        int rowsDeletedCount = db.delete(TABLE_NAME_EVENTS, 	E_DTE + " < '" + dateOfYesterdayString + "'", null);
         Log.i(LOG, rowsDeletedCount + " entries have been deleted because corresponding events were outdated");
         db.close();
     }
