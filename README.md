@@ -40,6 +40,6 @@ which create an alert box and print specific messages. Since Clubs- and Events T
 
 **-->Grading Categories**
 
-- Date Storage
+- Data Storage
 - Networking
 
