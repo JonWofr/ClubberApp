@@ -70,7 +70,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //todo bug --> wieso auch immer wird das eventfragment mit ausgewählten datum 2mal erstellt, die komplette oncreateview wird zweimal ausgeführt
                 Fragment fragment;
                 switch (v.getId()) {
                     //if our button for submitting the date is clicked, this will happen
@@ -112,7 +111,6 @@ public class HomeFragment extends Fragment {
     //if you click on Button after selecting Date Fragment is replaced by filtered Eventlist
     public void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        //ToDo: muss man hier auch addToBackstack einfügen ??
         transaction.replace(R.id.fragment_container, someFragment);
         transaction.commit();
     }

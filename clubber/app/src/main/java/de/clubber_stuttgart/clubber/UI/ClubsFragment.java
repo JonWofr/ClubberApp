@@ -56,7 +56,6 @@ public class ClubsFragment extends Fragment {
         if (!networkAccess) {
             if (clubList.isEmpty()) {
                 Log.w(LOG, "There are no entries in the database");
-                //ToDo: Hier evtl. eher eine TextView einfügen.
                 Toast.makeText(context, "Keine Clubs vorhanden, bitte stelle eine Internetverbindung her.", Toast.LENGTH_LONG).show();
             } else {
                 Log.i(LOG, "There are entries in the database but they might not be up to date");
