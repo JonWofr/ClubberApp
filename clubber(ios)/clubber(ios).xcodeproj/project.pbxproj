@@ -21,6 +21,7 @@
 		0397BB5C2275E1EE00FDF73C /* TableViewControllerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */; };
 		0397BB5E2275F07900FDF73C /* TableViewControllerClubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */; };
 		03DA9107227A06E2006EAEB8 /* AlertHelperExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */; };
+		03DBA185228C5778000C8D27 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBA184228C5778000C8D27 /* EventCell.swift */; };
 		EB5280F6228059C000D8596D /* CardViewDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5280F5228059C000D8596D /* CardViewDesign.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerEvents.swift; sourceTree = "<group>"; };
 		0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerClubs.swift; sourceTree = "<group>"; };
 		03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelperExtension.swift; sourceTree = "<group>"; };
+		03DBA184228C5778000C8D27 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		EB5280F5228059C000D8596D /* CardViewDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewDesign.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +120,7 @@
 				036BD46D2266171500036F3E /* HTTPHelper.swift */,
 				036BD46B226616E300036F3E /* DataBaseHelper.swift */,
 				0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */,
+				03DBA184228C5778000C8D27 /* EventCell.swift */,
 				0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */,
 				03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */,
 				03927BD6227E159600FB4E19 /* TabBarController.swift */,
@@ -286,6 +289,7 @@
 				03927BD7227E159600FB4E19 /* TabBarController.swift in Sources */,
 				036BD443226615A200036F3E /* clubber_ios_.xcdatamodeld in Sources */,
 				03DA9107227A06E2006EAEB8 /* AlertHelperExtension.swift in Sources */,
+				03DBA185228C5778000C8D27 /* EventCell.swift in Sources */,
 				0397BB5E2275F07900FDF73C /* TableViewControllerClubs.swift in Sources */,
 				EB5280F6228059C000D8596D /* CardViewDesign.swift in Sources */,
 				0397BB5C2275E1EE00FDF73C /* TableViewControllerEvents.swift in Sources */,

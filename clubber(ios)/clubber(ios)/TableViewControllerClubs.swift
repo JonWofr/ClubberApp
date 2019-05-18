@@ -21,7 +21,7 @@ class TableViewControllerClubs : UITableViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        clubArr = DataBaseHelper.requestDataFromDatabase(entity: "Clubs")
+        //clubArr = DataBaseHelper.requestDataFromDatabase(entity: "Clubs")
         giveUserFeedbackIfNecessary(arr: clubArr)
     }
     

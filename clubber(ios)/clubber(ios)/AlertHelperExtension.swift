@@ -26,7 +26,7 @@ extension UIViewController{
     }
     
     //shows user an alert to let him know if something is wrong
-    func giveUserFeedbackIfNecessary(arr: [String]){
+    func giveUserFeedbackIfNecessary(arr: [Any]){
         
         //First checks if we have got internet connection and then looks at the different cases that could occur
         if(HTTPHelper.hasNetworkAccess){

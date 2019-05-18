@@ -37,13 +37,13 @@ class HTTPHelper{
     }
     
     //JSONData struct that stores Event and Club object Arrays
-    private struct JSONData : Decodable {
-        var events :[Event]!
-        var clubs : [Club]!
+    private struct JSONDataStruct : Decodable {
+        var events :[EventStruct]!
+        var clubs : [ClubStruct]!
     }
     
     //comparabe with an event object
-    private struct Event : Decodable {
+    private struct EventStruct : Decodable {
         var id : String!
         var dte : String!
         var name : String!
@@ -54,7 +54,7 @@ class HTTPHelper{
     }
     
     //comparabe with a club object
-    private struct Club : Decodable {
+    private struct ClubStruct : Decodable {
         var id : String!
         var name : String!
         var adrs : String!
@@ -74,7 +74,7 @@ class HTTPHelper{
         let context = appDelegate.persistentContainer.viewContext
     
         
-        let highestEventId = DataBaseHelper.requestHighestId(entity: "Events")
+        let highestEventId = DataBaseHelper.requestHighestId(entity: "Event")
         let highestClubId = DataBaseHelper.requestHighestId(entity: "Clubs")
 
         let url = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=\(highestEventId)&&idClub=\(highestClubId)"
@@ -87,17 +87,16 @@ class HTTPHelper{
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         dispatchGroup.enter()
         URLSession.shared.dataTask(with: urlObj!) {(data, response, error) in
+            json = String(data: data!, encoding: String.Encoding.utf8)
             do {
                 //jsonData is object of JSONData struct which contains an Object Array of Event- and Club-struct
-                let jsonData = try JSONDecoder().decode(JSONData.self, from: data!)
+                let jsonData = try JSONDecoder().decode(JSONDataStruct.self, from: data!)
                 NSLog("JSONData object has been created")
-                json = String(data: data!, encoding: String.Encoding.utf8)
                 saveRequestedArraysInDatabase(jsonDataObj: jsonData, context: context)
             }catch{
                 //localizedDescription is needed to convert NSError into String
                 NSLog("Requesting data from given URL has been unsuccessful. Error: %@", error.localizedDescription)
             }
-            
             requestResponseServerIsRunning = false
             dispatchGroup.leave()
             }.resume()
@@ -105,7 +104,7 @@ class HTTPHelper{
     
 
     
-    private static func saveRequestedArraysInDatabase(jsonDataObj: JSONData, context: NSManagedObjectContext) {
+    private static func saveRequestedArraysInDatabase(jsonDataObj: JSONDataStruct, context: NSManagedObjectContext) {
         do{
             if (jsonDataObj.events.count == 0){
                 NSLog("There are no new events which should be stored into the local db")
@@ -115,7 +114,7 @@ class HTTPHelper{
                 //mirror saves every value of each column
                 let eventMirror = Mirror(reflecting: event)
                 //every mirror value will be gradually stored into the new row of the local db
-                let newEventEntry = NSEntityDescription.insertNewObject(forEntityName: "Events", into: context)
+                let newEventEntry = NSEntityDescription.insertNewObject(forEntityName: "Event", into: context)
                 for children in eventMirror.children{
                     if (children.label! == "id"){
                         //ids should be stored as integer

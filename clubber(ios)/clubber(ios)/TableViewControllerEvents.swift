@@ -7,11 +7,11 @@
 //
 
 import UIKit
-
+import CoreData
 
 class TableViewControllerEvents : UITableViewController{
     
-    var eventArr : [String] = []
+    var eventArr : [Event] = []
     var refreshcontrol : UIRefreshControl?
     @IBOutlet var table: UITableView!
     
@@ -31,7 +31,7 @@ class TableViewControllerEvents : UITableViewController{
         
         table.addSubview(refreshcontrol!)
         if !HTTPHelper.requestResponseServerIsRunning{
-            eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
+            eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Event")
         }
         giveUserFeedbackIfNecessary(arr: eventArr)
         
@@ -42,16 +42,14 @@ class TableViewControllerEvents : UITableViewController{
         return eventArr.count
     }
     
+    
+    
     //creates a cell and returns it
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> EventCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentEvents", for: indexPath)
-<<<<<<< HEAD
-       
-        //cell.textLabel?.text = eventArr[indexPath.row]
-=======
-        
->>>>>>> 362337d1bd3ab3a4f5c2b4050dd24accce8527de
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentEvents", for: indexPath) as! EventCell
+
+        cell.setEventCellValues(event : eventArr[indexPath.row])
         
         cell.contentView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         
@@ -65,20 +63,13 @@ class TableViewControllerEvents : UITableViewController{
     }
 
     
-<<<<<<< HEAD
-    
-    @objc func refreshClicked(){
-        if(HTTPHelper.hasNetworkAccess){
-            func refreshControlPulledDown(){
-=======
     @objc func refreshControlPulledDown(){
->>>>>>> 362337d1bd3ab3a4f5c2b4050dd24accce8527de
         if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
             HTTPHelper.requestResponseServer()
             //wait until the thread inside requestResponseServer() has done its job
             HTTPHelper.dispatchGroup.notify(queue: .main){
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                self.eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Events")
+                self.eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Event")
                 NSLog("TableView is about to be updated")
                 self.table.reloadData()
                 self.refreshcontrol?.endRefreshing()
@@ -96,6 +87,4 @@ class TableViewControllerEvents : UITableViewController{
         }
         NSLog("Refresh button has been clicked")
     }
-}
-}
 }

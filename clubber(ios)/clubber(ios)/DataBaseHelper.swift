@@ -21,38 +21,30 @@ class DataBaseHelper {
         return appDelegate.persistentContainer.viewContext
     }
     
-    //returns an array of requested data from the database, for example Events/Clubs
-    static func requestDataFromDatabase(entity: String) -> [String]{
+     static func requestDataFromDatabase(entity: String) -> [Event] {
         let context = getContext()
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         request.returnsObjectsAsFaults = false
-        var arr : [String] = []
+        var results : [Event] = []
         do{
-            let results = try context.fetch(request)
-            if(results.count > 0){
-                var index = 0
-                for event in results {
-                    //print((event as AnyObject).value(forKey: "id") as! Int)
-                    arr.append((event as AnyObject).value(forKey: "name") as! String)
-                    index += 1
-                }
-            }
+            results = try context.fetch(request) as! [Event]
         }
         catch{
             print(error)
         }
-        return arr
+        return results
     }
+    
     
     
     static func deleteOldEntries() {
         do {
             let context = getContext()
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Events")
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
             //fetch every entry, which is older than the date of yesterday
             fetchRequest.predicate = NSPredicate(format: "dte < %@", getDateOfYesterday() as CVarArg)
             let result = try context.fetch(fetchRequest)
-            let resultData = result as! [Events]
+            let resultData = result as! [Event]
             NSLog("%@ Events are dated before the date of yesterday", resultData.count)
             
             
@@ -71,10 +63,10 @@ class DataBaseHelper {
     
     static func deleteAll(){
         let context = getContext()
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Events")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
         
         let result = try? context.fetch(fetchRequest)
-        let resultData = result as! [Events]
+        let resultData = result as! [Event]
         
         for object in resultData {
             context.delete(object)
@@ -127,13 +119,15 @@ class DataBaseHelper {
         }
     }
     
+    //ToDo: gibt das nicht das heutige datum zurück?
     private static func getDateOfYesterday () -> Date {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let date = dateFormatter.string(from: currentDate)
         NSLog("Todays date is %@", date)
-        let dateOfYesterdayDate = dateFormatter.date(from: date)
-        return dateOfYesterdayDate!
+        let dateOfYesterday = dateFormatter.date(from: date)
+        return dateOfYesterday!
     }
+  
 }
