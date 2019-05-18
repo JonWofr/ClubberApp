@@ -17,6 +17,8 @@ class EventCell : UITableViewCell {
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var dte: UILabel!
     
+    var url : URL?
+    
     
     func setEventCellValues(event : Event){
         eventName.text = event.name
@@ -26,11 +28,17 @@ class EventCell : UITableViewCell {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         dte.text = dateFormatter.string(from: event.dte!)
+        url = URL(string: event.btn!)!
     }
     
     
+    //funktioniert so nicht
     @IBAction func eventBtn(_ sender: UIButton) {
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         
+        let t = TableViewControllerEvents()
+        let arr : [Any] = []
+        t.createAlert(title: "Hello", message: "does it work?")
     }
     
     

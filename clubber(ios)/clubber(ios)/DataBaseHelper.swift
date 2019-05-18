@@ -4,7 +4,7 @@
 //
 //  Created by Nico Burkart on 16.04.19.
 //  Copyright © 2019 hdm-stuttgart. All rights reserved.
-//
+
 
 import Foundation
 import CoreData
@@ -13,7 +13,7 @@ import UIKit
 class DataBaseHelper {
     
     
-    //IST DAS HIER SINNVOLL? WIE VIELE CONTEXTS HAT EIN APP, WIE WIRD DIESER GESPEICHERT
+    //IST DAS HIER SINNVOLL? WIE VIELE CONTEXTS HAT EIN APP, WIE WIRD DIESER GESPEICHERT?
     
     //returs Context
     static func getContext () -> NSManagedObjectContext {
@@ -21,13 +21,27 @@ class DataBaseHelper {
         return appDelegate.persistentContainer.viewContext
     }
     
-     static func requestDataFromDatabase(entity: String) -> [Event] {
+    static func requestEventsFromDatabase(entity: String) -> [Event] {
         let context = getContext()
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         request.returnsObjectsAsFaults = false
         var results : [Event] = []
         do{
             results = try context.fetch(request) as! [Event]
+        }
+        catch{
+            print(error)
+        }
+        return results
+    }
+    
+    static func requestClubsFromDatabase(entity: String) -> [Club] {
+        let context = getContext()
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        request.returnsObjectsAsFaults = false
+        var results : [Club] = []
+        do{
+            results = try context.fetch(request) as! [Club]
         }
         catch{
             print(error)
@@ -119,7 +133,6 @@ class DataBaseHelper {
         }
     }
     
-    //ToDo: gibt das nicht das heutige datum zurück?
     private static func getDateOfYesterday () -> Date {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
@@ -130,4 +143,6 @@ class DataBaseHelper {
         return dateOfYesterday!
     }
   
+    
+    
 }

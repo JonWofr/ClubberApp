@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func getJson(_ sender: UIButton) {
+        jsonDebug.text = HTTPHelper.json
     }
     
     override func viewDidLoad() {

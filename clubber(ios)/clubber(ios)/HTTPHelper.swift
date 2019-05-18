@@ -75,7 +75,7 @@ class HTTPHelper{
     
         
         let highestEventId = DataBaseHelper.requestHighestId(entity: "Event")
-        let highestClubId = DataBaseHelper.requestHighestId(entity: "Clubs")
+        let highestClubId = DataBaseHelper.requestHighestId(entity: "Club")
 
         let url = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=\(highestEventId)&&idClub=\(highestClubId)"
         
@@ -150,7 +150,7 @@ class HTTPHelper{
                 //mirror saves every value of each column
                 let clubMirror = Mirror(reflecting: club)
                 //every mirror value will be gradually stored into the new row of the local db
-                let newClubEntry = NSEntityDescription.insertNewObject(forEntityName: "Clubs", into: context)
+                let newClubEntry = NSEntityDescription.insertNewObject(forEntityName: "Club", into: context)
                 for children in clubMirror.children{
                     if (children.label! == "id"){
                         //ids should be stored as integer
