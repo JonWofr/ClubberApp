@@ -14,6 +14,7 @@ class HTTPHelper{
     
     static var hasNetworkAccess : Bool = false
     static var requestResponseServerIsRunning : Bool = false
+    static var newEventEntriesHaveBeenStored : Bool = false
     
     //checks if device got internetAccess
     //is updated when network state has changed (turned off/on)
@@ -37,13 +38,13 @@ class HTTPHelper{
     }
     
     //JSONData struct that stores Event and Club object Arrays
-    private struct JSONDataStruct : Decodable {
+    public struct JSONDataStruct : Decodable {
         var events :[EventStruct]!
         var clubs : [ClubStruct]!
     }
     
     //comparabe with an event object
-    private struct EventStruct : Decodable {
+    public struct EventStruct : Decodable {
         var id : String!
         var dte : String!
         var name : String!
@@ -54,7 +55,7 @@ class HTTPHelper{
     }
     
     //comparabe with a club object
-    private struct ClubStruct : Decodable {
+    public struct ClubStruct : Decodable {
         var id : String!
         var name : String!
         var adrs : String!
@@ -108,6 +109,7 @@ class HTTPHelper{
         do{
             if (jsonDataObj.events.count == 0){
                 NSLog("There are no new events which should be stored into the local db")
+                newEventEntriesHaveBeenStored = false
             }
             //stores every event into the entity events in core object
             for event in jsonDataObj.events {
@@ -141,6 +143,7 @@ class HTTPHelper{
                     try context.save()
                 }
                 NSLog("A new event entry has been made")
+                newEventEntriesHaveBeenStored = true
             }
             if (jsonDataObj.clubs.count == 0){
                 NSLog("There are no new clubs which should be stored into the local db")

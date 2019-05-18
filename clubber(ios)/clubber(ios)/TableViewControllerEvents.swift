@@ -26,8 +26,7 @@ class TableViewControllerEvents : UITableViewController{
         //text displayed under the circle
         refreshcontrol?.attributedTitle = NSAttributedString(string : "Pull to refresh")
         //selector is called when the refreshControl is swiped down
-        //ToDo: bei mir kommt hier ein Fehler ??
-        //refreshcontrol?.addTarget(self, action: #selector(refreshControlPulledDown) , for: .valueChanged)
+        refreshcontrol?.addTarget(self, action: #selector(refreshControlPulledDown) , for: .valueChanged)
         
         table.addSubview(refreshcontrol!)
         if !HTTPHelper.requestResponseServerIsRunning{
@@ -69,9 +68,14 @@ class TableViewControllerEvents : UITableViewController{
             //wait until the thread inside requestResponseServer() has done its job
             HTTPHelper.dispatchGroup.notify(queue: .main){
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                self.eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Event")
-                NSLog("TableView is about to be updated")
-                self.table.reloadData()
+                if (HTTPHelper.newEventEntriesHaveBeenStored){
+                    self.eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Event")
+                    NSLog("TableView is about to be updated")
+                    self.table.reloadData()
+                }
+                else {
+                    NSLog("TableView does not need to be updated because there is no new data")
+                }
                 self.refreshcontrol?.endRefreshing()
                 }
         }else{

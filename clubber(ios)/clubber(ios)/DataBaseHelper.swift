@@ -12,7 +12,6 @@ import UIKit
 
 class DataBaseHelper {
     
-    
     //IST DAS HIER SINNVOLL? WIE VIELE CONTEXTS HAT EIN APP, WIE WIRD DIESER GESPEICHERT
     
     //returs Context
