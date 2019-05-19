@@ -94,6 +94,10 @@ class DataBaseHelper {
     
     static func requestEventsFromDatabase(context: NSManagedObjectContext) -> [Event] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
+        let sortDate = NSSortDescriptor(key: "dte", ascending: true)
+        let sortTime = NSSortDescriptor(key: "srttime", ascending: true)
+        let sortDescriptors = [sortDate, sortTime]
+        request.sortDescriptors = sortDescriptors
         request.returnsObjectsAsFaults = false
         var results : [Event] = []
         do{

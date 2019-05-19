@@ -69,8 +69,14 @@ class HTTPHelper{
     //For requesting and receiving a json file from our webserver
     static func requestResponseServer(){
         requestResponseServerIsRunning = true
-    
         let context = DataBaseHelper.getContext()
+        
+        //We implemented this because if there is nothing to download and the user uses the refreshfunction, he could think the application didn't properly refreshed
+        DispatchQueue.global(qos: .background).async {
+            dispatchGroup.enter()
+            usleep(1500000)
+            dispatchGroup.leave()
+        }
         
         let highestEventId = DataBaseHelper.requestHighestId(entity: "Event", context: context)
         let highestClubId = DataBaseHelper.requestHighestId(entity: "Club",context: context)

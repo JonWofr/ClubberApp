@@ -62,7 +62,6 @@ class TableViewControllerEvents : UITableViewController{
     }
 
     
-    //Hier muss ein Thread eingefügt werden, der mindestens eine sekunde lang geht, um zu verhindern, dass die refreshfunktion zu schnell beendet und der user denkt, dass nicht refresht worden ist. Dieser Thread sollte in die dispatchGroup eingefügt werden, jedoch NICHT in HTTP helper, da das nicht effizient wäre. Es müsste eine zusätzliche dispatch group nur für die refresh control existieren.
     @objc func refreshControlPulledDown(){
         if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
             HTTPHelper.requestResponseServer()
