@@ -11,7 +11,10 @@ import Network
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var inputTextfield: UITextField!
     @IBOutlet weak var jsonDebug: UITextView!
+    
+    private var datePicker: UIDatePicker?
     
     @IBAction func refreshBtn(_ sender: UIButton) {
         if !HTTPHelper.requestResponseServerIsRunning {
@@ -41,6 +44,38 @@ class ViewController: UIViewController {
             
         }
         //DataBaseHelper.deleteOldEntries()
+        
+        //create instance of the datepicker
+        datePicker = UIDatePicker()
+        //sets format, so only day month and year can be selected
+        datePicker?.datePickerMode = .date
+        datePicker?.backgroundColor = .white
+        datePicker?.addTarget(self, action: #selector(ViewController.dateChanged(datePicker:)), for: .valueChanged)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.viewTapped(gesturRecognizer:)))
+        
+        view.addGestureRecognizer(tapGesture)
+        
+        
+        inputTextfield.inputView = datePicker
+        
+    }
+    
+    //function to select a date
+    @objc func dateChanged(datePicker: UIDatePicker){
+        
+        //selected date by the user
+        let dateFormate = DateFormatter()
+        //Jonas das ist vllt für dich relevant, man kann es so verändern wie man will
+        dateFormate.dateFormat = "MM/dd/yyyy"
+        
+        inputTextfield.text = dateFormate.string(from: datePicker.date)
+    }
+    
+    //function to close the datepicker, when tapping on the inputText again -handler method
+    @objc func viewTapped(gesturRecognizer: UITapGestureRecognizer){
+        view.endEditing(true)
+        
     }
     
 }
