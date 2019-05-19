@@ -14,7 +14,6 @@ class HTTPHelper{
     
     static var hasNetworkAccess : Bool = false
     static var requestResponseServerIsRunning : Bool = false
-    static var newEventEntriesHaveBeenStored : Bool = false
     
     //checks if device got internetAccess
     //is updated when network state has changed (turned off/on)
@@ -76,7 +75,7 @@ class HTTPHelper{
     
         
         let highestEventId = DataBaseHelper.requestHighestId(entity: "Event")
-        let highestClubId = DataBaseHelper.requestHighestId(entity: "Clubs")
+        let highestClubId = DataBaseHelper.requestHighestId(entity: "Club")
 
         let url = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=\(highestEventId)&&idClub=\(highestClubId)"
         
@@ -93,7 +92,7 @@ class HTTPHelper{
                 //jsonData is object of JSONData struct which contains an Object Array of Event- and Club-struct
                 let jsonData = try JSONDecoder().decode(JSONDataStruct.self, from: data!)
                 NSLog("JSONData object has been created")
-                saveRequestedArraysInDatabase(jsonDataObj: jsonData, context: context)
+                DataBaseHelper.saveRequestedArraysInDatabase(jsonDataObj: jsonData, context: context)
             }catch{
                 //localizedDescription is needed to convert NSError into String
                 NSLog("Requesting data from given URL has been unsuccessful. Error: %@", error.localizedDescription)
@@ -101,78 +100,5 @@ class HTTPHelper{
             requestResponseServerIsRunning = false
             dispatchGroup.leave()
             }.resume()
-    }
-    
-
-    
-    private static func saveRequestedArraysInDatabase(jsonDataObj: JSONDataStruct, context: NSManagedObjectContext) {
-        do{
-            if (jsonDataObj.events.count == 0){
-                NSLog("There are no new events which should be stored into the local db")
-                newEventEntriesHaveBeenStored = false
-            }
-            //stores every event into the entity events in core object
-            for event in jsonDataObj.events {
-                //mirror saves every value of each column
-                let eventMirror = Mirror(reflecting: event)
-                //every mirror value will be gradually stored into the new row of the local db
-                let newEventEntry = NSEntityDescription.insertNewObject(forEntityName: "Event", into: context)
-                for children in eventMirror.children{
-                    if (children.label! == "id"){
-                        //ids should be stored as integer
-                        let id = children.value as! String
-                        newEventEntry.setValue(Int(id), forKey: children.label!)
-                    }
-                    else if (children.label! == "dte"){
-                        //date has to be stored in date format
-                        let dateFormatter = DateFormatter()
-                        //the date datatype has an unchangeable format (i.e.) yyyy-MM-dd hh:mm:ss. dateFormat defines what the input String looks like
-                        dateFormatter.dateFormat = "yyyy-MM-dd"
-                        let dte = dateFormatter.date(from: children.value as! String)
-                        newEventEntry.setValue(dte!, forKey: children.label!)
-                    }
-                    else{
-                        //rest is stored as strings
-                        newEventEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
-                    }
-                    //the new entry will be saved
-                    
-                    NSLog("%@ of a new event is about to be stored into local db", children.value as? String ?? "nil")
-                    //the new row will be saved
-                    
-                    try context.save()
-                }
-                NSLog("A new event entry has been made")
-                newEventEntriesHaveBeenStored = true
-            }
-            if (jsonDataObj.clubs.count == 0){
-                NSLog("There are no new clubs which should be stored into the local db")
-            }
-            //stores every club into the entity events in core object
-            for club in jsonDataObj.clubs {
-                //mirror saves every value of each column
-                let clubMirror = Mirror(reflecting: club)
-                //every mirror value will be gradually stored into the new row of the local db
-                let newClubEntry = NSEntityDescription.insertNewObject(forEntityName: "Clubs", into: context)
-                for children in clubMirror.children{
-                    if (children.label! == "id"){
-                        //ids should be stored as integer
-                        let id = children.value as! String
-                        newClubEntry.setValue(Int(id), forKey: children.label!)
-                    }
-                    else{
-                        //rest is stored as strings
-                        newClubEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
-                    }
-                    
-                    NSLog("%@ of a new club is about to be stored into local db", children.value as? String ?? "nil")
-                    //the new entry will be saved
-                    try context.save()
-                }
-                NSLog("A new club entry has been made")
-            }
-        }catch{
-            NSLog("Error saving data into local db. Error:%@", error.localizedDescription)
-        }
     }
 }

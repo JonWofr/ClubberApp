@@ -26,14 +26,14 @@ class TableViewControllerEvents : UITableViewController{
         //text displayed under the circle
         refreshcontrol?.attributedTitle = NSAttributedString(string : "Pull to refresh")
         //selector is called when the refreshControl is swiped down
+        //ToDo: bei mir kommt hier ein Fehler ??
         refreshcontrol?.addTarget(self, action: #selector(refreshControlPulledDown) , for: .valueChanged)
         
         table.addSubview(refreshcontrol!)
         if !HTTPHelper.requestResponseServerIsRunning{
-            eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Event")
+            eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext())
         }
-        giveUserFeedbackIfNecessary(arr: eventArr)
-        
+        giveUserFeedbackIfNecessary(arr: eventArr)        
     }
     
     //sets the amount of rows the table will have
@@ -62,14 +62,15 @@ class TableViewControllerEvents : UITableViewController{
     }
 
     
+    //Hier muss ein Thread eingefügt werden, der mindestens eine sekunde lang geht, um zu verhindern, dass die refreshfunktion zu schnell beendet und der user denkt, dass nicht refresht worden ist. Dieser Thread sollte in die dispatchGroup eingefügt werden, jedoch NICHT in HTTP helper, da das nicht effizient wäre. Es müsste eine zusätzliche dispatch group nur für die refresh control existieren.
     @objc func refreshControlPulledDown(){
         if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
             HTTPHelper.requestResponseServer()
             //wait until the thread inside requestResponseServer() has done its job
             HTTPHelper.dispatchGroup.notify(queue: .main){
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                if (HTTPHelper.newEventEntriesHaveBeenStored){
-                    self.eventArr = DataBaseHelper.requestDataFromDatabase(entity: "Event")
+                if (DataBaseHelper.newEventEntriesHaveBeenStored){
+                    self.eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext())
                     NSLog("TableView is about to be updated")
                     self.table.reloadData()
                 }

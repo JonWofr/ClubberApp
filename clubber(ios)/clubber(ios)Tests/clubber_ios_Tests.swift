@@ -33,37 +33,4 @@ class clubber_ios_Tests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    
-    func test_create_event() {
-        
-        //Given the name & ssn
-        let name1 = "Alok"
-        let ssn1 = 123
-        
-        let name2 = "Naitvik"
-        let ssn2 = 456
-        
-        let name3 = "Deepti"
-        let ssn3 = 789
-        
-        let person1 = coreDataManager.insertPerson(name: name1, ssn: Int16(ssn1))
-        
-        /*Asserts that an expression is not nil.
-         Generates a failure when expression == nil.*/
-        XCTAssertNotNil( person1 )
-        
-        let person2 = coreDataManager.insertPerson(name: name2, ssn: Int16(ssn2))
-        
-        /*Asserts that an expression is not nil.
-         Generates a failure when expression == nil.*/
-        XCTAssertNotNil( person2 )
-        
-        let person3 = coreDataManager.insertPerson(name: name3, ssn: Int16(ssn3))
-        
-        /*Asserts that an expression is not nil.
-         Generates a failure when expression == nil.*/
-        XCTAssertNotNil( person3 )
-        
-    }
-
 }

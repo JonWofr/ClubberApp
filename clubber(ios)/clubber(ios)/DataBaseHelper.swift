@@ -4,7 +4,7 @@
 //
 //  Created by Nico Burkart on 16.04.19.
 //  Copyright © 2019 hdm-stuttgart. All rights reserved.
-//
+
 
 import Foundation
 import CoreData
@@ -12,17 +12,88 @@ import UIKit
 
 class DataBaseHelper {
     
-    //IST DAS HIER SINNVOLL? WIE VIELE CONTEXTS HAT EIN APP, WIE WIRD DIESER GESPEICHERT
+    static var newEventEntriesHaveBeenStored : Bool = false
     
-    //returs Context
+    //IST DAS HIER SINNVOLL? WIE VIELE CONTEXTS HAT EIN APP, WIE WIRD DIESER GESPEICHERT
+    //returns Context
     static func getContext () -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
     }
     
-     static func requestDataFromDatabase(entity: String) -> [Event] {
-        let context = getContext()
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+    static func saveRequestedArraysInDatabase(jsonDataObj: HTTPHelper.JSONDataStruct, context: NSManagedObjectContext) {
+        do{
+            if (jsonDataObj.events.count == 0){
+                NSLog("There are no new events which should be stored into the local db")
+                newEventEntriesHaveBeenStored = false
+            }
+            //stores every event into the entity events in core object
+            for event in jsonDataObj.events {
+                //mirror saves every value of each column
+                let eventMirror = Mirror(reflecting: event)
+                //every mirror value will be gradually stored into the new row of the local db
+                let newEventEntry = NSEntityDescription.insertNewObject(forEntityName: "Event", into: context)
+                for children in eventMirror.children{
+                    if (children.label! == "id"){
+                        //ids should be stored as integer
+                        let id = children.value as! String
+                        newEventEntry.setValue(Int(id), forKey: children.label!)
+                    }
+                    else if (children.label! == "dte"){
+                        //date has to be stored in date format
+                        let dateFormatter = DateFormatter()
+                        //the date datatype has an unchangeable format (i.e.) yyyy-MM-dd hh:mm:ss. dateFormat defines what the input String looks like
+                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                        let dte = dateFormatter.date(from: children.value as! String)
+                        newEventEntry.setValue(dte!, forKey: children.label!)
+                    }
+                    else{
+                        //rest is stored as strings
+                        newEventEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
+                    }
+                    //the new entry will be saved
+                    
+                    NSLog("%@ of a new event is about to be stored into local db", children.value as? String ?? "nil")
+                    //the new row will be saved
+                    
+                    try context.save()
+                }
+                NSLog("A new event entry has been made")
+                newEventEntriesHaveBeenStored = true
+            }
+            if (jsonDataObj.clubs.count == 0){
+                NSLog("There are no new clubs which should be stored into the local db")
+            }
+            //stores every club into the entity events in core object
+            for club in jsonDataObj.clubs {
+                //mirror saves every value of each column
+                let clubMirror = Mirror(reflecting: club)
+                //every mirror value will be gradually stored into the new row of the local db
+                let newClubEntry = NSEntityDescription.insertNewObject(forEntityName: "Club", into: context)
+                for children in clubMirror.children{
+                    if (children.label! == "id"){
+                        //ids should be stored as integer
+                        let id = children.value as! String
+                        newClubEntry.setValue(Int(id), forKey: children.label!)
+                    }
+                    else{
+                        //rest is stored as strings
+                        newClubEntry.setValue(children.value as? String ?? "N/A", forKey: children.label!)
+                    }
+                    
+                    NSLog("%@ of a new club is about to be stored into local db", children.value as? String ?? "nil")
+                    //the new entry will be saved
+                    try context.save()
+                }
+                NSLog("A new club entry has been made")
+            }
+        }catch{
+            NSLog("Error saving data into local db. Error:%@", error.localizedDescription)
+        }
+    }
+    
+    static func requestEventsFromDatabase(context: NSManagedObjectContext) -> [Event] {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
         request.returnsObjectsAsFaults = false
         var results : [Event] = []
         do{
@@ -33,6 +104,20 @@ class DataBaseHelper {
         }
         return results
     }
+    
+    /*static func requestClubsFromDatabase(entity: String) -> [Club] {
+        let context = getContext()
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        request.returnsObjectsAsFaults = false
+        var results : [Club] = []
+        do{
+            results = try context.fetch(request) as! [Club]
+        }
+        catch{
+            print(error)
+        }
+        return results
+    }*/
     
     
     
@@ -118,7 +203,6 @@ class DataBaseHelper {
         }
     }
     
-    //ToDo: gibt das nicht das heutige datum zurück?
     private static func getDateOfYesterday () -> Date {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
@@ -129,4 +213,6 @@ class DataBaseHelper {
         return dateOfYesterday!
     }
   
+    
+    
 }
