@@ -128,7 +128,7 @@ class DataBaseHelper {
             fetchRequest.predicate = NSPredicate(format: "dte < %@", getDateOfYesterday() as CVarArg)
             let result = try context.fetch(fetchRequest)
             let resultData = result as! [Event]
-            NSLog("%@ Events are dated before the date of yesterday", resultData.count)
+            NSLog("%d Events are dated before the date of yesterday", resultData.count)
             
             
             if (resultData.count > 0){
@@ -137,7 +137,7 @@ class DataBaseHelper {
                     context.delete(object)
                 }
                 try context.save()
-                NSLog("%@ Events have been deleted", resultData.count)
+                NSLog("%d Events have been deleted", resultData.count)
             }
         } catch let error as NSError  {
             print("Error trying to delete old db entries \(error), \(error.userInfo)")
@@ -166,6 +166,7 @@ class DataBaseHelper {
     static func requestHighestId(entity: String, context: NSManagedObjectContext) -> Int {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         request.entity = NSEntityDescription.entity(forEntityName: entity, in: context)
+        //this ensures the result to be key - value
         request.resultType = NSFetchRequestResultType.dictionaryResultType
         
         //column to be selected
@@ -175,7 +176,6 @@ class DataBaseHelper {
         
         let key = "maxId"
         
-        //key value pair
         let expressionDescription = NSExpressionDescription()
         expressionDescription.name = key
         expressionDescription.expression = maxExpression
@@ -191,7 +191,7 @@ class DataBaseHelper {
             if let result = try context.fetch(request) as? [[String: Int]], let dict = result.first {
                 maxId = dict[key]
             }
-            NSLog("Highest %@ id is %i", entity, maxId!)
+            NSLog("Highest %@ id is %d", entity, maxId!)
             return maxId!
         }
         catch{
