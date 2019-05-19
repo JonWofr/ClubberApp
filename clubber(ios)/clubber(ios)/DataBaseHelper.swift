@@ -92,16 +92,20 @@ class DataBaseHelper {
         }
     }
     
-    static func requestEventsFromDatabase(context: NSManagedObjectContext) -> [Event] {
+    static func requestEventsFromDatabase(context: NSManagedObjectContext, reqDate: Date?) -> [Event] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
         let sortDate = NSSortDescriptor(key: "dte", ascending: true)
         let sortTime = NSSortDescriptor(key: "srttime", ascending: true)
         let sortDescriptors = [sortDate, sortTime]
         request.sortDescriptors = sortDescriptors
         request.returnsObjectsAsFaults = false
+        if(reqDate != nil){
+            request.predicate = NSPredicate(format: "dte == %@", reqDate! as NSDate)
+        }
         var results : [Event] = []
         do{
             results = try context.fetch(request) as! [Event]
+            print("Hello \(results[0].dte!)")
         }
         catch{
             print(error)
@@ -109,9 +113,9 @@ class DataBaseHelper {
         return results
     }
     
-    /*static func requestClubsFromDatabase(entity: String) -> [Club] {
+    /*static func requestClubsFromDatabase(context: NSManagedObjectContext) -> [Club] {
         let context = getContext()
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Club")
         request.returnsObjectsAsFaults = false
         var results : [Club] = []
         do{

@@ -30,8 +30,13 @@ class TableViewControllerEvents : UITableViewController{
         refreshcontrol?.addTarget(self, action: #selector(refreshControlPulledDown) , for: .valueChanged)
         
         table.addSubview(refreshcontrol!)
+        
         if !HTTPHelper.requestResponseServerIsRunning{
-            eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext())
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy"
+            let date = formatter.date(from: ViewController.inputDate)
+            
+            eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext(), reqDate: date)
         }
         giveUserFeedbackIfNecessary(arr: eventArr)        
     }
@@ -69,7 +74,7 @@ class TableViewControllerEvents : UITableViewController{
             HTTPHelper.dispatchGroup.notify(queue: .main){
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 if (DataBaseHelper.newEventEntriesHaveBeenStored){
-                    self.eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext())
+                    self.eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext(), reqDate: nil)
                     NSLog("TableView is about to be updated")
                     self.table.reloadData()
                 }

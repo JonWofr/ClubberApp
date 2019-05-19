@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var jsonDebug: UITextView!
     
     private var datePicker: UIDatePicker?
+    static var inputDate : String = ""
     
     @IBAction func refreshBtn(_ sender: UIButton) {
         if !HTTPHelper.requestResponseServerIsRunning {
@@ -66,10 +67,11 @@ class ViewController: UIViewController {
         
         //selected date by the user
         let dateFormate = DateFormatter()
-        //Jonas das ist vllt für dich relevant, man kann es so verändern wie man will
-        dateFormate.dateFormat = "MM/dd/yyyy"
+        dateFormate.dateFormat = "dd/MM/yyyy"
+        //STATIC VARIABLE SOLLTE MIT BUTTONÜBERGABE ERSETZT WERDEN -> BESSERER CODE
+        ViewController.inputDate = dateFormate.string(from: datePicker.date)
+        inputTextfield.text = ViewController.inputDate
         
-        inputTextfield.text = dateFormate.string(from: datePicker.date)
     }
     
     //function to close the datepicker, when tapping on the inputText again -handler method
