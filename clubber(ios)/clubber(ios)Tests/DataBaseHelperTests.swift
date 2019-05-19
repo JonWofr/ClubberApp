@@ -53,15 +53,40 @@ class DataBaseHelperTests: XCTestCase {
     
     
     func initStubs() {
+        var newEventEntry = NSEntityDescription.insertNewObject(forEntityName: "Event", into: mockPersistantContainer.viewContext)
+        //date has to be stored in date format
+        let dateFormatter = DateFormatter()
+        //the date datatype has an unchangeable format (i.e.) yyyy-MM-dd hh:mm:ss. dateFormat defines what the input String looks like
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dte = dateFormatter.date(from: "2019-12-12")
         
-        let event = HTTPHelper.EventStruct(id : "1", dte : "2020-01-01", name : "For unit testing", club : "Schräglage", srttime : "20:00", genre : "house", btn : "https://google.de")
-        let events: [HTTPHelper.EventStruct]? = [event]
+        newEventEntry.setValue(1, forKey: "id")
+        newEventEntry.setValue(dte, forKey: "dte")
+        newEventEntry.setValue("event name 1", forKey: "name")
+        newEventEntry.setValue("event club 1", forKey: "club")
+        newEventEntry.setValue("event srttime 1", forKey: "srttime")
+        newEventEntry.setValue("event genre 1", forKey: "genre")
+        newEventEntry.setValue("event btn 1", forKey: "btn")
         
-        let clubs : [HTTPHelper.ClubStruct]? = []
+        newEventEntry = NSEntityDescription.insertNewObject(forEntityName: "Event", into: mockPersistantContainer.viewContext)
         
-        let json = HTTPHelper.JSONDataStruct(events: events, clubs: clubs)
+        newEventEntry.setValue(2, forKey: "id")
+        newEventEntry.setValue(dte, forKey: "dte")
+        newEventEntry.setValue("event name 2", forKey: "name")
+        newEventEntry.setValue("event club 2", forKey: "club")
+        newEventEntry.setValue("event srttime 2", forKey: "srttime")
+        newEventEntry.setValue("event genre 2", forKey: "genre")
+        newEventEntry.setValue("event btn 2", forKey: "btn")
         
-        DataBaseHelper.saveRequestedArraysInDatabase(jsonDataObj: json, context: mockPersistantContainer.viewContext)
+        let newClubEntry = NSEntityDescription.insertNewObject(forEntityName: "Club", into: mockPersistantContainer.viewContext)
+        
+        newClubEntry.setValue(1, forKey: "id")
+        newClubEntry.setValue("club name 1", forKey: "name")
+        newClubEntry.setValue("club adrs 1", forKey: "adrs")
+        newClubEntry.setValue("club tel 1", forKey: "tel")
+        newClubEntry.setValue("club web 1", forKey: "web")
+
+        try? mockPersistantContainer.viewContext.save()
     }
     
     func flushData() {
@@ -75,8 +100,28 @@ class DataBaseHelperTests: XCTestCase {
         
     }
     
+    func testSaveRequestedArraysInDatabase(){
+        let event = HTTPHelper.EventStruct(id : "3", dte : "2020-01-01", name : "event name 3", club : "event club 3", srttime : "event srttime 3", genre : "event genre 3", btn : "event btn 3")
+        let events: [HTTPHelper.EventStruct]? = [event]
+        
+        let clubs : [HTTPHelper.ClubStruct]? = []
+        
+        let json = HTTPHelper.JSONDataStruct(events: events, clubs: clubs)
+        
+        DataBaseHelper.saveRequestedArraysInDatabase(jsonDataObj: json, context: mockPersistantContainer.viewContext)
+        
+        let allEvents = DataBaseHelper.requestEventsFromDatabase(context: mockPersistantContainer.viewContext)
+
+        XCTAssertEqual(allEvents.count, 3)
+    }
+    
     func testRequestEventsFromDatabase() {
         let events = DataBaseHelper.requestEventsFromDatabase(context: mockPersistantContainer.viewContext)
-        XCTAssertEqual(events.count, 1)
+        XCTAssertEqual(events.count, 2)
+    }
+    
+    func testRequestHighestIdEvents(){
+        let highestEventId = DataBaseHelper.requestHighestId(entity: "Event", context: self.mockPersistantContainer.viewContext)
+        XCTAssertEqual(highestEventId, 2)
     }
 }

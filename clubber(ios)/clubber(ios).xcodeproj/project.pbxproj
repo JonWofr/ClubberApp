@@ -22,6 +22,9 @@
 		0397BB5E2275F07900FDF73C /* TableViewControllerClubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */; };
 		03DA9107227A06E2006EAEB8 /* AlertHelperExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */; };
 		03DBA185228C5778000C8D27 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBA184228C5778000C8D27 /* EventCell.swift */; };
+		0B77C2F622915E1800DB567E /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD46D2266171500036F3E /* HTTPHelper.swift */; };
+		0B77C2F722915E4900DB567E /* DataBaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD46B226616E300036F3E /* DataBaseHelper.swift */; };
+		0B77C2F822915F6E00DB567E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD43A226615A200036F3E /* AppDelegate.swift */; };
 		0BB635B5229042E3003E20AA /* clubber_ios_.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 036BD441226615A200036F3E /* clubber_ios_.xcdatamodeld */; };
 		0BB635BB22913CD9003E20AA /* DataBaseHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB635B922913CD8003E20AA /* DataBaseHelperTests.swift */; };
 		EB5280F6228059C000D8596D /* CardViewDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5280F5228059C000D8596D /* CardViewDesign.swift */; };
@@ -227,7 +230,6 @@
 					};
 					036BD44D226615A300036F3E = {
 						CreatedOnToolsVersion = 10.1;
-						TestTargetID = 036BD436226615A200036F3E;
 					};
 					036BD458226615A300036F3E = {
 						CreatedOnToolsVersion = 10.1;
@@ -305,9 +307,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B77C2F822915F6E00DB567E /* AppDelegate.swift in Sources */,
 				036BD453226615A300036F3E /* clubber_ios_Tests.swift in Sources */,
+				0B77C2F622915E1800DB567E /* HTTPHelper.swift in Sources */,
 				0BB635BB22913CD9003E20AA /* DataBaseHelperTests.swift in Sources */,
 				0BB635B5229042E3003E20AA /* clubber_ios_.xcdatamodeld in Sources */,
+				0B77C2F722915E4900DB567E /* DataBaseHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,7 +515,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C44K2Z4B36;
 				INFOPLIST_FILE = "clubber(ios)Tests/Info.plist";
@@ -523,7 +527,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clubber(ios).app/clubber(ios)";
 			};
 			name = Debug;
 		};
@@ -531,7 +534,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C44K2Z4B36;
 				INFOPLIST_FILE = "clubber(ios)Tests/Info.plist";
@@ -544,7 +546,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clubber(ios).app/clubber(ios)";
 			};
 			name = Release;
 		};

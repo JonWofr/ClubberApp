@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func deleteBtn(_ sender: Any) {
-        DataBaseHelper.deleteAll()
+        DataBaseHelper.deleteAll(context: DataBaseHelper.getContext())
     }
     
     @IBAction func getJson(_ sender: UIButton) {

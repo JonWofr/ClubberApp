@@ -69,13 +69,11 @@ class HTTPHelper{
     //For requesting and receiving a json file from our webserver
     static func requestResponseServer(){
         requestResponseServerIsRunning = true
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
     
+        let context = DataBaseHelper.getContext()
         
-        let highestEventId = DataBaseHelper.requestHighestId(entity: "Event")
-        let highestClubId = DataBaseHelper.requestHighestId(entity: "Club")
+        let highestEventId = DataBaseHelper.requestHighestId(entity: "Event", context: context)
+        let highestClubId = DataBaseHelper.requestHighestId(entity: "Club",context: context)
 
         let url = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=\(highestEventId)&&idClub=\(highestClubId)"
         

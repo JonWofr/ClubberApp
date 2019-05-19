@@ -121,9 +121,8 @@ class DataBaseHelper {
     
     
     
-    static func deleteOldEntries() {
+    static func deleteOldEntries(context: NSManagedObjectContext) {
         do {
-            let context = getContext()
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
             //fetch every entry, which is older than the date of yesterday
             fetchRequest.predicate = NSPredicate(format: "dte < %@", getDateOfYesterday() as CVarArg)
@@ -145,8 +144,7 @@ class DataBaseHelper {
         }
     }
     
-    static func deleteAll(){
-        let context = getContext()
+    static func deleteAll(context: NSManagedObjectContext){
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
         
         let result = try? context.fetch(fetchRequest)
@@ -165,8 +163,7 @@ class DataBaseHelper {
     }
     
     //function to directly request the highest id stored in the coreData
-    static func requestHighestId(entity: String) -> Int {
-        let context = getContext()
+    static func requestHighestId(entity: String, context: NSManagedObjectContext) -> Int {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         request.entity = NSEntityDescription.entity(forEntityName: entity, in: context)
         request.resultType = NSFetchRequestResultType.dictionaryResultType
