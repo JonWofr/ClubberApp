@@ -11,10 +11,12 @@ import Network
 
 class ViewController: UIViewController {
 
+
     @IBOutlet weak var inputTextfield: UITextField!
     @IBOutlet weak var jsonDebug: UITextView!
     
     private var datePicker: UIDatePicker?
+    
     
     @IBAction func refreshBtn(_ sender: UIButton) {
         if !HTTPHelper.requestResponseServerIsRunning {
@@ -45,21 +47,45 @@ class ViewController: UIViewController {
         }
         //DataBaseHelper.deleteOldEntries()
         
+       createDatePicker()
+        
+    }
+    
+    //Function to create the datepicker
+    func createDatePicker(){
+        
         //create instance of the datepicker
         datePicker = UIDatePicker()
         //sets format, so only day month and year can be selected
-        datePicker?.datePickerMode = .date
+        //datePicker?.datePickerMode = .date
         datePicker?.backgroundColor = .white
         datePicker?.addTarget(self, action: #selector(ViewController.dateChanged(datePicker:)), for: .valueChanged)
+        //to limit the datepicker, you can not pick a date older than yesterday
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
+        datePicker?.minimumDate = yesterday
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.viewTapped(gesturRecognizer:)))
         
         view.addGestureRecognizer(tapGesture)
         
+        /*datePicker?.frame=CGRect(x: 0, y: 200, width: self.view.frame.width, height: 200)*/
         
         inputTextfield.inputView = datePicker
         
+        //create a toolbar
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        //add done button to the toolbar
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneClicked))
+        toolbar.setItems([doneButton], animated: true)
+        
+        
+        inputTextfield.inputAccessoryView = toolbar
+        
+       
     }
+    
     
     //function to select a date
     @objc func dateChanged(datePicker: UIDatePicker){
@@ -76,6 +102,11 @@ class ViewController: UIViewController {
     @objc func viewTapped(gesturRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
         
+    }
+    
+    //function to close the datepicker when clicking on the done button
+    @objc func doneClicked(){
+        self.view.endEditing(true)
     }
     
 }
