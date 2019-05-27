@@ -11,7 +11,8 @@ import Network
 
 class ViewController: UIViewController {
 
-
+    
+    
     @IBOutlet weak var inputTextfield: UITextField!
     @IBOutlet weak var jsonDebug: UITextView!
     
@@ -63,6 +64,9 @@ class ViewController: UIViewController {
         //to limit the datepicker, you can not pick a date older than yesterday
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         datePicker?.minimumDate = yesterday
+        datePicker?.minuteInterval = 30
+        let loc = Locale(identifier: "de")
+        datePicker?.locale = loc
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.viewTapped(gesturRecognizer:)))
         
@@ -71,6 +75,7 @@ class ViewController: UIViewController {
         /*datePicker?.frame=CGRect(x: 0, y: 200, width: self.view.frame.width, height: 200)*/
         
         inputTextfield.inputView = datePicker
+        
         
         //create a toolbar
         let toolbar = UIToolbar()
@@ -82,6 +87,8 @@ class ViewController: UIViewController {
         
         
         inputTextfield.inputAccessoryView = toolbar
+        
+        
         
        
     }
@@ -101,6 +108,8 @@ class ViewController: UIViewController {
     //function to close the datepicker, when tapping on the inputText again -handler method
     @objc func viewTapped(gesturRecognizer: UITapGestureRecognizer){
         view.endEditing(true)
+        
+        
         
     }
     

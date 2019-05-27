@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0Kz-o6-sU6">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,24 +15,24 @@
             <objects>
                 <viewController id="s6t-9e-eDg" customClass="ViewController" customModule="clubber_ios_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="S61-vE-WKS">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="select date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jx3-uJ-S03">
-                                <rect key="frame" x="92" y="59" width="193" height="30"/>
+                                <rect key="frame" x="92" y="83" width="232" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mnD-hf-4pr">
-                                <rect key="frame" x="0.0" y="241" width="375" height="251"/>
+                                <rect key="frame" x="1" y="449" width="414" height="249"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">UI just for debugging.    Though some technical functions are implemented such as: -&gt; request to webserver for JSON file -&gt; CoreData Database with calls and connection to the tableViews (just the names of clubs/events) -&gt; A refresh function for updating the application manually (swipe down in Events) -&gt; Some alertboxes for the user, in case the database is empty for some reason -&gt; internet connection checker</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Press btn to get JSON file, if you didn't start the app the first time ever, it will probably be empty" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jcc-UZ-RA1">
-                                <rect key="frame" x="0.0" y="531" width="375" height="78"/>
+                                <rect key="frame" x="1" y="726" width="414" height="78"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="78" id="SqA-li-VOb"/>
@@ -41,60 +41,60 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQj-oR-va6">
-                                <rect key="frame" x="9" y="500" width="62" height="30"/>
+                                <rect key="frame" x="10" y="695" width="62" height="30"/>
                                 <state key="normal" title="Get Json"/>
                                 <connections>
                                     <action selector="getJson:" destination="s6t-9e-eDg" eventType="touchUpInside" id="9qr-oz-4ey"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9c-jv-QxS">
-                                <rect key="frame" x="92" y="500" width="94" height="30"/>
+                                <rect key="frame" x="93" y="695" width="94" height="30"/>
                                 <state key="normal" title="delete Entries"/>
                                 <connections>
                                     <action selector="deleteBtn:" destination="s6t-9e-eDg" eventType="touchUpInside" id="8QD-4P-KH0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ws-D7-6vj">
-                                <rect key="frame" x="211" y="500" width="105" height="30"/>
+                                <rect key="frame" x="212" y="695" width="105" height="30"/>
                                 <state key="normal" title="Download Json"/>
                                 <connections>
                                     <action selector="refreshBtn:" destination="s6t-9e-eDg" eventType="touchUpInside" id="Fhe-th-TEk"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sE-po-Qon">
-                                <rect key="frame" x="156" y="114" width="64" height="30"/>
+                                <rect key="frame" x="156" y="138" width="103" height="30"/>
                                 <state key="normal" title="filterDate"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Jcc-UZ-RA1" firstAttribute="top" secondItem="IQj-oR-va6" secondAttribute="bottom" constant="1" id="11I-jd-ukX"/>
-                            <constraint firstItem="IQj-oR-va6" firstAttribute="top" secondItem="mnD-hf-4pr" secondAttribute="bottom" constant="8" id="4SP-IU-jg9"/>
-                            <constraint firstItem="mnD-hf-4pr" firstAttribute="top" secondItem="Jx3-uJ-S03" secondAttribute="bottom" constant="152" id="5lY-Rm-cS9"/>
+                            <constraint firstItem="IQj-oR-va6" firstAttribute="top" secondItem="mnD-hf-4pr" secondAttribute="bottom" constant="-3" id="4SP-IU-jg9"/>
+                            <constraint firstItem="mnD-hf-4pr" firstAttribute="top" secondItem="Jx3-uJ-S03" secondAttribute="bottom" constant="336" id="5lY-Rm-cS9"/>
                             <constraint firstItem="Jcc-UZ-RA1" firstAttribute="top" secondItem="c9c-jv-QxS" secondAttribute="bottom" constant="1" id="6qa-I0-I9r"/>
-                            <constraint firstItem="mnD-hf-4pr" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" id="7ro-Q0-FYO"/>
+                            <constraint firstItem="mnD-hf-4pr" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="1" id="7ro-Q0-FYO"/>
                             <constraint firstItem="4ws-D7-6vj" firstAttribute="leading" secondItem="c9c-jv-QxS" secondAttribute="trailing" constant="25" id="97x-ls-2OH"/>
-                            <constraint firstItem="mnD-hf-4pr" firstAttribute="trailing" secondItem="bBy-Jq-Eyq" secondAttribute="trailing" id="9YY-eD-6CV"/>
-                            <constraint firstItem="bBy-Jq-Eyq" firstAttribute="trailing" secondItem="4ws-D7-6vj" secondAttribute="trailing" constant="59" id="DzK-MH-HOg"/>
+                            <constraint firstItem="mnD-hf-4pr" firstAttribute="trailing" secondItem="bBy-Jq-Eyq" secondAttribute="trailing" constant="1" id="9YY-eD-6CV"/>
+                            <constraint firstItem="bBy-Jq-Eyq" firstAttribute="trailing" secondItem="4ws-D7-6vj" secondAttribute="trailing" constant="97" id="DzK-MH-HOg"/>
                             <constraint firstItem="Jx3-uJ-S03" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="92" id="IkJ-63-XjP"/>
                             <constraint firstItem="c9c-jv-QxS" firstAttribute="leading" secondItem="IQj-oR-va6" secondAttribute="trailing" constant="21" id="M4T-sH-8v7"/>
                             <constraint firstItem="bBy-Jq-Eyq" firstAttribute="bottom" secondItem="Jcc-UZ-RA1" secondAttribute="bottom" constant="9" id="Q4g-N6-CYX"/>
-                            <constraint firstItem="IQj-oR-va6" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="9" id="QPp-NQ-jiY"/>
+                            <constraint firstItem="IQj-oR-va6" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="10" id="QPp-NQ-jiY"/>
                             <constraint firstItem="4ws-D7-6vj" firstAttribute="leading" secondItem="c9c-jv-QxS" secondAttribute="trailing" constant="25" id="WVL-D8-Uwb"/>
                             <constraint firstItem="6sE-po-Qon" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="156" id="Ylw-Jb-dHP"/>
                             <constraint firstItem="6sE-po-Qon" firstAttribute="top" secondItem="Jx3-uJ-S03" secondAttribute="bottom" constant="25" id="b3J-Rs-ebx"/>
                             <constraint firstItem="bBy-Jq-Eyq" firstAttribute="trailing" secondItem="6sE-po-Qon" secondAttribute="trailing" constant="155" id="bQL-iL-IjQ"/>
                             <constraint firstItem="Jx3-uJ-S03" firstAttribute="top" secondItem="bBy-Jq-Eyq" secondAttribute="top" constant="39" id="d1d-XG-tAm"/>
-                            <constraint firstItem="mnD-hf-4pr" firstAttribute="top" secondItem="6sE-po-Qon" secondAttribute="bottom" constant="97" id="dqw-1q-cXu"/>
-                            <constraint firstItem="c9c-jv-QxS" firstAttribute="top" secondItem="mnD-hf-4pr" secondAttribute="bottom" constant="8" id="jHz-BV-e3q"/>
-                            <constraint firstItem="4ws-D7-6vj" firstAttribute="top" secondItem="mnD-hf-4pr" secondAttribute="bottom" constant="8" id="jqt-wx-5Ur"/>
+                            <constraint firstItem="mnD-hf-4pr" firstAttribute="top" secondItem="6sE-po-Qon" secondAttribute="bottom" constant="281" id="dqw-1q-cXu"/>
+                            <constraint firstItem="c9c-jv-QxS" firstAttribute="top" secondItem="mnD-hf-4pr" secondAttribute="bottom" constant="-3" id="jHz-BV-e3q"/>
+                            <constraint firstItem="4ws-D7-6vj" firstAttribute="top" secondItem="mnD-hf-4pr" secondAttribute="bottom" constant="-3" id="jqt-wx-5Ur"/>
                             <constraint firstItem="c9c-jv-QxS" firstAttribute="leading" secondItem="IQj-oR-va6" secondAttribute="trailing" constant="21" id="oBG-1x-4Bp"/>
                             <constraint firstItem="Jcc-UZ-RA1" firstAttribute="top" secondItem="IQj-oR-va6" secondAttribute="bottom" constant="1" id="oKS-C7-5M5"/>
-                            <constraint firstItem="Jcc-UZ-RA1" firstAttribute="trailing" secondItem="bBy-Jq-Eyq" secondAttribute="trailing" id="s6z-Mc-jE1"/>
+                            <constraint firstItem="Jcc-UZ-RA1" firstAttribute="trailing" secondItem="bBy-Jq-Eyq" secondAttribute="trailing" constant="1" id="s6z-Mc-jE1"/>
                             <constraint firstItem="Jcc-UZ-RA1" firstAttribute="top" secondItem="4ws-D7-6vj" secondAttribute="bottom" constant="1" id="uGH-fN-QFd"/>
                             <constraint firstItem="bBy-Jq-Eyq" firstAttribute="trailing" secondItem="Jx3-uJ-S03" secondAttribute="trailing" constant="90" id="v9J-7V-enz"/>
-                            <constraint firstItem="IQj-oR-va6" firstAttribute="top" secondItem="mnD-hf-4pr" secondAttribute="bottom" constant="8" id="wGu-Y3-C4W"/>
-                            <constraint firstItem="Jcc-UZ-RA1" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" id="wTQ-he-Uvr"/>
+                            <constraint firstItem="IQj-oR-va6" firstAttribute="top" secondItem="mnD-hf-4pr" secondAttribute="bottom" constant="-3" id="wGu-Y3-C4W"/>
+                            <constraint firstItem="Jcc-UZ-RA1" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="1" id="wTQ-he-Uvr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bBy-Jq-Eyq"/>
                     </view>
@@ -106,22 +106,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nQp-AX-FTo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1610.4000000000001" y="773.16341829085468"/>
+            <point key="canvasLocation" x="-1611.5942028985507" y="772.76785714285711"/>
         </scene>
         <!--Events-->
         <scene sceneID="mmf-3I-Lzd">
             <objects>
                 <tableViewController id="9Pk-Nn-hJz" customClass="TableViewControllerEvents" customModule="clubber_ios_" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="180" estimatedRowHeight="180" sectionHeaderHeight="28" sectionFooterHeight="28" id="B0L-8Z-1TL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseIdentEvents" rowHeight="215" id="qFa-0Q-Nmn" customClass="EventCell" customModule="clubber_ios_" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="215"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="215"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qFa-0Q-Nmn" id="cNd-Ms-hcQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="214.5"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qFa-0Q-Nmn" id="cNd-Ms-hcQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="214.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fhA-ZZ-6B6" customClass="CardViewDesign" customModule="clubber_ios_" customModuleProvider="target">
@@ -276,15 +276,15 @@
             <objects>
                 <tableViewController id="nsp-K9-Fbz" customClass="TableViewControllerClubs" customModule="clubber_ios_" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="msR-b0-3PN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseIdentClubs" rowHeight="200" id="sYg-Tq-qTt">
-                                <rect key="frame" x="0.0" y="28" width="375" height="200"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sYg-Tq-qTt" id="Lyj-Cf-AGp">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="199.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x4i-Kr-JkY" customClass="CardViewDesign" customModule="clubber_ios_" customModuleProvider="target">
