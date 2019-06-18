@@ -109,9 +109,8 @@ class DataBaseHelper {
         return results
     }
     
-    /*static func requestClubsFromDatabase(entity: String) -> [Club] {
-        let context = getContext()
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+    static func requestClubsFromDatabase(context: NSManagedObjectContext) -> [Club] {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Club")
         request.returnsObjectsAsFaults = false
         var results : [Club] = []
         do{
@@ -121,7 +120,7 @@ class DataBaseHelper {
             print(error)
         }
         return results
-    }*/
+    }
     
     
     

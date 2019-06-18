@@ -11,7 +11,7 @@ import UIKit
 
 class TableViewControllerClubs : UITableViewController {
     
-    var clubArr : [String] = []
+    var clubArr : [Club] = []
     @IBOutlet var table: UITableView!
     
     override func viewDidLoad() {
@@ -21,7 +21,7 @@ class TableViewControllerClubs : UITableViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        //clubArr = DataBaseHelper.requestEventsFromDatabase(entity: "Club")
+        clubArr = DataBaseHelper.requestClubsFromDatabase(context: DataBaseHelper.getContext())
         giveUserFeedbackIfNecessary(arr: clubArr)
     }
     
@@ -33,9 +33,9 @@ class TableViewControllerClubs : UITableViewController {
     //creates a cell and returns it
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentClubs", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentClubs", for: indexPath) as! ClubCell
         
-        //cell.textLabel?.text = clubArr[indexPath.row]
+        cell.setClubCellValues(club: clubArr[indexPath.row])
         
         cell.contentView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         

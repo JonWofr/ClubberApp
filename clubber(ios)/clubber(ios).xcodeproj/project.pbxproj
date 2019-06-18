@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0335ED3C22B921D2002044F3 /* ClubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0335ED3B22B921D2002044F3 /* ClubCell.swift */; };
 		036BD43B226615A200036F3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD43A226615A200036F3E /* AppDelegate.swift */; };
 		036BD43D226615A200036F3E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD43C226615A200036F3E /* ViewController.swift */; };
 		036BD440226615A200036F3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 036BD43E226615A200036F3E /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0335ED3B22B921D2002044F3 /* ClubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubCell.swift; sourceTree = "<group>"; };
 		036BD437226615A200036F3E /* clubber(ios).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "clubber(ios).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		036BD43A226615A200036F3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		036BD43C226615A200036F3E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */,
 				03DBA184228C5778000C8D27 /* EventCell.swift */,
 				0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */,
+				0335ED3B22B921D2002044F3 /* ClubCell.swift */,
 				03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */,
 				03927BD6227E159600FB4E19 /* TabBarController.swift */,
 				036BD43E226615A200036F3E /* Main.storyboard */,
@@ -296,6 +299,7 @@
 				036BD443226615A200036F3E /* clubber_ios_.xcdatamodeld in Sources */,
 				03DA9107227A06E2006EAEB8 /* AlertHelperExtension.swift in Sources */,
 				03DBA185228C5778000C8D27 /* EventCell.swift in Sources */,
+				0335ED3C22B921D2002044F3 /* ClubCell.swift in Sources */,
 				0397BB5E2275F07900FDF73C /* TableViewControllerClubs.swift in Sources */,
 				EB5280F6228059C000D8596D /* CardViewDesign.swift in Sources */,
 				0397BB5C2275E1EE00FDF73C /* TableViewControllerEvents.swift in Sources */,
