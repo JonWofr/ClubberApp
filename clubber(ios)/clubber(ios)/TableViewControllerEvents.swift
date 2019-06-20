@@ -12,12 +12,16 @@ import CoreData
 class TableViewControllerEvents : UITableViewController{
     
     var eventArr : [Event] = []
+    var eventArrBuffer : [Event] = []
     var refreshcontrol : UIRefreshControl?
+    
+   
+    
     @IBOutlet var table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         tableView.separatorColor = UIColor(white: 0.95, alpha: 1)
         tableView.dataSource = self
         tableView.delegate = self
@@ -91,4 +95,37 @@ class TableViewControllerEvents : UITableViewController{
         }
         NSLog("Refresh button has been clicked")
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let filterDate = DataBaseHelper.filterDate
+        if(filterDate != ""){
+            eventArrBuffer = eventArr
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            let dte = dateFormatter.date(from: filterDate)
+            eventArr = filterEventArr(date: dte!)
+            
+            
+            NSLog("TableView is about to be reloaded with filtered dates...")
+            self.table.reloadData()
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        DataBaseHelper.filterDate = ""
+        self.eventArr = eventArrBuffer
+        self.table.reloadData()
+    }
+    
+    func filterEventArr (date : Date) -> [Event]{
+        var filteredEventArr : [Event] = []
+        for event in eventArr {
+            if(event.dte! == date){
+                filteredEventArr.append(event)
+            }
+        }
+        return filteredEventArr
+    }
+    
 }
+

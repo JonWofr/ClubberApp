@@ -12,6 +12,7 @@ import UIKit
 
 class DataBaseHelper {
     
+    static var filterDate = ""
     static var newEventEntriesHaveBeenStored : Bool = false
     
     //IST DAS HIER SINNVOLL? WIE VIELE CONTEXTS HAT EIN APP, WIE WIRD DIESER GESPEICHERT
@@ -93,6 +94,8 @@ class DataBaseHelper {
     }
     
     static func requestEventsFromDatabase(context: NSManagedObjectContext) -> [Event] {
+        
+        
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
         let sortDate = NSSortDescriptor(key: "dte", ascending: true)
         let sortTime = NSSortDescriptor(key: "srttime", ascending: true)

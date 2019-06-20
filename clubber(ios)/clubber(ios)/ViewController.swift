@@ -22,6 +22,16 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func findDateBtn(_ sender: UIButton) {
+        if(inputTextfield.text != ""){
+            self.tabBarController?.selectedIndex = 1
+            DataBaseHelper.filterDate = inputTextfield.text!
+        }
+        
+    }
+    
+    
+    
     @IBAction func deleteBtn(_ sender: Any) {
         DataBaseHelper.deleteAll(context: DataBaseHelper.getContext())
     }
@@ -29,6 +39,8 @@ class ViewController: UIViewController {
     @IBAction func getJson(_ sender: UIButton) {
         jsonDebug.text = HTTPHelper.json
     }
+    
+    
     
     
     lazy var datePicker: UIDatePicker = {
@@ -128,7 +140,6 @@ class ViewController: UIViewController {
         
         //selected date by the user
         let dateFormate = DateFormatter()
-        //Jonas das ist vllt für dich relevant, man kann es so verändern wie man will
         dateFormate.dateFormat = "MM/dd/yyyy"
         
         inputTextfield.text = dateFormate.string(from: datePicker.date)

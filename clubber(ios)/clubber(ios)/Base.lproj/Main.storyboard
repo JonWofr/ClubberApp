@@ -51,6 +51,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sE-po-Qon">
                                 <rect key="frame" x="157" y="209" width="103" height="30"/>
                                 <state key="normal" title="filterDate"/>
+                                <connections>
+                                    <action selector="findDateBtn:" destination="s6t-9e-eDg" eventType="touchUpInside" id="54T-pM-c1N"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mnD-hf-4pr">
                                 <rect key="frame" x="0.0" y="438" width="414" height="249"/>
