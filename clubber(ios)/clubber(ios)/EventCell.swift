@@ -31,15 +31,8 @@ class EventCell : UITableViewCell {
         url = URL(string: event.btn!)!
     }
     
-    
-    //funktioniert so nicht
-    @IBAction func eventBtn(_ sender: UIButton) {
-        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-        
-        let t = TableViewControllerEvents()
-        let arr : [Any] = []
-        t.createAlert(title: "Hello", message: "does it work?")
+    @IBAction func buttonClicked(_ sender: UIButton) {
+        UIApplication.shared.open(url!, completionHandler: {result in NSLog("The external URL \(String(describing: self.url)) has been opened \(result)")})
     }
-    
     
 }
