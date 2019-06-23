@@ -30,8 +30,6 @@ class ViewController: UIViewController {
         
     }
     
-    
-    
     @IBAction func deleteBtn(_ sender: Any) {
         DataBaseHelper.deleteAll(context: DataBaseHelper.getContext())
     }
@@ -39,8 +37,6 @@ class ViewController: UIViewController {
     @IBAction func getJson(_ sender: UIButton) {
         jsonDebug.text = HTTPHelper.json
     }
-    
-    
     
     
     lazy var datePicker: UIDatePicker = {
@@ -75,11 +71,16 @@ class ViewController: UIViewController {
     }()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        self.navigationController?.navigationBar.topItem?.title = "Clubber"
+        assignbackground()
         setupAutoLayout()
         pickerContainer.isHidden = true
         inputTextfield.delegate = self
         hideDatePicker()
+        
+        
 
         
         //If we don't have network access at the beginning, but have internet while runtime, the app will start to request our webserver. if it was successful, it will set the automaticDownloadHasBeenSuccesful variable to true and we won't call the methode ever again while runtime
@@ -94,6 +95,15 @@ class ViewController: UIViewController {
         //DataBaseHelper.deleteOldEntries()
        //createDatePicker()
         
+    }
+    
+    func assignbackground(){
+        let background = UIImage(named: "concert")
+        var imageView : UIImageView!
+        imageView = UIImageView(frame: view.bounds)
+        imageView.image = background
+        view.addSubview(imageView)
+        self.view.sendSubviewToBack(imageView)
     }
     
     func showDatePickerView() {
@@ -158,70 +168,4 @@ extension ViewController: UITextFieldDelegate {
     }
     
 }
-    //Function to create the datepicker
-    /*func createDatePicker(){
-        
-        //create instance of the datepicker
-        datePicker = UIDatePicker()
-        showDatepicker.addSubview(datePicker!)
-        //sets format, so only day month and year can be selected
-        //datePicker?.datePickerMode = .date
-        datePicker?.backgroundColor = .white
-        datePicker?.addTarget(self, action: #selector(ViewController.dateChanged(datePicker:)), for: .valueChanged)
-        //to limit the datepicker, you can not pick a date older than yesterday
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
-        datePicker?.minimumDate = yesterday
-        datePicker?.minuteInterval = 30
-        let loc = Locale(identifier: "de")
-        datePicker?.locale = loc
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.viewTapped(gesturRecognizer:)))
-        
-        view.addGestureRecognizer(tapGesture)
-        
-        inputTextfield.inputView = datePicker
-        
-        
-        //create a toolbar
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        //add done button to the toolbar
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneClicked))
-        toolbar.setItems([doneButton], animated: true)
-        
-        
-        inputTextfield.inputAccessoryView = toolbar
-        
-        
-        
-       
-    }
     
-    
-    //function to select a date
-    @objc func dateChanged(datePicker: UIDatePicker){
-        
-        //selected date by the user
-        let dateFormate = DateFormatter()
-        //Jonas das ist vllt für dich relevant, man kann es so verändern wie man will
-        dateFormate.dateFormat = "MM/dd/yyyy"
-        
-        inputTextfield.text = dateFormate.string(from: datePicker.date)
-    }
-    
-    //function to close the datepicker, when tapping on the inputText again -handler method
-    @objc func viewTapped(gesturRecognizer: UITapGestureRecognizer){
-        view.endEditing(true)
-        
-        
-        
-    }
-    
-    //function to close the datepicker when clicking on the done button
-    @objc func doneClicked(){
-        self.view.endEditing(true)
-    }*/
-    
-
-

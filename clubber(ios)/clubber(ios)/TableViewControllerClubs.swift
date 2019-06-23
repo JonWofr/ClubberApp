@@ -17,6 +17,8 @@ class TableViewControllerClubs : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.topItem?.title = "Clubs"
+        
         tableView.separatorColor = UIColor(white: 0.95, alpha: 1)
         tableView.dataSource = self
         tableView.delegate = self
