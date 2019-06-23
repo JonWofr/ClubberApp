@@ -117,7 +117,7 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activate([
             inputTextfield.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
             inputTextfield.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
-            inputTextfield.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+            inputTextfield.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
             
             pickerContainer.topAnchor.constraint(equalTo: inputTextfield.bottomAnchor, constant: 5),
             pickerContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
