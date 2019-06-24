@@ -14,7 +14,7 @@ import UIKit
 extension UIViewController{
     
     //creates an alert for the user with a simple "ok" button
-    func createAlert (title:String, message:String, completionHandler: (() -> Void)?){
+    private func createAlert (title:String, message:String, completionHandler: (() -> Void)?){
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         
@@ -26,17 +26,19 @@ extension UIViewController{
     }
     
     //shows user an alert to let him know if something is wrong
-    func giveUserFeedbackIfNecessary(arr: [Any]){
+    func giveUserFeedbackIfNecessary(arr: [Any], filteringEvents : Bool, completionHandler: (() -> Void)?){
         
-        //First checks if we have got internet connection and then looks at the different cases that could occur
-        if(HTTPHelper.hasNetworkAccess){
+        if(arr.count == 0 && filteringEvents){
+            createAlert(title: "Ups", message: "Für diesen Tag sind keine Events vorhanden", completionHandler: completionHandler)
+        }
+        else if(HTTPHelper.hasNetworkAccess){
             if(arr.count == 0){
-                createAlert(title: "PlatzhalterTitel", message: "Leider sind derzeit keine Events vorhanden versuche zu refreshen", completionHandler: nil)
+                createAlert(title: "PlatzhalterTitel", message: "Leider sind derzeit keine Events vorhanden. Schau in Kürze nochmal vorbei.", completionHandler: completionHandler)
                 //ToDo: Was wenn wir einen leeren Array bekommen, wenn wir für ein bestimmtes Datum
                 //anfragen und nicht nur die KOMPLETTE Db anfragen und einen leeren Array zurückbekommen...
             }
         }else{
-            createAlert(title: "Platzhalter", message: "Du hast keine Internetverbindung, die Einträge sind eventuell unvollständig oder nicht vorhanden", completionHandler: nil)
+            createAlert(title: "Platzhalter", message: "Du hast keine Internetverbindung, die Einträge sind eventuell unvollständig oder nicht vorhanden", completionHandler: completionHandler)
         }
     }
 

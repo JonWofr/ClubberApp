@@ -39,7 +39,7 @@ class TableViewControllerEvents : UITableViewController{
         if !HTTPHelper.requestResponseServerIsRunning{
             eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext())
         }
-        giveUserFeedbackIfNecessary(arr: eventArr)        
+        giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: false)
     }
     
     //sets the amount of rows the table will have
@@ -85,9 +85,8 @@ class TableViewControllerEvents : UITableViewController{
                 self.refreshcontrol?.endRefreshing()
                 }
         }else{
-            
-            //refreshControl will be stoped once user dialogue shows up
-            createAlert(title: "Ups", message: "Du hast keine Internetverbindung, die Einträge sind eventuell unvollständig oder nicht vorhanden", completionHandler: {() -> Void in self.refreshcontrol?.endRefreshing()})
+            //refreshControl will be stopped once user dialogue shows up
+            giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: false, completionHandler: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
         }
         NSLog("Refresh button has been clicked")
     }
@@ -104,6 +103,7 @@ class TableViewControllerEvents : UITableViewController{
             
             NSLog("TableView is about to be reloaded with filtered dates...")
             self.table.reloadData()
+            giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: true)
         }
     }
     
