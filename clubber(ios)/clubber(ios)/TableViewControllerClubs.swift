@@ -24,7 +24,7 @@ class TableViewControllerClubs : UITableViewController {
         tableView.delegate = self
         
         clubArr = DataBaseHelper.requestClubsFromDatabase(context: DataBaseHelper.getContext())
-        giveUserFeedbackIfNecessary(arr: clubArr)
+        giveUserFeedbackIfNecessary(arr: clubArr, filteringEvents: false)
     }
     
     //sets the amount of rows the table will have

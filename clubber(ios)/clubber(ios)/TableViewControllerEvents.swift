@@ -39,7 +39,7 @@ class TableViewControllerEvents : UITableViewController{
         if !HTTPHelper.requestResponseServerIsRunning{
             eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext())
         }
-        giveUserFeedbackIfNecessary(arr: eventArr)        
+        giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: false)
     }
     
     //sets the amount of rows the table will have
@@ -110,6 +110,7 @@ class TableViewControllerEvents : UITableViewController{
             
             NSLog("TableView is about to be reloaded with filtered dates...")
             self.table.reloadData()
+            giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: true)
         }
     }
     
