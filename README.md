@@ -37,7 +37,7 @@ We are currently fixing some bugs and finalizing the UI.
 **-->iOS:**
 
 The app has two TableViewControllers (Clubs, Events) and a basic ViewController. They are connected with a TabBarController to navigate in the application.
-We download a JSON file (in its own thread) automatically by considering the application lifecylcle in the AppDelegate class when the app launches the first time. The data is then stored in a CoreData database.
+To check if we have internet access we set up a connection listener which helps us to know if we can download our JSON file. We download the JSON file (in its own thread) automatically in the ViewControllerHome class when the app launches the first time. The data is then stored in a CoreData database. To prevent downloading the whole Database from our webserver we request the highest id that is stored in our CoreData database and then send a request to our webserver with the highest id. The webserver sends us a json with only the entries that are higher than the requested ones.   
 However the user can always refresh the database by pulling down the tableView in Events. To provide user feedback we extended the UITableViewController class with two methodes
 which create an alert box and print specific messages. Since Clubs- and Events TableViewContoller both inherite this class we can easily call these methodes.
 
