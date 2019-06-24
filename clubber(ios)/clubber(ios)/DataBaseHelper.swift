@@ -15,7 +15,6 @@ class DataBaseHelper {
     static var filterDate = ""
     static var newEventEntriesHaveBeenStored : Bool = false
     
-    //IST DAS HIER SINNVOLL? WIE VIELE CONTEXTS HAT EIN APP, WIE WIRD DIESER GESPEICHERT
     //returns Context
     static func getContext () -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

@@ -32,14 +32,13 @@ class TableViewControllerEvents : UITableViewController{
         //text displayed under the circle
         refreshcontrol?.attributedTitle = NSAttributedString(string : "Pull to refresh")
         //selector is called when the refreshControl is swiped down
-        //ToDo: bei mir kommt hier ein Fehler ??
         refreshcontrol?.addTarget(self, action: #selector(refreshControlPulledDown) , for: .valueChanged)
         
         table.addSubview(refreshcontrol!)
         if !HTTPHelper.requestResponseServerIsRunning{
             eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext())
         }
-        giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: false)
+        giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: false, completionHandler: nil)
     }
     
     //sets the amount of rows the table will have
@@ -87,7 +86,7 @@ class TableViewControllerEvents : UITableViewController{
                 }
         }else{
             //refreshControl will be stopped once user dialogue shows up
-            giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: false, completionHandler: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
+            giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: false, completionHandler: {() -> Void in self.refreshcontrol?.endRefreshing()})
         }
         NSLog("Refresh button has been clicked")
     }
@@ -107,7 +106,7 @@ class TableViewControllerEvents : UITableViewController{
             
             NSLog("TableView is about to be reloaded with filtered dates...")
             self.table.reloadData()
-            giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: true)
+            giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: true, completionHandler: nil)
         }
     }
     

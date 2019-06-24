@@ -520,7 +520,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C44K2Z4B36;
+				DEVELOPMENT_TEAM = 8C5J828CXA;
 				INFOPLIST_FILE = "clubber(ios)Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -539,7 +539,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C44K2Z4B36;
+				DEVELOPMENT_TEAM = 8C5J828CXA;
 				INFOPLIST_FILE = "clubber(ios)Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

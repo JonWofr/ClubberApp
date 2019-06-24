@@ -33,12 +33,10 @@ extension UIViewController{
         }
         else if(HTTPHelper.hasNetworkAccess){
             if(arr.count == 0){
-                createAlert(title: "PlatzhalterTitel", message: "Leider sind derzeit keine Events vorhanden. Schau in Kürze nochmal vorbei.", completionHandler: completionHandler)
-                //ToDo: Was wenn wir einen leeren Array bekommen, wenn wir für ein bestimmtes Datum
-                //anfragen und nicht nur die KOMPLETTE Db anfragen und einen leeren Array zurückbekommen...
+                createAlert(title: "Ups", message: "Leider sind derzeit keine Events vorhanden. Schau in Kürze nochmal vorbei.", completionHandler: completionHandler)
             }
         }else{
-            createAlert(title: "Platzhalter", message: "Du hast keine Internetverbindung, die Einträge sind eventuell unvollständig oder nicht vorhanden", completionHandler: completionHandler)
+            createAlert(title: "Ups", message: "Du hast keine Internetverbindung, die Einträge sind eventuell unvollständig oder nicht vorhanden", completionHandler: completionHandler)
         }
     }
 
