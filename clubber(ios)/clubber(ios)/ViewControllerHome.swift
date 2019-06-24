@@ -9,7 +9,7 @@
 import UIKit
 import Network
 
-class ViewController: UIViewController {
+class ViewControllerHome: UIViewController {
 
     
     @IBOutlet weak var showDatepicker: UIView!
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.backgroundColor = .white
-        picker.addTarget(self, action: #selector(ViewController.dateChanged(datePicker:)), for: .valueChanged)
+        picker.addTarget(self, action: #selector(ViewControllerHome.dateChanged(datePicker:)), for: .valueChanged)
         
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         picker.minimumDate = yesterday
@@ -160,7 +160,7 @@ class ViewController: UIViewController {
     }
     
 }
-extension ViewController: UITextFieldDelegate {
+extension ViewControllerHome: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.resignFirstResponder()

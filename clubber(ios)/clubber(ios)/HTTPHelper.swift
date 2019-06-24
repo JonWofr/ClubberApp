@@ -78,6 +78,8 @@ class HTTPHelper{
             dispatchGroup.leave()
         }
         
+        DataBaseHelper.deleteOldEntries(context: context)
+        
         let highestEventId = DataBaseHelper.requestHighestId(entity: "Event", context: context)
         let highestClubId = DataBaseHelper.requestHighestId(entity: "Club",context: context)
 

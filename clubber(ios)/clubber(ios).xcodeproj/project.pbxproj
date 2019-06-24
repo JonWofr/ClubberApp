@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0335ED3C22B921D2002044F3 /* ClubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0335ED3B22B921D2002044F3 /* ClubCell.swift */; };
 		036BD43B226615A200036F3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD43A226615A200036F3E /* AppDelegate.swift */; };
-		036BD43D226615A200036F3E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD43C226615A200036F3E /* ViewController.swift */; };
+		036BD43D226615A200036F3E /* ViewControllerHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BD43C226615A200036F3E /* ViewControllerHome.swift */; };
 		036BD440226615A200036F3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 036BD43E226615A200036F3E /* Main.storyboard */; };
 		036BD443226615A200036F3E /* clubber_ios_.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 036BD441226615A200036F3E /* clubber_ios_.xcdatamodeld */; };
 		036BD445226615A300036F3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 036BD444226615A300036F3E /* Assets.xcassets */; };
@@ -52,7 +52,7 @@
 		0335ED3B22B921D2002044F3 /* ClubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubCell.swift; sourceTree = "<group>"; };
 		036BD437226615A200036F3E /* clubber(ios).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "clubber(ios).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		036BD43A226615A200036F3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		036BD43C226615A200036F3E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		036BD43C226615A200036F3E /* ViewControllerHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerHome.swift; sourceTree = "<group>"; };
 		036BD43F226615A200036F3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		036BD442226615A200036F3E /* clubber_ios_.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = clubber_ios_.xcdatamodel; sourceTree = "<group>"; };
 		036BD444226615A300036F3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				036BD43A226615A200036F3E /* AppDelegate.swift */,
-				036BD43C226615A200036F3E /* ViewController.swift */,
+				036BD43C226615A200036F3E /* ViewControllerHome.swift */,
 				036BD446226615A300036F3E /* LaunchScreen.storyboard */,
 				036BD46D2266171500036F3E /* HTTPHelper.swift */,
 				036BD46B226616E300036F3E /* DataBaseHelper.swift */,
@@ -293,7 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				036BD46C226616E300036F3E /* DataBaseHelper.swift in Sources */,
-				036BD43D226615A200036F3E /* ViewController.swift in Sources */,
+				036BD43D226615A200036F3E /* ViewControllerHome.swift in Sources */,
 				036BD46E2266171500036F3E /* HTTPHelper.swift in Sources */,
 				03927BD7227E159600FB4E19 /* TabBarController.swift in Sources */,
 				036BD443226615A200036F3E /* clubber_ios_.xcdatamodeld in Sources */,

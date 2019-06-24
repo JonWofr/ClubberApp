@@ -34,5 +34,4 @@ class EventCell : UITableViewCell {
     @IBAction func buttonClicked(_ sender: UIButton) {
         UIApplication.shared.open(url!, completionHandler: {result in NSLog("The external URL \(String(describing: self.url)) has been opened \(result)")})
     }
-    
 }

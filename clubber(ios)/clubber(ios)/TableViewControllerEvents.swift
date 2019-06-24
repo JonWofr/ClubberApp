@@ -85,15 +85,9 @@ class TableViewControllerEvents : UITableViewController{
                 self.refreshcontrol?.endRefreshing()
                 }
         }else{
-            //needs to be called in order for the refresh process to be stopped
-            let alert = UIAlertController(title: "Placholder", message: "Stelle bitte eine Internetverbindung her", preferredStyle: UIAlertController.Style.alert)
-        
-            //refreshControl will be stoped once user dialogue shows up
-            self.present(alert, animated: true, completion: {() -> Void in self.refreshcontrol?.endRefreshing()})
             
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { (action) in
-                alert.dismiss(animated: true, completion: nil)
-            }))
+            //refreshControl will be stoped once user dialogue shows up
+            createAlert(title: "Ups", message: "Du hast keine Internetverbindung, die Einträge sind eventuell unvollständig oder nicht vorhanden", completionHandler: {() -> Void in self.refreshcontrol?.endRefreshing()})
         }
         NSLog("Refresh button has been clicked")
     }

@@ -215,7 +215,4 @@ class DataBaseHelper {
         let dateOfYesterday = dateFormatter.date(from: date)
         return dateOfYesterday!
     }
-  
-    
-    
 }
