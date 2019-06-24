@@ -114,9 +114,11 @@ class TableViewControllerEvents : UITableViewController{
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        DataBaseHelper.filterDate = ""
-        self.eventArr = eventArrBuffer
-        self.table.reloadData()
+        if(DataBaseHelper.filterDate != ""){
+            DataBaseHelper.filterDate = ""
+            self.eventArr = eventArrBuffer
+            self.table.reloadData()
+        }
     }
     
     func filterEventArr (date : Date) -> [Event]{
