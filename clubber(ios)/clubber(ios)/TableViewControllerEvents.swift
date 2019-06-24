@@ -77,6 +77,7 @@ class TableViewControllerEvents : UITableViewController{
                 if (DataBaseHelper.newEventEntriesHaveBeenStored){
                     self.eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext())
                     NSLog("TableView is about to be updated")
+                    self.filterEventsIfRequested()
                     self.table.reloadData()
                 }
                 else {
@@ -92,6 +93,10 @@ class TableViewControllerEvents : UITableViewController{
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        filterEventsIfRequested()
+    }
+    
+    func filterEventsIfRequested(){
         let filterDate = DataBaseHelper.filterDate
         if(filterDate != ""){
             eventArrBuffer = eventArr
@@ -99,7 +104,6 @@ class TableViewControllerEvents : UITableViewController{
             dateFormatter.dateFormat = "MM/dd/yyyy"
             let dte = dateFormatter.date(from: filterDate)
             eventArr = filterEventArr(date: dte!)
-            
             
             NSLog("TableView is about to be reloaded with filtered dates...")
             self.table.reloadData()
