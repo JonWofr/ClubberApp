@@ -29,7 +29,7 @@ class DataBaseHelperTests: XCTestCase {
             let container = NSPersistentContainer(name: "PersistentTodoList", managedObjectModel: self.managedObjectModel)
             let description = NSPersistentStoreDescription()
             description.type = NSInMemoryStoreType
-            description.shouldAddStoreAsynchronously = false // Make it simpler in test env
+            description.shouldAddStoreAsynchronously = false
             
             container.persistentStoreDescriptions = [description]
             container.loadPersistentStores { (description, error) in
@@ -140,18 +140,6 @@ class DataBaseHelperTests: XCTestCase {
         let events = DataBaseHelper.requestEventsFromDatabase(context: mockPersistantContainer.viewContext)
         XCTAssertEqual(events.count, 2)
     }
-    
-    /*
-    func testRequestHighestId(){
-        HTTPHelper.dispatchGroup.notify(queue: .main){
-            let highestEventId = DataBaseHelper.requestHighestId(entity: "Event", context: self.mockPersistantContainer.viewContext)
-            XCTAssertEqual(highestEventId, 2)
-            
-            let highestClubId = DataBaseHelper.requestHighestId(entity: "Club", context: self.mockPersistantContainer.viewContext)
-            XCTAssertEqual(highestClubId, 1)
-        }
-    }
- */
     
     func testDeleteOldEntries(){
         //one entry is outdated. Checks if the number of total entries is subtracted by one after the method is called

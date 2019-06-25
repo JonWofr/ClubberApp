@@ -36,6 +36,8 @@ class HTTPHelper{
         monitor.start(queue: queue)
     }
     
+    
+    
     //JSONData struct that stores Event and Club object Arrays
     public struct JSONDataStruct : Decodable {
         var events :[EventStruct]!

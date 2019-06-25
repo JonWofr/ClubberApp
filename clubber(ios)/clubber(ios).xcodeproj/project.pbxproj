@@ -123,22 +123,13 @@
 		036BD439226615A200036F3E /* clubber(ios) */ = {
 			isa = PBXGroup;
 			children = (
-				036BD43A226615A200036F3E /* AppDelegate.swift */,
-				036BD43C226615A200036F3E /* ViewControllerHome.swift */,
+				0B8485E822C211CE009C5FFE /* UI */,
+				0B8485E722C211B2009C5FFE /* BusinessLogic */,
 				036BD446226615A300036F3E /* LaunchScreen.storyboard */,
-				036BD46D2266171500036F3E /* HTTPHelper.swift */,
-				036BD46B226616E300036F3E /* DataBaseHelper.swift */,
-				0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */,
-				03DBA184228C5778000C8D27 /* EventCell.swift */,
-				0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */,
-				0335ED3B22B921D2002044F3 /* ClubCell.swift */,
-				03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */,
-				03927BD6227E159600FB4E19 /* TabBarController.swift */,
 				036BD43E226615A200036F3E /* Main.storyboard */,
 				036BD444226615A300036F3E /* Assets.xcassets */,
 				036BD449226615A300036F3E /* Info.plist */,
 				036BD441226615A200036F3E /* clubber_ios_.xcdatamodeld */,
-				EB5280F5228059C000D8596D /* CardViewDesign.swift */,
 			);
 			path = "clubber(ios)";
 			sourceTree = "<group>";
@@ -160,6 +151,31 @@
 				036BD45F226615A300036F3E /* Info.plist */,
 			);
 			path = "clubber(ios)UITests";
+			sourceTree = "<group>";
+		};
+		0B8485E722C211B2009C5FFE /* BusinessLogic */ = {
+			isa = PBXGroup;
+			children = (
+				036BD43A226615A200036F3E /* AppDelegate.swift */,
+				036BD46D2266171500036F3E /* HTTPHelper.swift */,
+				036BD46B226616E300036F3E /* DataBaseHelper.swift */,
+			);
+			path = BusinessLogic;
+			sourceTree = "<group>";
+		};
+		0B8485E822C211CE009C5FFE /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				036BD43C226615A200036F3E /* ViewControllerHome.swift */,
+				0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */,
+				0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */,
+				03927BD6227E159600FB4E19 /* TabBarController.swift */,
+				03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */,
+				03DBA184228C5778000C8D27 /* EventCell.swift */,
+				0335ED3B22B921D2002044F3 /* ClubCell.swift */,
+				EB5280F5228059C000D8596D /* CardViewDesign.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
