@@ -12,23 +12,32 @@ import UIKit
 
 class DataBaseHelper {
     
-    static var filterDate = ""
-    static var newEventEntriesHaveBeenStored : Bool = false
+    public var filterDate = ""
+    public var newEventEntriesHaveBeenStored : Bool = false
     
-    //returns Context
-    static func getContext () -> NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistentContainer.viewContext
+    var events: [HTTPHelper.Event] = []
+    var clubs: [HTTPHelper.Club] = []
+    let context: NSManagedObjectContext
+    
+    init(context: NSManagedObjectContext) {
+        self.context = context
     }
     
-    static func saveRequestedArraysInDatabase(jsonDataObj: HTTPHelper.JSONDataStruct, context: NSManagedObjectContext) {
-        do{
-            if (jsonDataObj.events.count == 0){
+
+    public func save(){
+        saveEvents()
+        saveClubs()
+    }
+    
+    
+    private func saveEvents(){
+        do {
+            if (events.count == 0){
                 NSLog("There are no new events which should be stored into the local db")
                 newEventEntriesHaveBeenStored = false
             }
             //stores every event into the entity events in core object
-            for event in jsonDataObj.events {
+            for event in events {
                 //mirror saves every value of each column
                 let eventMirror = Mirror(reflecting: event)
                 //every mirror value will be gradually stored into the new row of the local db
@@ -61,11 +70,20 @@ class DataBaseHelper {
                 NSLog("A new event entry has been made")
                 newEventEntriesHaveBeenStored = true
             }
-            if (jsonDataObj.clubs.count == 0){
+        }
+        catch{
+            NSLog("Error saving data into local db. Error:%@", error.localizedDescription)
+        }
+    }
+    
+    
+    private func saveClubs(){
+        do {
+            if (clubs.count == 0){
                 NSLog("There are no new clubs which should be stored into the local db")
             }
             //stores every club into the entity events in core object
-            for club in jsonDataObj.clubs {
+            for club in clubs {
                 //mirror saves every value of each column
                 let clubMirror = Mirror(reflecting: club)
                 //every mirror value will be gradually stored into the new row of the local db
@@ -87,13 +105,15 @@ class DataBaseHelper {
                 }
                 NSLog("A new club entry has been made")
             }
-        }catch{
-            NSLog("Error saving data into local db. Error:%@", error.localizedDescription)
+        }
+        catch{
+            NSLog("Error saving data into local db. Error: %@", error.localizedDescription)
+            
         }
     }
     
-    static func requestEventsFromDatabase(context: NSManagedObjectContext) -> [Event] {
-        
+    
+    public func requestEventsFromDatabase() -> [Event] {
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
         let sortDate = NSSortDescriptor(key: "dte", ascending: true)
@@ -111,7 +131,8 @@ class DataBaseHelper {
         return results
     }
     
-    static func requestClubsFromDatabase(context: NSManagedObjectContext) -> [Club] {
+    
+    public func requestClubsFromDatabase() -> [Club] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Club")
         request.returnsObjectsAsFaults = false
         var results : [Club] = []
@@ -125,8 +146,7 @@ class DataBaseHelper {
     }
     
     
-    
-    static func deleteOldEntries(context: NSManagedObjectContext) {
+    public func deleteOldEntries() {
         do {
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
             //fetch every entry, which is older than the date of yesterday
@@ -144,12 +164,13 @@ class DataBaseHelper {
                 try context.save()
                 NSLog("%d Events have been deleted", resultData.count)
             }
-        } catch let error as NSError  {
-            print("Error trying to delete old db entries \(error), \(error.userInfo)")
+        } catch {
+            print("Error trying to delete old db entries error: %@", error.localizedDescription)
         }
     }
     
-    static func deleteAll(context: NSManagedObjectContext){
+    
+    public func deleteAll(){
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
         
         let result = try? context.fetch(fetchRequest)
@@ -168,7 +189,7 @@ class DataBaseHelper {
     }
     
     //function to directly request the highest id stored in the coreData
-    static func requestHighestId(entity: String, context: NSManagedObjectContext) -> Int {
+    public func requestHighestId(entity: String) -> Int {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         request.entity = NSEntityDescription.entity(forEntityName: entity, in: context)
         //this ensures the result to be key - value
@@ -205,7 +226,7 @@ class DataBaseHelper {
         }
     }
     
-    private static func getDateOfYesterday () -> Date {
+    private func getDateOfYesterday () -> Date {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"

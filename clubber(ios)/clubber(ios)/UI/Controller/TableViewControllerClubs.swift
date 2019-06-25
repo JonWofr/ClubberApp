@@ -17,13 +17,16 @@ class TableViewControllerClubs : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let dataBaseHelper = appDelegate.dataBaseHelper!
+        
         self.navigationController?.navigationBar.topItem?.title = "Clubs"
         
         tableView.separatorColor = UIColor(white: 0.95, alpha: 1)
         tableView.dataSource = self
         tableView.delegate = self
         
-        clubArr = DataBaseHelper.requestClubsFromDatabase(context: DataBaseHelper.getContext())
+        clubArr = dataBaseHelper.requestClubsFromDatabase()
         giveUserFeedbackIfNecessary(arr: clubArr, filteringEvents: false, completionHandler: nil)
     }
     
@@ -48,5 +51,4 @@ class TableViewControllerClubs : UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
 }

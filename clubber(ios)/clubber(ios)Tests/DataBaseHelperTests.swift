@@ -26,7 +26,7 @@ class DataBaseHelperTests: XCTestCase {
         
         mockPersistantContainer = {
             
-            let container = NSPersistentContainer(name: "PersistentTodoList", managedObjectModel: self.managedObjectModel)
+            let container = NSPersistentContainer(name: "clubber_ios_tests", managedObjectModel: self.managedObjectModel)
             let description = NSPersistentStoreDescription()
             description.type = NSInMemoryStoreType
             description.shouldAddStoreAsynchronously = false
@@ -43,6 +43,9 @@ class DataBaseHelperTests: XCTestCase {
             }
             return container
         }()
+        
+        databaseHelper = DataBaseHelper(context: mockPersistantContainer.viewContext)
+        
         //makes a two event entries and one club entry into the created db
         initStubs()
     }
@@ -109,42 +112,43 @@ class DataBaseHelperTests: XCTestCase {
     func testSaveRequestedArraysInDatabase(){
         //Tests if the number of event entries is increased by one if we add a new one to the db
         
-        let event = HTTPHelper.EventStruct(id : "3", dte : "2020-01-01", name : "event name 3", club : "event club 3", srttime : "event srttime 3", genre : "event genre 3", btn : "event btn 3")
-        var events: [HTTPHelper.EventStruct]? = [event]
+        let event = HTTPHelper.Event(id : "3", dte : "2020-01-01", name : "event name 3", club : "event club 3", srttime : "event srttime 3", genre : "event genre 3", btn : "event btn 3")
+        var events: [HTTPHelper.Event] = [event]
         
-        let clubs : [HTTPHelper.ClubStruct]? = []
+        let clubs : [HTTPHelper.Club] = []
         
-        var json = HTTPHelper.JSONDataStruct(events: events, clubs: clubs)
+        databaseHelper.events = events
+        databaseHelper.clubs = clubs
         
-        DataBaseHelper.saveRequestedArraysInDatabase(jsonDataObj: json, context: mockPersistantContainer.viewContext)
+        databaseHelper.save()
         
-        var allEvents = DataBaseHelper.requestEventsFromDatabase(context: mockPersistantContainer.viewContext)
+        var allEvents = databaseHelper.requestEventsFromDatabase()
 
         XCTAssertEqual(allEvents.count, 3)
         
         //Tests if the number of entries is not increased if we pass an empty json object
         
         events = []
-    
-        json = HTTPHelper.JSONDataStruct(events: events, clubs: clubs)
         
-        DataBaseHelper.saveRequestedArraysInDatabase(jsonDataObj: json, context: mockPersistantContainer.viewContext)
+        databaseHelper.events = events
         
-        allEvents = DataBaseHelper.requestEventsFromDatabase(context: mockPersistantContainer.viewContext)
+        databaseHelper.save()
+        
+        allEvents = databaseHelper.requestEventsFromDatabase()
         
         XCTAssertEqual(allEvents.count, 3)
     }
     
     func testRequestEventsFromDatabase() {
         //Tests if the two entries made in setUp() have been stored correctly and now present in the db
-        let events = DataBaseHelper.requestEventsFromDatabase(context: mockPersistantContainer.viewContext)
+        let events = databaseHelper.requestEventsFromDatabase()
         XCTAssertEqual(events.count, 2)
     }
     
     func testDeleteOldEntries(){
         //one entry is outdated. Checks if the number of total entries is subtracted by one after the method is called
-        DataBaseHelper.deleteOldEntries(context: mockPersistantContainer.viewContext)
-        let events = DataBaseHelper.requestEventsFromDatabase(context: mockPersistantContainer.viewContext)
+        databaseHelper.deleteOldEntries()
+        let events = databaseHelper.requestEventsFromDatabase()
         XCTAssertEqual(events.count, 1)
     }
 }

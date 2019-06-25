@@ -15,35 +15,20 @@ class ViewControllerHome: UIViewController {
     @IBOutlet weak var showDatepicker: UIView!
     
     @IBOutlet weak var inputTextfield: UITextField!
-    @IBOutlet weak var jsonDebug: UITextView!
-    @IBAction func refreshBtn(_ sender: UIButton) {
-        if !HTTPHelper.requestResponseServerIsRunning {
-            HTTPHelper.requestResponseServer()
-        }
-    }
     
     @IBAction func findDateBtn(_ sender: UIButton) {
         if(inputTextfield.text != ""){
             self.tabBarController?.selectedIndex = 1
-            DataBaseHelper.filterDate = inputTextfield.text!
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let dataBaseHelper = appDelegate.dataBaseHelper!
+            dataBaseHelper.filterDate = inputTextfield.text!
         }
-        
     }
-    
-    @IBAction func deleteBtn(_ sender: Any) {
-        DataBaseHelper.deleteAll(context: DataBaseHelper.getContext())
-    }
-    
-    @IBAction func getJson(_ sender: UIButton) {
-        jsonDebug.text = HTTPHelper.json
-    }
-    
     
     lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.backgroundColor = .white
         picker.addTarget(self, action: #selector(ViewControllerHome.dateChanged(datePicker:)), for: .valueChanged)
-        
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         picker.minimumDate = yesterday
         picker.minuteInterval = 30
@@ -52,6 +37,8 @@ class ViewControllerHome: UIViewController {
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
+    
+    
     
     //toolbar with done button to end the datepicker
     lazy var doneToolBar: UIToolbar = {
@@ -62,6 +49,8 @@ class ViewControllerHome: UIViewController {
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         return toolbar
     }()
+    
+    
     //container where the datepicker will be in
     lazy var pickerContainer: UIView = {
         let view = UIView()
@@ -70,9 +59,13 @@ class ViewControllerHome: UIViewController {
         return view
     }()
     
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        
         self.navigationController?.navigationBar.topItem?.title = "Clubber"
         assignbackground()
         setupAutoLayout()
@@ -90,11 +83,7 @@ class ViewControllerHome: UIViewController {
             HTTPHelper.dispatchGroup.notify(queue: .main){
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
-            
         }
-        //DataBaseHelper.deleteOldEntries()
-       //createDatePicker()
-        
     }
     
     func assignbackground(){

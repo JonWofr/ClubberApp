@@ -11,12 +11,14 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
-
+    var dataBaseHelper: DataBaseHelper?
+    var hello: NSString?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        dataBaseHelper = DataBaseHelper(context: persistentContainer.viewContext)
         //set up connectionListener and initiates an automatic download of a JSON file from the webserver
         HTTPHelper.startConnectionListener()
 

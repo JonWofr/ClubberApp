@@ -14,6 +14,7 @@ class HTTPHelper{
     
     static var hasNetworkAccess : Bool = false
     static var requestResponseServerIsRunning : Bool = false
+    static let dispatchGroup = DispatchGroup()
     
     //checks if device got internetAccess
     //is updated when network state has changed (turned off/on)
@@ -40,12 +41,12 @@ class HTTPHelper{
     
     //JSONData struct that stores Event and Club object Arrays
     public struct JSONDataStruct : Decodable {
-        var events :[EventStruct]!
-        var clubs : [ClubStruct]!
+        var events :[Event]!
+        var clubs : [Club]!
     }
     
     //comparabe with an event object
-    public struct EventStruct : Decodable {
+    public struct Event : Decodable {
         var id : String!
         var dte : String!
         var name : String!
@@ -56,7 +57,7 @@ class HTTPHelper{
     }
     
     //comparabe with a club object
-    public struct ClubStruct : Decodable {
+    public struct Club : Decodable {
         var id : String!
         var name : String!
         var adrs : String!
@@ -64,27 +65,25 @@ class HTTPHelper{
         var web : String!
     }
     
-    static var json : String! = ""
-    static let dispatchGroup = DispatchGroup()
-
-    
     //For requesting and receiving a json file from our webserver
     static func requestResponseServer(){
-        requestResponseServerIsRunning = true
-        let context = DataBaseHelper.getContext()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let dataBaseHelper = appDelegate.dataBaseHelper!
         
-        //We implemented this because if there is nothing to download and the user uses the refreshfunction, he could think the application didn't properly refreshed
+        requestResponseServerIsRunning = true
+        
+        //We implemented this because if there is nothing to download and the user uses the refreshfunction, he could think the application didn't properly refresh
         DispatchQueue.global(qos: .background).async {
             dispatchGroup.enter()
             usleep(1500000)
             dispatchGroup.leave()
         }
         
-        DataBaseHelper.deleteOldEntries(context: context)
+        dataBaseHelper.deleteOldEntries()
         
-        let highestEventId = DataBaseHelper.requestHighestId(entity: "Event", context: context)
-        let highestClubId = DataBaseHelper.requestHighestId(entity: "Club",context: context)
-
+        let highestEventId = dataBaseHelper.requestHighestId(entity: "Event")
+        let highestClubId = dataBaseHelper.requestHighestId(entity: "Club")
+        
         let url = "https://clubber-stuttgart.de/script/scriptDB.php?idEvent=\(highestEventId)&&idClub=\(highestClubId)"
         
         NSLog("Requesting data from %@", url)
@@ -95,12 +94,17 @@ class HTTPHelper{
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         dispatchGroup.enter()
         URLSession.shared.dataTask(with: urlObj!) {(data, response, error) in
-            json = String(data: data!, encoding: String.Encoding.utf8)
             do {
                 //jsonData is object of JSONData struct which contains an Object Array of Event- and Club-struct
                 let jsonData = try JSONDecoder().decode(JSONDataStruct.self, from: data!)
                 NSLog("JSONData object has been created")
-                DataBaseHelper.saveRequestedArraysInDatabase(jsonDataObj: jsonData, context: context)
+                
+                dataBaseHelper.events = jsonData.events
+                dataBaseHelper.clubs = jsonData.clubs
+                
+                NSLog("Data has been passed to DataBaseHelper")
+                
+                dataBaseHelper.save()
             }catch{
                 //localizedDescription is needed to convert NSError into String
                 NSLog("Requesting data from given URL has been unsuccessful. Error: %@", error.localizedDescription)

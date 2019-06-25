@@ -166,16 +166,32 @@
 		0B8485E822C211CE009C5FFE /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				0B8485F422C24C2E009C5FFE /* Views */,
+				0B8485F322C24C28009C5FFE /* Controller */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		0B8485F322C24C28009C5FFE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
 				036BD43C226615A200036F3E /* ViewControllerHome.swift */,
 				0397BB5B2275E1EE00FDF73C /* TableViewControllerEvents.swift */,
 				0397BB5D2275F07900FDF73C /* TableViewControllerClubs.swift */,
 				03927BD6227E159600FB4E19 /* TabBarController.swift */,
 				03DA9106227A06E2006EAEB8 /* AlertHelperExtension.swift */,
-				03DBA184228C5778000C8D27 /* EventCell.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0B8485F422C24C2E009C5FFE /* Views */ = {
+			isa = PBXGroup;
+			children = (
 				0335ED3B22B921D2002044F3 /* ClubCell.swift */,
+				03DBA184228C5778000C8D27 /* EventCell.swift */,
 				EB5280F5228059C000D8596D /* CardViewDesign.swift */,
 			);
-			path = UI;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -14,13 +14,16 @@ class TableViewControllerEvents : UITableViewController{
     var eventArr : [Event] = []
     var eventArrBuffer : [Event] = []
     var refreshcontrol : UIRefreshControl?
-    
+    var dataBaseHelper : DataBaseHelper!
    
     
     @IBOutlet var table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        dataBaseHelper = appDelegate.dataBaseHelper!
         
         self.navigationController?.navigationBar.topItem?.title = "Events"
     
@@ -36,7 +39,7 @@ class TableViewControllerEvents : UITableViewController{
         
         table.addSubview(refreshcontrol!)
         if !HTTPHelper.requestResponseServerIsRunning{
-            eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext())
+            eventArr = dataBaseHelper.requestEventsFromDatabase()
         }
         giveUserFeedbackIfNecessary(arr: eventArr, filteringEvents: false, completionHandler: nil)
     }
@@ -68,13 +71,15 @@ class TableViewControllerEvents : UITableViewController{
 
     
     @objc func refreshControlPulledDown(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let dataBaseHelper = appDelegate.dataBaseHelper!
         if(HTTPHelper.hasNetworkAccess && !HTTPHelper.requestResponseServerIsRunning){
             HTTPHelper.requestResponseServer()
             //wait until the thread inside requestResponseServer() has done its job
             HTTPHelper.dispatchGroup.notify(queue: .main){
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                if (DataBaseHelper.newEventEntriesHaveBeenStored){
-                    self.eventArr = DataBaseHelper.requestEventsFromDatabase(context: DataBaseHelper.getContext())
+                if (dataBaseHelper.newEventEntriesHaveBeenStored){
+                    self.eventArr = dataBaseHelper.requestEventsFromDatabase()
                     NSLog("TableView is about to be updated")
                     self.filterEventsIfRequested()
                     self.table.reloadData()
@@ -96,7 +101,7 @@ class TableViewControllerEvents : UITableViewController{
     }
     
     func filterEventsIfRequested(){
-        let filterDate = DataBaseHelper.filterDate
+        let filterDate = dataBaseHelper.filterDate
         if(filterDate != ""){
             eventArrBuffer = eventArr
             let dateFormatter = DateFormatter()
@@ -111,8 +116,8 @@ class TableViewControllerEvents : UITableViewController{
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        if(DataBaseHelper.filterDate != ""){
-            DataBaseHelper.filterDate = ""
+        if(dataBaseHelper.filterDate != ""){
+            dataBaseHelper.filterDate = ""
             self.eventArr = eventArrBuffer
             self.table.reloadData()
         }
