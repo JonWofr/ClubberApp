@@ -105,7 +105,7 @@ class TableViewControllerEvents : UITableViewController{
         if(filterDate != ""){
             eventArrBuffer = eventArr
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy"
+            dateFormatter.dateFormat = "dd-MM-yyyy"
             let dte = dateFormatter.date(from: filterDate)
             eventArr = filterEventArr(date: dte!)
             

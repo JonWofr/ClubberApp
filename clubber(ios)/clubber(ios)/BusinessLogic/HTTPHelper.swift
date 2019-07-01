@@ -32,7 +32,6 @@ class HTTPHelper{
             }
         }
 
-        
         let queue = DispatchQueue(label: "Monitor")
         monitor.start(queue: queue)
     }

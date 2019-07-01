@@ -20,18 +20,17 @@ class ViewControllerHome: UIViewController {
         if(inputTextfield.text != ""){
             self.tabBarController?.selectedIndex = 1
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let dataBaseHelper = appDelegate.dataBaseHelper!
-            dataBaseHelper.filterDate = inputTextfield.text!
+            appDelegate.dataBaseHelper!.filterDate = inputTextfield.text!
         }
     }
     
     lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.backgroundColor = .white
+        picker.datePickerMode = .date
         picker.addTarget(self, action: #selector(ViewControllerHome.dateChanged(datePicker:)), for: .valueChanged)
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         picker.minimumDate = yesterday
-        picker.minuteInterval = 30
         let loc = Locale(identifier: "de")
         picker.locale = loc
         picker.translatesAutoresizingMaskIntoConstraints = false
@@ -114,9 +113,7 @@ class ViewControllerHome: UIViewController {
         pickerContainer.addSubview(doneToolBar)
         pickerContainer.addSubview(datePicker)
         NSLayoutConstraint.activate([
-            inputTextfield.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
-            inputTextfield.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
-            inputTextfield.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            
             
             pickerContainer.topAnchor.constraint(equalTo: inputTextfield.bottomAnchor, constant: 5),
             pickerContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
@@ -139,7 +136,7 @@ class ViewControllerHome: UIViewController {
         
         //selected date by the user
         let dateFormate = DateFormatter()
-        dateFormate.dateFormat = "MM/dd/yyyy"
+        dateFormate.dateFormat = "dd-MM-yyyy"
         
         inputTextfield.text = dateFormate.string(from: datePicker.date)
     }

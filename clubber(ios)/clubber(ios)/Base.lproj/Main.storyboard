@@ -15,12 +15,11 @@
             <objects>
                 <viewController title="Home" id="s6t-9e-eDg" customClass="ViewControllerHome" customModule="clubber_ios_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="S61-vE-WKS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="530"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Datum auswählen" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jx3-uJ-S03">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Datum auswählen" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jx3-uJ-S03">
                                 <rect key="frame" x="91" y="423" width="232" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" red="0.94421905279999996" green="0.61926984789999995" blue="0.22335529330000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -73,13 +72,16 @@
                             <constraint firstItem="6sE-po-Qon" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="143" id="2Ma-bi-TDL"/>
                             <constraint firstItem="bBy-Jq-Eyq" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1t4-eJ-kRs" secondAttribute="trailing" symbolic="YES" id="3vW-Tf-xTh"/>
                             <constraint firstItem="Z4N-0T-GUX" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="45" id="5sC-94-ai2"/>
-                            <constraint firstItem="bBy-Jq-Eyq" firstAttribute="bottom" secondItem="6sE-po-Qon" secondAttribute="bottom" constant="231" id="91b-QX-ZXr"/>
                             <constraint firstItem="Zf9-Ud-Qq5" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="11" id="APn-xC-syf"/>
+                            <constraint firstItem="6sE-po-Qon" firstAttribute="top" secondItem="Jx3-uJ-S03" secondAttribute="bottom" constant="8" id="DW3-d9-k1F"/>
+                            <constraint firstItem="bBy-Jq-Eyq" firstAttribute="trailing" secondItem="Jx3-uJ-S03" secondAttribute="trailing" constant="91" id="L4K-eH-cuz"/>
                             <constraint firstItem="bBy-Jq-Eyq" firstAttribute="trailing" secondItem="6sE-po-Qon" secondAttribute="trailing" constant="143" id="Nps-Vb-jIz"/>
                             <constraint firstItem="1t4-eJ-kRs" firstAttribute="leading" secondItem="Z4N-0T-GUX" secondAttribute="leading" id="OEr-zN-uBC"/>
                             <constraint firstItem="VKX-LB-uwk" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="45" id="Yek-1m-2aN"/>
                             <constraint firstItem="VKX-LB-uwk" firstAttribute="top" secondItem="4pR-zS-fP9" secondAttribute="bottom" constant="1" id="avK-ha-Jsm"/>
+                            <constraint firstItem="Jx3-uJ-S03" firstAttribute="leading" secondItem="bBy-Jq-Eyq" secondAttribute="leading" constant="91" id="bkk-H2-kdP"/>
                             <constraint firstItem="Z4N-0T-GUX" firstAttribute="top" secondItem="Zf9-Ud-Qq5" secondAttribute="bottom" constant="2" id="dEf-M4-M1N"/>
+                            <constraint firstItem="Jx3-uJ-S03" firstAttribute="top" secondItem="VKX-LB-uwk" secondAttribute="bottom" constant="36" id="dSB-6D-ax1"/>
                             <constraint firstItem="bBy-Jq-Eyq" firstAttribute="trailing" secondItem="4pR-zS-fP9" secondAttribute="trailing" constant="94" id="etH-iH-nno"/>
                             <constraint firstItem="bBy-Jq-Eyq" firstAttribute="trailing" secondItem="Z4N-0T-GUX" secondAttribute="trailing" constant="104" id="eu0-sJ-CTt"/>
                             <constraint firstItem="1t4-eJ-kRs" firstAttribute="top" secondItem="Z4N-0T-GUX" secondAttribute="bottom" id="hEf-vl-vP2"/>
@@ -106,7 +108,7 @@
             <objects>
                 <tableViewController title="Events" id="9Pk-Nn-hJz" customClass="TableViewControllerEvents" customModule="clubber_ios_" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="244" estimatedRowHeight="180" sectionHeaderHeight="28" sectionFooterHeight="28" id="B0L-8Z-1TL">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="530"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -262,7 +264,7 @@
             <objects>
                 <tableViewController title="Clubs" id="nsp-K9-Fbz" customClass="TableViewControllerClubs" customModule="clubber_ios_" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="msR-b0-3PN">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="530"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -437,7 +439,7 @@
                     <tabBarItem key="tabBarItem" title="Clubs" image="location24" id="Zj5-qb-jCu"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Xan-Pk-Boy">
-                        <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.94421905279999996" green="0.61926984789999995" blue="0.22335529330000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="titleTextAttributes">
@@ -460,7 +462,7 @@
                     <tabBarItem key="tabBarItem" title="Events" image="calendar24" id="3yQ-Uh-IvP"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="24A-LZ-ecR">
-                        <rect key="frame" x="0.0" y="20" width="600" height="50"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.94421905279999996" green="0.61926984789999995" blue="0.22335529330000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="titleTextAttributes">
@@ -483,7 +485,7 @@
                     <tabBarItem key="tabBarItem" title="Home" image="home24" id="yuX-1u-SJl"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="DI0-Fz-3kM">
-                        <rect key="frame" x="0.0" y="20" width="600" height="50"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.94421905279999996" green="0.61926984789999995" blue="0.22335529330000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="titleTextAttributes">

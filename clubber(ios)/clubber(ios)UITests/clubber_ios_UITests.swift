@@ -27,8 +27,23 @@ class clubber_ios_UITests: XCTestCase {
     }
 
     func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+       
+        let app = XCUIApplication()
+        app.textFields["Datum auswählen"].tap()
+        
+        //picks the 8. Dezember 2019
+        let datePickers = app.datePickers
+        datePickers.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "8.")
+        datePickers.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "Dezember")
+        datePickers.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "2019")
+        app.toolbars["Toolbar"].buttons["Done"].tap()
+        app.buttons["Events anzeigen"].tap()
+        //check if the cell exists
+        app.tables.cells.children(matching: .other).element(boundBy: 2).tap()
+        
+        let tabBarsQuery = app.tabBars
+        tabBarsQuery.buttons["Clubs"].tap()
+        tabBarsQuery.buttons["Events"].tap()
     }
 
 }
